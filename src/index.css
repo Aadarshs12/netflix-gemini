@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.swiper-pagination-bullet {
+    background: #f3e8e8 !important;
+}
+
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background: #d9232e !important;
+}
+.swiper-button-prev, .swiper-button-next {
+    color: #d9232e !important;
+    background-color: #374151a2;
+    padding: 25px;
+    border-radius: 50%;
+    border: 2px solid #d9232e;
+    display: grid;
+    place-content: center;
+    box-shadow: 1px 1px 4px #d9232e;
+}
+.swiper-pagination{
+    position: unset !important;
+}
+
+.swiper-button-prev:after, .swiper-button-next:after {
+    font-size: 20px !important;
+    font-weight: 600;
+}
+
+.forBackgroundGradient{
+    position: relative;
+    &::before{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 5, 13, .8), rgba(0, 5, 13, 0) 22.78%), linear-gradient(0deg, #00050d, rgba(0, 5, 13, .35) 15.68%, rgba(0, 5, 13, .05) 23.89%, rgba(0, 5, 13, 0) 27.36%), radial-gradient(83.07% 105.9% at 75.42% 30.21%, rgba(0, 5, 13, 0) 28.66%, rgba(0, 5, 13, .9) 100%), radial-gradient(91.1% 112.51% at 69.92% -12.5%, rgba(0, 5, 13, 0) 76.71%, rgba(0, 5, 13, .4) 100%);
+        height: 100%;
+        width: 100%;
+    }
+}
