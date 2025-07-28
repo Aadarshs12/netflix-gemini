@@ -91,7 +91,7 @@ const Login = () => {
             placeholder="Enter your name"
           />
           {errors.name?.type === "required" && (
-            <p className="text-red-500" role="alert">
+            <p className="text-[#d9232e]" role="alert">
               Full name is required
             </p>
           )}
@@ -102,7 +102,7 @@ const Login = () => {
             placeholder="Enter your email"
           />
           {errors.email?.type === "required" && (
-            <p className="text-red-500" role="alert">
+            <p className="text-[#d9232e]" role="alert">
               Email is required
             </p>
           )}
@@ -113,22 +113,22 @@ const Login = () => {
             placeholder="Enter your password"
           />
           {errors.password?.type === "required" && (
-            <p className="text-red-500" role="alert">
+            <p className="text-[#d9232e]" role="alert">
               Password is required
             </p>
           )}
           <button
             type="submit"
-            className="w-full bg-red-700 text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
+            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
           >
             Sign Up
           </button>
-          <p className="text-white text-sm mt-3">Created with 💖 by <span style={{color:"#e50914"}} className="font-semibold">Aadarsh Singh</span> - All Right Reserved.</p>
+          <p className="text-white text-sm mt-3">Created with 💖 by <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span> - All Right Reserved.</p>
           <div className="pt-4">
             <span className="text-white">
               Already an User?{" "}
               <span
-                className="font-bold hover:cursor-pointer"
+                className="font-bold text-[#d9232e] hover:underline hover:cursor-pointer"
                 onClick={handleSignUp}
               >
                 Sign In
@@ -149,7 +149,7 @@ const Login = () => {
             placeholder="Enter your email"
           />
           {errors.email?.type === "required" && (
-            <p className="text-red-500" role="alert">
+            <p className="text-[#d9232e]" role="alert">
               Email is required
             </p>
           )}
@@ -160,22 +160,22 @@ const Login = () => {
             placeholder="Enter your password"
           />
           {errors.password?.type === "required" && (
-            <p className="text-red-500" role="alert">
+            <p className="text-[#d9232e]" role="alert">
               Password is required
             </p>
           )}
           <button
             type="submit"
-            className="w-full bg-red-700 text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
+            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
           >
             Sign In
           </button>
-          <p className="text-white text-sm mt-3">Created with 💖 by <span style={{color:"#e50914"}} className="font-semibold">Aadarsh Singh</span> - All Right Reserved.</p>
+          <p className="text-white text-sm mt-3">Created with 💖 by <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span> - All Right Reserved.</p>
           <div className="pt-4">
             <span className="text-white">
               New to Netflix?{" "}
               <span
-                className="font-bold hover:cursor-pointer"
+                className="font-bold text-[#d9232e] hover:underline hover:cursor-pointer"
                 onClick={handleSignUp}
               >
                 Sign Up

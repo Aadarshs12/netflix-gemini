@@ -7,10 +7,9 @@ import { toast } from "react-toastify";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { LOGO } from "../utils/constant";
+import { LOGO, SupportedLanguage } from "../utils/constant";
 import { toggleGptSearchView } from "../utils/gptSlice";
 import { GiReturnArrow } from "react-icons/gi";
-
 
 const Header = () => {
   const navigate = useNavigate();
@@ -60,6 +59,12 @@ const Header = () => {
       </div>
       {location.pathname !== "/" && (
         <div className="flex items-center gap-3">
+          <select className="bg-gray-800 text-white px-2 py-1 rounded-lg border border-white">
+            {SupportedLanguage.map((lang) => {
+              return <option key={lang?.identifier}>{lang?.name}</option>;
+            })}
+          </select>
+
           {showToggleInformation ? (
             <button
               onClick={handleGptSearchClick}

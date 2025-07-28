@@ -6,7 +6,7 @@ import { FaInfoCircle } from "react-icons/fa";
 const VideoTitle = ({ original_title, overview }) => {
   return (
     <div className="absolute h-screen top-0 left-0 z-10 w-full pt-32 md:pt-48 px-4 md:px-10 text-white bg-gradient-to-r from-black to-transparent">
-      <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold">
+      <h1 className="text-3xl line-clamp-1 md:text-5xl lg:text-6xl font-bold">
         {original_title}
       </h1>
       <p className="text-base line-clamp-3 mb-5 text-white text-opacity-75 md:text-lg py-4 md:py-6 w-full md:w-3/4 lg:w-1/3">
