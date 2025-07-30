@@ -15,7 +15,6 @@ const useMovieTrailer = (id) => { // Changed to accept id directly, renamed for 
       );
       const jsonData = await response.json();
       setData(jsonData?.results || []);
-      console.log("jsonData", jsonData);
     } catch (error) {
       console.error("Error fetching movie videos:", error);
     }
@@ -32,7 +31,6 @@ const useMovieTrailer = (id) => { // Changed to accept id directly, renamed for 
       const filterData = data.filter((video) => video.type === "Trailer") || [];
       const trailer = filterData.length ? filterData[0] : data.length ? data[0] : null;
       dispatch(addTrailorVideo(trailer));
-      console.log("trailer", trailer);
     }
   }, [data, dispatch]);
 };

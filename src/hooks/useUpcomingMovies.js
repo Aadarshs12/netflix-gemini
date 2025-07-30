@@ -16,7 +16,6 @@ const useUpcomingMovies = () => {
         throw new Error(`API request failed with status ${response.status}`);
       }
       const json = await response.json();
-      console.log("Upcoming", json.results);
       dispatch(addUpcomingMovies(json.results || [])); 
     } catch (error) {
       console.error("Error fetching now playing movies:", error);

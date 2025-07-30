@@ -16,7 +16,6 @@ const useTopRatedMovies = () => {
         throw new Error(`API request failed with status ${response.status}`);
       }
       const json = await response.json();
-      console.log("Top Rated", json.results);
       dispatch(addTopRatedMovies(json.results || [])); 
     } catch (error) {
       console.error("Error fetching now playing movies:", error);

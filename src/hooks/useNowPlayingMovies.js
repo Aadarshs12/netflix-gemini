@@ -16,7 +16,6 @@ const useNowPlayingMovies = () => {
         throw new Error(`API request failed with status ${response.status}`);
       }
       const json = await response.json();
-      console.log("json", json.results);
       dispatch(addNowPlayingMovies(json.results || [])); 
     } catch (error) {
       console.error("Error fetching now playing movies:", error);

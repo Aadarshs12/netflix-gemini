@@ -16,7 +16,6 @@ const usePopularMovies = () => {
         throw new Error(`API request failed with status ${response.status}`);
       }
       const json = await response.json();
-      console.log("Popular Movies", json.results);
       dispatch(addPopularMovies(json.results || [])); 
     } catch (error) {
       console.error("Error fetching now playing movies:", error);

@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const languageSlice = createSlice({
-  name: "lang",
+  name: "language",
   initialState: {
-    currentLanguage: "en",
+    lang: "en",
   },
   reducers: {
-    setCurrentLanguage: (state, action) => {
-      state.currentLanguage = action.payload;
+    changeLang: (state, action) => {
+      state.lang = action.payload;
     },
   },
 });
 
 // Rename exported action to match the new reducer name
-export const { setCurrentLanguage } = languageSlice.actions;
+export const { changeLang } = languageSlice.actions;
 export const languageReducer = languageSlice.reducer;
 export default languageSlice;
