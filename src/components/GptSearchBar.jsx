@@ -17,7 +17,7 @@ const GptSearchBar = () => {
     const gptResults = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
-        { role: "user", content: data }
+        { role: "user", content: data.promt }
       ],
     });
 
