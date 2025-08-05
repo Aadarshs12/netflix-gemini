@@ -24,4 +24,7 @@ export const SupportedLanguage = [
   { identifier: "french", name: "French" }
 ];
 
-export const OPEN_AI_KEY = "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";
+console.log("OpenAI Key:", process.env.REACT_APP_OPENAI_API_KEY);
+
+// export const OPEN_AI_KEY = 'REACT_APP_OPENAI_API_KEY';
+
