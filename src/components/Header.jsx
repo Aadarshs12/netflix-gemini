@@ -10,6 +10,7 @@ import { toggleGeminiSearchView } from "../utils/geminiSlice";
 import { changeLang } from "../utils/languageSlice";
 import { Select } from "@headlessui/react";
 import { FaChevronDown } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -55,9 +56,9 @@ const Header = () => {
 
   return (
     <div className="absolute flex w-full justify-between items-center z-20 h-fit inset-0 bg-gradient-to-b from-black px-8 py-2">
-      <div>
+      <Link to="/browse">
         <img className="w-48" src={LOGO} alt="logo" />
-      </div>
+      </Link>
       {location.pathname !== "/" && (
         <div className="flex items-center gap-3">
           {showToggleInformation && (

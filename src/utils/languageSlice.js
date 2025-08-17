@@ -12,7 +12,6 @@ const languageSlice = createSlice({
   },
 });
 
-// Rename exported action to match the new reducer name
 export const { changeLang } = languageSlice.actions;
 export const languageReducer = languageSlice.reducer;
 export default languageSlice;

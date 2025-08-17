@@ -5,7 +5,6 @@ import { auth } from "../utils/firebase";
 import { Login_Banner1 } from "../utils/constant";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
-
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,

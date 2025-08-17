@@ -16,6 +16,9 @@ export const Login_Banner2 = "https://assets.nflxext.com/ffe/siteui/vlv3/729ce5c
 
 export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w185";
 
+export const IMG_CDN_URL2 = "https://image.tmdb.org/t/p/original";
+
+
 export const SupportedLanguage = [
   { identifier: "en", name: "English" },
   { identifier: "hindi", name: "Hindi" },
@@ -24,7 +27,5 @@ export const SupportedLanguage = [
   { identifier: "french", name: "French" }
 ];
 
-console.log("OpenAI Key:", process.env.REACT_APP_OPENAI_API_KEY);
 
-// export const OPEN_AI_KEY = 'REACT_APP_OPENAI_API_KEY';
 
