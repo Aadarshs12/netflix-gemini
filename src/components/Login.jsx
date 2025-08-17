@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { auth } from "../utils/firebase";
 import { Login_Banner1 } from "../utils/constant";
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -16,12 +19,17 @@ import { useDispatch } from "react-redux";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isPasswordShow, setIsPasswordShow] = useState(false);
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
   } = useForm();
+
+  const handleEyeClick = () => {
+    setIsPasswordShow(!isPasswordShow);
+  };
 
   const [newToNetflix, setNewToNetflix] = useState(false);
 
@@ -31,28 +39,31 @@ const Login = () => {
 
   const onSubmitSignUp = async (data) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, data?.email, data?.password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data?.email,
+        data?.password
+      );
       const user = userCredential.user;
-  
+
       await updateProfile(user, {
-        displayName: data?.name
+        displayName: data?.name,
       });
-  
+
       const { uid, email, displayName } = auth.currentUser;
       dispatch(addUser({ uid, email, displayName }));
-  
+
       toast.success("Signed up successfully!");
-  
+
       setTimeout(() => setNewToNetflix(false), 500);
-  
-      reset(); 
+
+      reset();
     } catch (error) {
       console.log(error.message);
       toast.error("Failed to sign up!");
     }
   };
-  
-  
+
   const onSubmit = (data) => {
     signInWithEmailAndPassword(auth, data?.email, data?.password)
       .then((userCredential) => {
@@ -106,24 +117,38 @@ const Login = () => {
               Email is required
             </p>
           )}
-          <input
-            className="w-full my-3 p-3 text-white bg-gray-700 rounded-lg"
-            {...register("password", { required: true })}
-            aria-invalid={errors.password ? "true" : "false"}
-            placeholder="Enter your password"
-          />
-          {errors.password?.type === "required" && (
-            <p className="text-[#d9232e]" role="alert">
-              Password is required
-            </p>
-          )}
+          <div className="relative">
+            <input
+              type={isPasswordShow ? "text" : "password"}
+              className="w-full relative my-3 p-3 text-white bg-gray-700 rounded-lg"
+              {...register("password", { required: true })}
+              aria-invalid={errors.password ? "true" : "false"}
+              placeholder="Enter your password"
+              autoComplete="new-password"
+            />
+            <span
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 h-4 w-4 text-white/60"
+              onClick={handleEyeClick}
+            >
+              {isPasswordShow ? <FaRegEyeSlash /> : <FaRegEye />}
+            </span>
+            {errors.password?.type === "required" && (
+              <p className="text-[#d9232e]" role="alert">
+                Password is required
+              </p>
+            )}
+          </div>
           <button
             type="submit"
             className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
           >
             Sign Up
           </button>
-          <p className="text-white text-sm mt-3">Created with 💖 by <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span> - All Right Reserved.</p>
+          <p className="text-white text-sm mt-3">
+            Created with 💖 by{" "}
+            <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span>{" "}
+            - All Right Reserved.
+          </p>
           <div className="pt-4">
             <span className="text-white">
               Already an User?{" "}
@@ -153,24 +178,38 @@ const Login = () => {
               Email is required
             </p>
           )}
-          <input
-            className="w-full my-3 p-3 bg-gray-700 text-white rounded-lg"
-            {...register("password", { required: true })}
-            aria-invalid={errors.password ? "true" : "false"}
-            placeholder="Enter your password"
-          />
-          {errors.password?.type === "required" && (
-            <p className="text-[#d9232e]" role="alert">
-              Password is required
-            </p>
-          )}
+          <div className="relative">
+            <input
+              type={isPasswordShow ? "text" : "password"}
+              className="w-full my-3 p-3 bg-gray-700 text-white rounded-lg"
+              {...register("password", { required: true })}
+              aria-invalid={errors.password ? "true" : "false"}
+              placeholder="Enter your password"
+              autoComplete="new-password"
+            />
+            <span
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 h-4 w-4 text-white/60"
+              onClick={handleEyeClick}
+            >
+              {isPasswordShow ? <FaRegEyeSlash /> : <FaRegEye />}
+            </span>
+            {errors.password?.type === "required" && (
+              <p className="text-[#d9232e]" role="alert">
+                Password is required
+              </p>
+            )}
+          </div>
           <button
             type="submit"
             className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
           >
             Sign In
           </button>
-          <p className="text-white text-sm mt-3">Created with 💖 by <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span> - All Right Reserved.</p>
+          <p className="text-white text-sm mt-3">
+            Created with 💖 by{" "}
+            <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span>{" "}
+            - All Right Reserved.
+          </p>
           <div className="pt-4">
             <span className="text-white">
               New to Netflix?{" "}

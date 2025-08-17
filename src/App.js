@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
     <Provider store={appStore}>
-      <div className="bg-black">
+      <div className="bg-black select-none">
         <Body />
         <ToastContainer closeOnClick={true}/>
       </div>

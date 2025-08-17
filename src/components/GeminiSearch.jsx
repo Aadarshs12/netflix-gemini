@@ -1,8 +1,8 @@
-import GptMovieSuggetions from "./GptMovieSuggetions";
-import GptSearchBar from "./GptSearchBar";
+import GeminiMovieSuggetions from "./GeminiMovieSuggetions";
+import GeminiSearchBar from "./GeminiSearchBar";
 import { Login_Banner2 } from "../utils/constant";
 
-const GptSearch = () => {
+const GeminiSearch = () => {
   return (
     <>
       <div className="absolute h-screen w-full inset-0 -z-10">
@@ -12,10 +12,10 @@ const GptSearch = () => {
           alt="bg-imag"
         />
       </div>
-      <GptSearchBar />
-      <GptMovieSuggetions />
+      <GeminiSearchBar />
+      <GeminiMovieSuggetions />
     </>
   );
 };
 
-export default GptSearch;
+export default GeminiSearch;
