@@ -1,9 +1,13 @@
 import { FaPlay } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
+import { Dialog, DialogPanel } from "@headlessui/react";
+import { useState } from "react";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { IMG_CDN_URL2 } from "../utils/constant";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
+import { IoIosCloseCircle } from "react-icons/io";
+import useMovieTrailer from "../hooks/useMovieTrailor";
 
 const VideoTitle = ({
   original_title,
@@ -12,9 +16,12 @@ const VideoTitle = ({
   vote_average,
   genre_ids,
   overview,
+  id,
 }) => {
+  const trailorVideo = useSelector((store) => store.movies?.trailorVideo);
+  const [isOpen, setIsOpen] = useState(false);
   const genreList = useSelector((store) => store.genre?.genreList);
-
+  useMovieTrailer(id);
   const getGenres = (genre_ids = [], genreList = []) => {
     if (!Array.isArray(genre_ids) || !Array.isArray(genreList)) return [];
     console.log("genre_ids:", genre_ids);
@@ -38,9 +45,40 @@ const VideoTitle = ({
       </p>
 
       <div className="flex gap-4 md:gap-6 items-center">
-        <button className="bg-white py-2 px-4 md:px-8 flex gap-1 items-center text-black rounded-lg hover:bg-opacity-70 transition">
+        <button
+          className="bg-white py-2 px-4 md:px-8 flex gap-1 items-center text-black rounded-lg hover:bg-opacity-70 transition"
+          onClick={() => setIsOpen(true)}
+        >
           <FaPlay /> Play
         </button>
+        <Dialog
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          className="fixed inset-0 z-50"
+        >
+          <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center">
+            <DialogPanel className="relative w-full h-full bg-black">
+              {/* Close Button (top-right) */}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="absolute  text-5xl top-6 right-4 bg-[#302e2e9d] rounded-full text-[#d9232e] hover:text-red-800 focus:outline-none"
+                aria-label="Close"
+              >
+                <IoIosCloseCircle />
+              </button>
+
+              <div className="w-full h-full">
+                <iframe
+                  className="w-full aspect-video"
+                  src={`https://www.youtube.com/embed/${trailorVideo?.key}?&playlist=${trailorVideo?.key}&controls=1`}
+                  title="youtube-video"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </DialogPanel>
+          </div>
+        </Dialog>
 
         <Popover className="relative">
           {({ open }) => (

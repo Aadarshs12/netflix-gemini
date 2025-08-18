@@ -8,7 +8,8 @@ const MainContainer = () => {
   if (!movies) return;
 
   const mainMovie = movies[0];
-
+  console.log(mainMovie);
+  
 
   const {
     original_title,
@@ -29,6 +30,7 @@ const MainContainer = () => {
         original_title={original_title}
         genre_ids={genre_ids}
         overview={overview}
+        id={id}
       />
       <VideoBackground id={id} />
     </div>

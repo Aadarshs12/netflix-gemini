@@ -126,7 +126,7 @@ const Login = () => {
               autoComplete="new-password"
             />
             <span
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 h-4 w-4 text-white/60"
+              className="absolute top-1/2 right-4 cursor-pointer transform -translate-y-1/2 h-4 w-4 text-white/60"
               onClick={handleEyeClick}
             >
               {isPasswordShow ? <FaRegEyeSlash /> : <FaRegEye />}
@@ -187,7 +187,7 @@ const Login = () => {
               autoComplete="new-password"
             />
             <span
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 h-4 w-4 text-white/60"
+              className="absolute top-1/2 right-4 cursor-pointer transform -translate-y-1/2 h-4 w-4 text-white/60"
               onClick={handleEyeClick}
             >
               {isPasswordShow ? <FaRegEyeSlash /> : <FaRegEye />}
