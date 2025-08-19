@@ -58,10 +58,9 @@ const VideoTitle = ({
         >
           <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center">
             <DialogPanel className="relative w-full h-full bg-black">
-              {/* Close Button (top-right) */}
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute  text-5xl top-6 right-4 bg-[#302e2e9d] rounded-full text-[#d9232e] hover:text-red-800 focus:outline-none"
+                className="absolute  text-5xl top-6 right-4 bg-[#302e2e9d] rounded-full text-[#fff] hover:text-[#d9232e] focus:outline-none"
                 aria-label="Close"
               >
                 <IoIosCloseCircle />
