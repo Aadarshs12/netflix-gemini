@@ -5,13 +5,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO, SupportedLanguage } from "../utils/constant";
+import { SupportedLanguage } from "../utils/constant";
 import { toggleGeminiSearchView } from "../utils/geminiSlice";
 import { changeLang } from "../utils/languageSlice";
 import { Select } from "@headlessui/react";
 import { FaChevronDown } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import Logo1 from "../utils/netflix-gemini-horizonal-logo.PNG"
+import Logo1 from "../utils/netflix-gemini-newlogo.PNG";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -47,7 +47,6 @@ const Header = () => {
       }
     });
 
-    // Cleanup subscription on component unmount
     return () => unsubscribe();
   }, [dispatch, navigate]);
 
@@ -58,7 +57,7 @@ const Header = () => {
   return (
     <div className="absolute flex w-full justify-between items-center z-20 h-fit inset-0 bg-gradient-to-b from-black px-8 py-2">
       <Link to="/browse">
-        <img className="w-72 object-cover" src={Logo1} alt="logo" />
+        <img className="w-64 object-cover" src={Logo1} alt="logo" />
       </Link>
       {location.pathname !== "/" && (
         <div className="flex items-center gap-3">
