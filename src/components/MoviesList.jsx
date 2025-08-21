@@ -17,10 +17,10 @@ const MoviesList = ({ title, movies, property }) => {
         spaceBetween={10}
         slidesPerView={8}
         loop={true}
-        // autoplay={{
-        //   delay: 3000,
-        //   disableOnInteraction: false,
-        // }}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
         navigation
         breakpoints={{
           320: {
