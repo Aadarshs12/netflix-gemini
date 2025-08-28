@@ -15,10 +15,11 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   background-color: #2b3d5ad3;
   padding: 25px;
   border-radius: 50%;
-  /* border: 2px solid #d9232e; */
   display: grid;
   place-content: center;
-  /* box-shadow: 1px 1px 4px #d9232e; */
+  &:hover,&:active{
+    color: #d9232e !important;
+  }
 }
 .swiper-pagination {
   position: unset !important;
