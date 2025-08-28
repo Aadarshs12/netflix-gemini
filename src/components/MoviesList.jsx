@@ -11,7 +11,7 @@ const MoviesList = ({ title, movies, property }) => {
   if(!movies) return null;
   return (
     <div className={`py-6 px-10 relative z-20 ${property}`}>
-      <h2 className="text-white text-3xl mb-3">{title}</h2>
+      <h2 className="text-slate-300 text-3xl mb-3">{title}</h2>
       <Swiper
         modules={[Navigation, Autoplay]}
         spaceBetween={10}
@@ -19,7 +19,8 @@ const MoviesList = ({ title, movies, property }) => {
         loop={true}
         autoplay={{
           delay: 3000,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
+          pauseOnMouseEnter: true,
         }}
         navigation
         breakpoints={{

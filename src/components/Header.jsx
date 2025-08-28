@@ -12,6 +12,8 @@ import { Select } from "@headlessui/react";
 import { FaChevronDown } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import Logo1 from "../utils/netflix-gemini-newlogo.PNG";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -60,7 +62,7 @@ const Header = () => {
         <img className="w-64 object-cover" src={Logo1} alt="logo" />
       </Link>
       {location.pathname !== "/" && (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center mt-3 gap-3">
           {showToggleInformation && (
             <div className="relative">
               <Select
@@ -87,10 +89,30 @@ const Header = () => {
           )}
           <button
             onClick={handleGeminiSearchClick}
-            className="text-[#d9232e] text-base flex items-center gap-2 font-semibold hover:bg-[#374151] bg-[#374151ef] py-1 px-4 rounded-lg"
+            className="text-slate-300 text-base flex items-center gap-2 font-semibold hover:bg-[#374151] bg-[#374151ef] py-1 px-4 rounded-lg"
           >
             {showToggleInformation ? "Go Back" : "Gemini Search"}
           </button>
+          <Menu>
+      <MenuButton className="text-white">My account</MenuButton>
+      <MenuItems anchor="bottom">
+        <MenuItem>
+          <a className="block data-focus:bg-blue-100" href="/settings">
+            Settings
+          </a>
+        </MenuItem>
+        <MenuItem>
+          <a className="block data-focus:bg-blue-100" href="/support">
+            Support
+          </a>
+        </MenuItem>
+        <MenuItem>
+          <a className="block data-focus:bg-blue-100" href="/license">
+            License
+          </a>
+        </MenuItem>
+      </MenuItems>
+    </Menu>
           <img
             className="rounded-sm w-8 h-8"
             src="https://occ-0-3646-3647.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABb7kuX9mKPrFGfvZ0oJ9eMBbFCB7ZhumT7uHIoILp1FtGpeIhybv8zoGgNK76rr7N8bMdhn-kkbRnD6ut8mFLwqYXmdpwCw.png?r=eea"
@@ -98,7 +120,7 @@ const Header = () => {
           />
           <button
             onClick={handleSignOut}
-            className="text-white bg-[#d9232e] rounded-full px-4 py-3 text-xs font-bold"
+            className="text-white bg-[#d9232e] active:bg-red-900 hover:bg-red-700 rounded-full px-4 py-3 text-xs font-bold"
           >
             Sign Out
           </button>

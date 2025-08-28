@@ -1,13 +1,15 @@
-import { FaPlay } from "react-icons/fa6";
+import { FaPlay, FaHeart } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { Dialog, DialogPanel } from "@headlessui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { IMG_CDN_URL2 } from "../utils/constant";
 import dayjs from "dayjs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoIosCloseCircle } from "react-icons/io";
 import useMovieTrailer from "../hooks/useMovieTrailor";
+import YouTube from "react-youtube";
+import { clearTrailerVideo } from "../utils/moviesSlice";
 
 const VideoTitle = ({
   original_title,
@@ -18,20 +20,46 @@ const VideoTitle = ({
   overview,
   id,
 }) => {
-  const trailorVideo = useSelector((store) => store.movies?.trailorVideo);
-  const [isOpen, setIsOpen] = useState(false);
-  const genreList = useSelector((store) => store.genre?.genreList);
+  const dispatch = useDispatch();
   useMovieTrailer(id);
+  const trailorVideo = useSelector((store) => store.movies?.trailers[id]);
+  console.log(trailorVideo, "trailorVideo");
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [iframeKey, setIframeKey] = useState(0);
+  const genreList = useSelector((store) => store.genre?.genreList);
   const getGenres = (genre_ids = [], genreList = []) => {
     if (!Array.isArray(genre_ids) || !Array.isArray(genreList)) return [];
-    console.log("genre_ids:", genre_ids);
-    console.log("genreList:", genreList);
     return genre_ids
       .map((id) => {
         const genre = genreList.find((g) => g.id === id);
         return genre ? genre.name : null;
       })
       .filter(Boolean);
+  };
+
+  useEffect(() => {
+    let timeout;
+    if (!isOpen) {
+      timeout = setTimeout(() => {
+        setIframeKey((prev) => prev + 1);
+        dispatch(clearTrailerVideo(id));
+      }, 300);
+    }
+    return () => clearTimeout(timeout);
+  }, [isOpen, id, dispatch]);
+
+  const youtubeOpts = {
+    height: "100%",
+    width: "100%",
+    playerVars: {
+      autoplay: 1,
+      controls: 1,
+      rel: 0,
+      modestbranding: 1,
+      iv_load_policy: 3,
+      disablekb: 1,
+    },
   };
 
   return (
@@ -46,7 +74,7 @@ const VideoTitle = ({
 
       <div className="flex gap-4 md:gap-6 items-center">
         <button
-          className="bg-white py-2 px-4 md:px-8 flex gap-1 items-center text-black rounded-lg hover:bg-opacity-70 transition"
+          className="bg-[#d9232e] py-2 px-4 md:px-8 flex gap-1 items-center text-white rounded-lg hover:bg-opacity-70 transition"
           onClick={() => setIsOpen(true)}
         >
           <FaPlay /> Play
@@ -67,13 +95,14 @@ const VideoTitle = ({
               </button>
 
               <div className="w-full h-full">
-                <iframe
-                  className="w-full aspect-video"
-                  src={`https://www.youtube.com/embed/${trailorVideo?.key}?&playlist=${trailorVideo?.key}&controls=1`}
-                  title="youtube-video"
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                ></iframe>
+                <YouTube
+                  key={iframeKey}
+                  videoId={trailorVideo?.key}
+                  opts={youtubeOpts}
+                  className="w-full h-full"
+                  iframeClassName="w-full h-full"
+                  title={`Trailer for ${original_title || "Movie"}`}
+                />
               </div>
             </DialogPanel>
           </div>
@@ -82,7 +111,7 @@ const VideoTitle = ({
         <Popover className="relative">
           {({ open }) => (
             <>
-              <PopoverButton className="bg-[#374151] py-2 px-4 md:px-8 flex gap-1 items-center text-black rounded-lg bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
+              <PopoverButton className="bg-[#374151] py-2 px-4 md:px-8 flex gap-1 items-center text-slate-300 rounded-lg bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
                 <FaInfoCircle className="w-5 h-5" />
                 More Info
               </PopoverButton>
@@ -92,7 +121,7 @@ const VideoTitle = ({
                 className={`absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-64 bg-[#000000fa] shadow-lg rounded-lg p-4 transition 
                 ${open ? "opacity-100" : "opacity-0"}`}
               >
-                <div className="text-sm flex flex-col gap-3 text-[#fff] relative z-[99]">
+                <div className="text-sm flex flex-col gap-3 relative z-[99]">
                   <div>
                     <img
                       className="w-full rounded-md object-cover"
@@ -127,6 +156,9 @@ const VideoTitle = ({
             </>
           )}
         </Popover>
+        <button className="flex gap-1 items-center bg-[#374151] py-2 px-4 md:px-8 text-slate-300 rounded-lg bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
+          <FaHeart /> Add to Watch List
+        </button>
       </div>
     </div>
   );
