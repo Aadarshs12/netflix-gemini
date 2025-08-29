@@ -58,11 +58,11 @@ const WatchList = () => {
               <h2 className="text-3xl text-[#d9232e] font-bold">
                 Jurassic World Rebirth
               </h2>
-              <span><FaStarHalfStroke className="inline text-yellow-300" /> 6.4/10</span>
-              <span><FaCalendarAlt className="inline" /> July 1, 2025</span>
+              <span>⭐ 6.4/10</span>
+              <span>📅 July 1, 2025</span>
             </div>
             <p className="text-slate-300">
-              <TiInfo className="inline"/> Five years after the events of Jurassic World
+              <span>ℹ️</span> Five years after the events of Jurassic World
               Dominion, covert operations expert Zora Bennett is contracted to
               lead a skilled team on a top-secret mission to secure genetic
               material from the world's three most massive dinosaurs. When

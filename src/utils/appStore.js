@@ -4,6 +4,7 @@ import { moviesReducer } from "./moviesSlice";
 import { geminiReducer } from "./geminiSlice";
 import { languageReducer } from "./languageSlice";
 import { genreReducer } from "./genreSlice";
+import { watchlistReducer } from "./watchlistSlice";
 const appStore = configureStore({
   reducer: {
     user: userReducer,
@@ -11,6 +12,7 @@ const appStore = configureStore({
     gemini: geminiReducer,
     lang: languageReducer,
     genre:genreReducer,
+    watchlist : watchlistReducer,
   },
 });
 export default appStore;

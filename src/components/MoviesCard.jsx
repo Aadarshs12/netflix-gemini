@@ -8,7 +8,8 @@ import dayjs from "dayjs";
 import { IoIosCloseCircle } from "react-icons/io";
 import useMovieTrailer from "../hooks/useMovieTrailor";
 import { clearTrailerVideo } from "../utils/moviesSlice";
-import YouTube from "react-youtube"; 
+import YouTube from "react-youtube";
+import { toast } from "react-toastify";
 
 const MoviesCard = ({ movie }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const MoviesCard = ({ movie }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPlay, setIsOpenPlay] = useState(false);
   const [iframeKey, setIframeKey] = useState(0);
+  const [addedWatchList, setAddedWatchList] = useState(false);
 
   useMovieTrailer(movie?.id);
 
@@ -48,13 +50,23 @@ const MoviesCard = ({ movie }) => {
     height: "100%",
     width: "100%",
     playerVars: {
-      autoplay: 1, 
+      autoplay: 1,
       controls: 1,
-      rel: 0, 
+      rel: 0,
       modestbranding: 1,
-      iv_load_policy: 3, 
+      iv_load_policy: 3,
       disablekb: 1,
     },
+  };
+
+  const handleAddWatchList = () => {
+    setAddedWatchList(true);
+    toast.success("Added to Watch List!");
+  };
+
+  const handleRemoveWatchList = () => {
+    setAddedWatchList(false);
+    toast.error("Removed from Watch List!");
   };
 
   return (
@@ -85,9 +97,15 @@ const MoviesCard = ({ movie }) => {
             <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4">
               <DialogPanel className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
                 <div className="absolute flex items-center gap-3 top-4 right-4">
-                  <button className="bg-[#2b3d5ad3] hover:text-[#d9232e] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none">
-                    <FaHeart />
-                  </button>
+                  {addedWatchList ? (
+                    <button onClick={handleRemoveWatchList} className="bg-[#2b3d5ad3] text-[#d9232e] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none">
+                      <FaHeart />
+                    </button>
+                  ) : (
+                    <button onClick={handleAddWatchList} className="bg-[#2b3d5ad3] hover:text-[#d9232e] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none">
+                      <FaHeart />
+                    </button>
+                  )}
                   <button
                     onClick={() => setIsOpenPlay(false)}
                     className="bg-[#302e2e9d] text-4xl rounded-full text-slate-300 hover:text-[#d9232e] focus:outline-none z-10"
@@ -122,9 +140,18 @@ const MoviesCard = ({ movie }) => {
           >
             <BsInfoLg />
           </button>
-          <button className="bg-[#2b3d5ad3] hover:text-[#d9232e] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none">
-            <FaHeart />
-          </button>
+          {addedWatchList ? (
+            <button onClick={handleRemoveWatchList} className="bg-[#2b3d5ad3]  text-[#d9232e] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none">
+              <FaHeart />
+            </button>
+          ) : (
+            <button
+              onClick={handleAddWatchList}
+              className="bg-[#2b3d5ad3] hover:text-[#d9232e] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
+            >
+              <FaHeart />
+            </button>
+          )}
         </div>
         <h4 className="text-white m-0 pb-1 text-lg font-bold leading-5 line-clamp-2">
           {movie?.title || "Not Available"}

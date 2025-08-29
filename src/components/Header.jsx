@@ -1,5 +1,5 @@
 import { signOut, onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { auth } from "../utils/firebase";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,13 +12,15 @@ import { Select } from "@headlessui/react";
 import { FaChevronDown } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import Logo1 from "../utils/netflix-gemini-newlogo.PNG";
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-
+import { BsCaretDownFill } from "react-icons/bs";
+import { BsFillHeartFill } from "react-icons/bs";
 
 const Header = () => {
+  const menuRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const [open, setOpen] = useState(false);
   const showToggleInformation = useSelector(
     (store) => store.gemini?.showGeminiSearch
   );
@@ -51,6 +53,20 @@ const Header = () => {
 
     return () => unsubscribe();
   }, [dispatch, navigate]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleGeminiSearchClick = () => {
     dispatch(toggleGeminiSearchView());
@@ -87,37 +103,65 @@ const Header = () => {
               />
             </div>
           )}
-          <button
-            onClick={handleGeminiSearchClick}
-            className="text-slate-300 text-base flex items-center gap-2 font-semibold hover:bg-[#374151] bg-[#374151ef] py-1 px-4 rounded-lg"
-          >
-            {showToggleInformation ? "Go Back" : "Gemini Search"}
-          </button>
-          <Menu>
-      <MenuButton className="text-white">My account</MenuButton>
-      <MenuItems anchor="bottom">
-        <MenuItem>
-          <a className="block data-focus:bg-blue-100" href="/settings">
-            Settings
-          </a>
-        </MenuItem>
-        <MenuItem>
-          <a className="block data-focus:bg-blue-100" href="/support">
-            Support
-          </a>
-        </MenuItem>
-        <MenuItem>
-          <a className="block data-focus:bg-blue-100" href="/license">
-            License
-          </a>
-        </MenuItem>
-      </MenuItems>
-    </Menu>
-          <img
-            className="rounded-sm w-8 h-8"
-            src="https://occ-0-3646-3647.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABb7kuX9mKPrFGfvZ0oJ9eMBbFCB7ZhumT7uHIoILp1FtGpeIhybv8zoGgNK76rr7N8bMdhn-kkbRnD6ut8mFLwqYXmdpwCw.png?r=eea"
-            alt="user"
-          />
+          <div className="mr-2">
+            <Link to={"/watchlist"} className="relative">
+              <span className="text-white text-xl">
+                <BsFillHeartFill />
+              </span>
+              <span className="bg-[#374151ef] text-xs w-4 h-4 -top-2 -right-3 grid place-content-center rounded-full text-white absolute ">
+                0
+              </span>
+            </Link>
+          </div>
+          {location.pathname === "/browse" && (
+            <button
+              onClick={handleGeminiSearchClick}
+              className="text-slate-300 text-base flex items-center gap-2 font-semibold hover:bg-[#374151] bg-[#374151ef] py-1 px-4 rounded-lg"
+            >
+              {showToggleInformation ? "Go Back" : "Gemini Search"}
+            </button>
+          )}
+
+          <div className="relative inline-block text-left" ref={menuRef}>
+            <button
+              onClick={() => setOpen(!open)}
+              className="text-white flex gap-1 items-center"
+            >
+              <div>
+                <img
+                  className="rounded-sm w-8 h-8"
+                  src="https://occ-0-3646-3647.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABb7kuX9mKPrFGfvZ0oJ9eMBbFCB7ZhumT7uHIoILp1FtGpeIhybv8zoGgNK76rr7N8bMdhn-kkbRnD6ut8mFLwqYXmdpwCw.png?r=eea"
+                  alt="user"
+                />
+              </div>{" "}
+              <BsCaretDownFill />
+            </button>
+
+            {open && (
+              <div className="absolute right-0 mt-2 text-slate-300 w-56 origin-top-right rounded-md bg-[#374151ef] dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                <div className="py-1">
+                  <Link
+                    to="/support"
+                    className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
+                  >
+                    View Developer Linkedin
+                  </Link>
+                  <Link
+                    to="/license"
+                    className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
+                  >
+                    View Developer Github
+                  </Link>
+                  <Link
+                    to="/support"
+                    className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
+                  >
+                    View Developer Instagram
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
           <button
             onClick={handleSignOut}
             className="text-white bg-[#d9232e] active:bg-red-900 hover:bg-red-700 rounded-full px-4 py-3 text-xs font-bold"

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .swiper-pagination-bullet {
   background: #f3e8e8 !important;
 }
@@ -104,8 +105,7 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 }
 
 .forWatchListBg {
-  height: 100vh;
-  overflow-y: scroll;
+  height: 100%;
   background-image: radial-gradient(
     circle at center left,
     rgb(46, 46, 46) 0%,
