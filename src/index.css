@@ -176,9 +176,3 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     padding-bottom: 0px !important;
   }
 }
-
-.forGeminiSearch {
-  background: linear-gradient(to right, #2f2a7b, #e2b97f);
-  -webkit-background-clip: text;
-  color: transparent;
-}

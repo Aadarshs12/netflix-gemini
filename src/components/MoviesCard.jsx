@@ -65,13 +65,17 @@ const MoviesCard = ({ movie }) => {
   const handleAddWatchList = () => {
     console.log("Adding movie to watchlist:", movie);
     dispatch(addWatchList(movie));
-    toast.success("Added to Watch List!");
+    toast.success("Added to Watch List!" , {
+      position: 'bottom-right',
+    });
   };
 
   const handleRemoveWatchList = () => {
     console.log("Removing movie with id:", movie.id);
     dispatch(removeWatchList(movie.id));
-    toast.error("Removed from Watch List!");
+    toast.error("Removed from Watch List!", {
+      position : 'bottom-right',
+    });
   };
 
   return (

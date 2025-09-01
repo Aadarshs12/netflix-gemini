@@ -74,7 +74,7 @@ const VideoTitle = ({
 
       <div className="flex gap-4 md:gap-6 items-center">
         <button
-          className="bg-[#d9232e] py-2 px-4 md:px-8 flex gap-1 items-center text-white rounded-lg hover:bg-opacity-70 transition"
+          className="bg-[#d9232e] py-2 px-4 md:px-8 flex gap-1 items-center text-white rounded-full hover:bg-opacity-70 transition"
           onClick={() => setIsOpen(true)}
         >
           <FaPlay /> Play
@@ -111,7 +111,7 @@ const VideoTitle = ({
         <Popover className="relative">
           {({ open }) => (
             <>
-              <PopoverButton className="bg-[#374151] py-2 px-4 md:px-8 flex gap-1 items-center text-slate-300 rounded-lg bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
+              <PopoverButton className="bg-[#374151] py-2 px-4 md:px-8 flex gap-1 items-center text-slate-300 rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
                 <FaInfoCircle className="w-5 h-5" />
                 More Info
               </PopoverButton>
@@ -156,7 +156,7 @@ const VideoTitle = ({
             </>
           )}
         </Popover>
-        <button className="flex gap-1 items-center bg-[#374151] py-2 px-4 md:px-8 text-slate-300 rounded-lg bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
+        <button className="flex gap-1 items-center bg-[#374151] py-2 px-4 md:px-8 text-slate-300 rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
           <FaHeart /> Add to Watch List
         </button>
       </div>
