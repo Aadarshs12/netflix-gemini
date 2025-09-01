@@ -2,9 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .swiper-pagination-bullet {
   background: #f3e8e8 !important;
+}
+
+body {
+  background-image: repeating-linear-gradient(
+      90deg,
+      rgba(217, 35, 46, 0.09019607843137255) 0px,
+      rgba(217, 35, 46, 0.09019607843137255) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(217, 35, 46, 0.09019607843137255) 0px,
+      rgba(217, 35, 46, 0.09019607843137255) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(217, 35, 46, 0.09019607843137255) 0px,
+      rgba(217, 35, 46, 0.09019607843137255) 1px,
+      transparent 1px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(217, 35, 46, 0.09019607843137255) 0px,
+      rgba(217, 35, 46, 0.09019607843137255) 1px,
+      transparent 1px,
+      transparent 10px
+    ),
+    linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0));
 }
 
 span.swiper-pagination-bullet.swiper-pagination-bullet-active {
@@ -18,7 +49,8 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   border-radius: 50%;
   display: grid;
   place-content: center;
-  &:hover,&:active{
+  &:hover,
+  &:active {
     color: #d9232e !important;
   }
 }
@@ -105,31 +137,48 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 }
 
 .forWatchListBg {
-  height: 100%;
-  background-image: radial-gradient(
-    circle at center left,
-    rgb(46, 46, 46) 0%,
-    rgb(46, 46, 46) 6%,
-    rgb(41, 41, 41) 6%,
-    rgb(41, 41, 41) 27%,
-    rgb(36, 36, 36) 27%,
-    rgb(36, 36, 36) 42%,
-    rgb(31, 31, 31) 42%,
-    rgb(31, 31, 31) 63%,
-    rgb(25, 25, 25) 63%,
-    rgb(25, 25, 25) 64%,
-    rgb(20, 20, 20) 64%,
-    rgb(20, 20, 20) 71%,
-    rgb(15, 15, 15) 71%,
-    rgb(15, 15, 15) 100%
-  );
+  background-image: repeating-linear-gradient(
+      90deg,
+      rgba(217, 35, 46, 0.09019607843137255) 0px,
+      rgba(217, 35, 46, 0.09019607843137255) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(217, 35, 46, 0.09019607843137255) 0px,
+      rgba(217, 35, 46, 0.09019607843137255) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(217, 35, 46, 0.09019607843137255) 0px,
+      rgba(217, 35, 46, 0.09019607843137255) 1px,
+      transparent 1px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(217, 35, 46, 0.09019607843137255) 0px,
+      rgba(217, 35, 46, 0.09019607843137255) 1px,
+      transparent 1px,
+      transparent 10px
+    ),
+    linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0));
 }
 
 .forMakingBorderBottom {
   border-bottom: 1px solid #cecece;
   padding-bottom: 30px;
-  &:last-child{
+  &:last-child {
     border-bottom: none;
-  padding-bottom: 0px !important;
+    padding-bottom: 0px !important;
   }
+}
+
+.forGeminiSearch {
+  background: linear-gradient(to right, #2f2a7b, #e2b97f);
+  -webkit-background-clip: text;
+  color: transparent;
 }

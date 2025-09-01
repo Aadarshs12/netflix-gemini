@@ -10,6 +10,7 @@ import useMovieTrailer from "../hooks/useMovieTrailor";
 import { clearTrailerVideo } from "../utils/moviesSlice";
 import YouTube from "react-youtube";
 import { toast } from "react-toastify";
+import { addWatchList, removeWatchList } from "../utils/watchlistSlice";
 
 const MoviesCard = ({ movie }) => {
   const dispatch = useDispatch();
@@ -17,10 +18,12 @@ const MoviesCard = ({ movie }) => {
   const trailorVideo = useSelector(
     (store) => store.movies?.trailers[movie?.id]
   );
+  const watchList = useSelector((store) => store.watchlist?.watchListItems);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPlay, setIsOpenPlay] = useState(false);
   const [iframeKey, setIframeKey] = useState(0);
-  const [addedWatchList, setAddedWatchList] = useState(false);
+
+  const isInWatchList = watchList.some((item) => item.id === movie.id);
 
   useMovieTrailer(movie?.id);
 
@@ -60,12 +63,14 @@ const MoviesCard = ({ movie }) => {
   };
 
   const handleAddWatchList = () => {
-    setAddedWatchList(true);
+    console.log("Adding movie to watchlist:", movie);
+    dispatch(addWatchList(movie));
     toast.success("Added to Watch List!");
   };
 
   const handleRemoveWatchList = () => {
-    setAddedWatchList(false);
+    console.log("Removing movie with id:", movie.id);
+    dispatch(removeWatchList(movie.id));
     toast.error("Removed from Watch List!");
   };
 
@@ -97,12 +102,18 @@ const MoviesCard = ({ movie }) => {
             <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4">
               <DialogPanel className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
                 <div className="absolute flex items-center gap-3 top-4 right-4">
-                  {addedWatchList ? (
-                    <button onClick={handleRemoveWatchList} className="bg-[#2b3d5ad3] text-[#d9232e] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none">
+                  {isInWatchList ? (
+                    <button
+                      onClick={handleRemoveWatchList}
+                      className="bg-[#2b3d5ad3] text-[#d9232e] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
+                    >
                       <FaHeart />
                     </button>
                   ) : (
-                    <button onClick={handleAddWatchList} className="bg-[#2b3d5ad3] hover:text-[#d9232e] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none">
+                    <button
+                      onClick={handleAddWatchList}
+                      className="bg-[#2b3d5ad3] hover:text-[#d9232e] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
+                    >
                       <FaHeart />
                     </button>
                   )}
@@ -140,8 +151,11 @@ const MoviesCard = ({ movie }) => {
           >
             <BsInfoLg />
           </button>
-          {addedWatchList ? (
-            <button onClick={handleRemoveWatchList} className="bg-[#2b3d5ad3]  text-[#d9232e] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none">
+          {isInWatchList ? (
+            <button
+              onClick={handleRemoveWatchList}
+              className="bg-[#2b3d5ad3] text-[#d9232e] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
+            >
               <FaHeart />
             </button>
           ) : (
@@ -188,7 +202,7 @@ const MoviesCard = ({ movie }) => {
                 />
                 <div className="absolute z-10 items-center right-2 bottom-2">
                   <button
-                    className="bg-[#d9232e]  text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
+                    className="bg-[#d9232e] text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
                     onClick={handlePlayInsideInfo}
                     disabled={!trailorVideo?.key}
                   >

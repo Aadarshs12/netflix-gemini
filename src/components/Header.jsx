@@ -25,6 +25,8 @@ const Header = () => {
     (store) => store.gemini?.showGeminiSearch
   );
 
+  const watchlist = useSelector((store)=> store.watchlist?.watchListItems);
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -109,18 +111,30 @@ const Header = () => {
                 <BsFillHeartFill />
               </span>
               <span className="bg-[#374151ef] text-xs w-4 h-4 -top-2 -right-3 grid place-content-center rounded-full text-white absolute ">
-                0
+                {watchlist.length}
               </span>
             </Link>
           </div>
-          {location.pathname === "/browse" && (
-            <button
-              onClick={handleGeminiSearchClick}
-              className="text-slate-300 text-base flex items-center gap-2 font-semibold hover:bg-[#374151] bg-[#374151ef] py-1 px-4 rounded-lg"
-            >
-              {showToggleInformation ? "Go Back" : "Gemini Search"}
-            </button>
-          )}
+         {location.pathname === "/browse" && (
+  <button
+    onClick={handleGeminiSearchClick}
+    className="text-base forGeminiSearch flex items-center gap-2 font-semibold hover:bg-[#374151] bg-[#374151ef] py-1 px-4 rounded-lg"
+  >
+    <span
+      style={{
+        background: 'linear-gradient(45deg, #4285F4 0%, #E975A8 100%)', // Gradient for the text
+        WebkitBackgroundClip: 'text',  // Ensures gradient is applied to the text
+        color: 'transparent',  // Makes the text transparent so the gradient shows
+        display: 'inline-block',  // Ensures the span behaves like text and takes up proper space
+      }}
+    >
+      {showToggleInformation ? "Go Back" : "Gemini Search"}
+    </span>
+  </button>
+)}
+
+
+
 
           <div className="relative inline-block text-left" ref={menuRef}>
             <button
