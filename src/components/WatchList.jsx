@@ -6,16 +6,9 @@ import { IMG_CDN_URL2 } from "../utils/constant";
 import watchlistimg from "../utils/watchlist.png";
 import { removeWatchList } from "../utils/watchlistSlice";
 import { toast } from "react-toastify";
-import { FaPlay } from "react-icons/fa";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import YouTube from "react-youtube";
-import { useState } from "react";
-import { IoIosCloseCircle } from "react-icons/io";
-const [iframeKey, setIframeKey] = useState(0);
 
 const WatchList = () => {
   const dispatch = useDispatch();
-  const [isOpenPlay, setIsOpenPlay] = useState(false);
   const watchlist =
     useSelector((store) => store.watchlist?.watchListItems) || [];
   const genreList = useSelector((store) => store.genre?.genreList) || [];
@@ -42,8 +35,6 @@ const WatchList = () => {
       position: "bottom-right",
     });
   };
-
-  const handlePlayInsideInfo = () => {};
 
   return (
     <>
@@ -79,7 +70,7 @@ const WatchList = () => {
                 key={item?.id}
                 className="text-white mx-8 forMakingBorderBottom pt-10 flex items-end gap-5"
               >
-                <div className="w-1/3 relative">
+                <div className="w-1/3">
                   <img
                     className="w-full rounded-md object-cover"
                     src={
@@ -89,50 +80,6 @@ const WatchList = () => {
                     }
                     alt={item?.original_title || "Movie"}
                   />
-                  <div className="absolute z-10 items-center right-2 bottom-2">
-                    <button
-                      className="bg-[#d9232e] text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
-                      onClick={() => setIsOpenPlay(true)}
-                      disabled={!trailorVideo?.key}
-                    >
-                      <FaPlay />
-                    </button>
-                    <Dialog
-                      open={isOpenPlay}
-                      onClose={() => setIsOpenPlay(false)}
-                      className="fixed inset-0 z-50"
-                    >
-                      <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4">
-                        <DialogPanel className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
-                          <div className="absolute flex items-center gap-3 top-4 right-4">
-                            <button
-                              onClick={() => setIsOpenPlay(false)}
-                              className="bg-[#302e2e9d] text-4xl rounded-full text-slate-300 hover:text-[#d9232e] focus:outline-none z-10"
-                              aria-label="Close"
-                            >
-                              <IoIosCloseCircle />
-                            </button>
-                          </div>
-                          <div className="w-full aspect-video">
-                            {trailorVideo?.key ? (
-                              <YouTube
-                                key={iframeKey}
-                                videoId={trailorVideo?.key}
-                                opts={youtubeOpts}
-                                className="w-full h-full"
-                                iframeClassName="w-full h-full"
-                                title={`Trailer for ${movie?.title || "Movie"}`}
-                              />
-                            ) : (
-                              <div className="flex items-center justify-center w-full h-full bg-gray-900 text-white">
-                                <p>No trailer available</p>
-                              </div>
-                            )}
-                          </div>
-                        </DialogPanel>
-                      </div>
-                    </Dialog>
-                  </div>
                 </div>
                 <div className="w-2/3 flex flex-col gap-1">
                   <span>{getGenres(item?.genre_ids, genreList)}</span>
