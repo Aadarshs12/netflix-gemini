@@ -12,7 +12,7 @@ import YouTube from "react-youtube";
 import { clearTrailerVideo } from "../utils/moviesSlice";
 
 const VideoTitle = ({
-  original_title,
+  title,
   backdrop_path,
   release_date,
   vote_average,
@@ -63,9 +63,9 @@ const VideoTitle = ({
   };
 
   return (
-    <div className="absolute h-screen top-0 left-0 z-10 w-full pt-32 md:pt-48 px-4 md:px-10 text-white bg-gradient-to-r from-black to-transparent">
-      <h1 className="text-3xl w-4/5 line-clamp-1 md:text-5xl lg:text-6xl font-bold">
-        {original_title}
+    <div className="absolute aspect-video top-0 left-0 z-10 w-full pt-32 md:pt-48 px-4 md:px-10 text-white bg-gradient-to-r from-black to-transparent">
+      <h1 className="text-3xl w-4/5 md:text-5xl leading-8 lg:text-6xl font-bold">
+        {title}
       </h1>
 
       <p className="text-base line-clamp-3 mb-5 text-white text-opacity-75 md:text-lg py-4 md:py-6 w-full md:w-3/4 lg:w-7/12">
@@ -101,7 +101,7 @@ const VideoTitle = ({
                   opts={youtubeOpts}
                   className="w-full h-full"
                   iframeClassName="w-full h-full"
-                  title={`Trailer for ${original_title || "Movie"}`}
+                  title={`Trailer for ${title || "Movie"}`}
                 />
               </div>
             </DialogPanel>
@@ -126,12 +126,12 @@ const VideoTitle = ({
                     <img
                       className="w-full rounded-md object-cover"
                       src={IMG_CDN_URL2 + backdrop_path}
-                      alt={original_title}
+                      alt={title}
                     />
                   </div>
 
                   <span>
-                    🎥 <strong>Movie:</strong> {original_title}
+                    🎥 <strong>Movie:</strong> {title}
                   </span>
                   <span>
                     ⭐ <strong>Rating:</strong> {vote_average.toFixed(1)}/10

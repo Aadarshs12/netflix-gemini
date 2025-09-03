@@ -78,7 +78,7 @@ const WatchList = () => {
                         ? IMG_CDN_URL2 + item.backdrop_path
                         : "/path/to/fallback-image.jpg"
                     }
-                    alt={item?.original_title || "Movie"}
+                    alt={item?.title || "Movie"}
                   />
                 </div>
                 <div className="w-2/3 flex flex-col gap-1">

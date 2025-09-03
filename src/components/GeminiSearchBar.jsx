@@ -3,7 +3,7 @@ import lang from "../utils/lang";
 import { useSelector } from "react-redux";
 import { model } from "../utils/geminiai";
 import { useState } from "react";
-import { Login_Banner2 } from "../utils/constant";
+import { API_Options, Login_Banner2 } from "../utils/constant";
 
 const GeminiSearchBar = () => {
   const selectedLanguage = useSelector((store) => store.lang?.lang);
@@ -16,18 +16,36 @@ const GeminiSearchBar = () => {
     formState: { errors },
   } = useForm();
 
+  const searchTMDBMovie = async (movie) => {
+    const data = await fetch(
+      "https://api.themoviedb.org/3/search/movie?query=" +
+        movie +
+        "&include_adult=false&language=en-US&page=1",
+      API_Options
+    );
+    const response = await data.json();
+    return response.results;
+  };
+
   const onSubmit = async (data) => {
     try {
       const result = await model.generateContent(
         "Act as a Movie Recommendation system and suggest some movies for the query : " +
           data.promt +
-          ". only give me names of 5 movies."
+          ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: Gadar, Sholay, Koi Mil Gya, Bahubali, RRR."
       );
 
       const responseText = result.response.text();
       console.log("Gemini Response:", responseText);
-
       setResponse(responseText);
+      const movieArray = responseText.split(",");
+      console.log("movieArray", movieArray);
+
+      const promiseArray = movieArray.map((movie)=> searchTMDBMovie(movie));
+      const tmdbMovieList = await Promise.all(promiseArray);
+      console.log("tmdbMovieList", tmdbMovieList);
+      
+
     } catch (error) {
       console.error("Error:", error);
       setResponse("⚠️ Something went wrong. Please try again.");
@@ -40,7 +58,7 @@ const GeminiSearchBar = () => {
     <section
       style={{
         background: `url(${Login_Banner2}) no-repeat center center / cover`,
-        minHeight : '100vh',
+        minHeight: "100vh",
       }}
     >
       <div className="p-12 lg:w-5/12 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80">

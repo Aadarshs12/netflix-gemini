@@ -8,10 +8,11 @@ const MainContainer = () => {
   if (!movies) return;
 
   const mainMovie = movies[0];
-  
+
+  if (!mainMovie) return null;
 
   const {
-    original_title,
+    title,
     backdrop_path,
     release_date,
     vote_average,
@@ -26,7 +27,7 @@ const MainContainer = () => {
         backdrop_path={backdrop_path}
         vote_average={vote_average}
         release_date={release_date}
-        original_title={original_title}
+        title={title}
         genre_ids={genre_ids}
         overview={overview}
         id={id}

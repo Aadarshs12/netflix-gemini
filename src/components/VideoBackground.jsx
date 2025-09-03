@@ -19,7 +19,7 @@ const VideoBackground = ({ id }) => {
 
 
   return (
-    <div className="w-full h-screen overflow-hidden forBackgroundGradient">
+    <div className="w-full aspect-video overflow-hidden forBackgroundGradient">
       {trailorVideo?.key ? (
         <iframe
           className="w-screen aspect-video"

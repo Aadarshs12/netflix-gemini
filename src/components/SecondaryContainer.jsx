@@ -9,7 +9,7 @@ const SecondaryContainer = () => {
       <MoviesList
         title="Now Playing"
         movies={movies?.nowPlayingMovies}
-        property="-mt-[160px]"
+        property="lg:-mt-[300px]"
       />
       <MoviesList title="Top Rated" movies={movies?.topRatedMovies} />
       <MoviesList title="Popular" movies={movies?.popularMovies} />

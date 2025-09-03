@@ -24,7 +24,6 @@ const useMovieTrailor = (id) => {
 
   useEffect(() => {
     getMovieVideos();
-    // Cleanup: Clear trailer for this movie ID when hook unmounts
     return () => {
       dispatch(clearTrailerVideo(id));
     };

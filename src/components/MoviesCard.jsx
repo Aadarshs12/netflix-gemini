@@ -202,7 +202,7 @@ const MoviesCard = ({ movie }) => {
                       ? IMG_CDN_URL2 + movie.backdrop_path
                       : "/path/to/fallback-image.jpg"
                   }
-                  alt={movie?.original_title || "Movie"}
+                  alt={movie?.title || "Movie"}
                 />
                 <div className="absolute z-10 items-center right-2 bottom-2">
                   <button
@@ -216,7 +216,7 @@ const MoviesCard = ({ movie }) => {
               </div>
               <span>
                 🎥 <strong>Movie:</strong>{" "}
-                {movie?.original_title || "Not Available"}
+                {movie?.title || "Not Available"}
               </span>
               <span className="line-clamp-5">
                 ℹ️ <strong>Overview:</strong>{" "}
