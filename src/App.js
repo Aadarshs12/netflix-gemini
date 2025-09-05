@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import "react-toastify/dist/ReactToastify.css";
+
 const App = () => {
   return (
     <Provider store={appStore}>

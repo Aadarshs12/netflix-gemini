@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import lang from "../utils/lang";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { model } from "../utils/geminiai";
 import { useState } from "react";
 import { API_Options, Login_Banner2 } from "../utils/constant";
+import { addtmdbSearchData } from "../utils/tmdbSearchSlice";
 
 const GeminiSearchBar = () => {
+  const dispatch = useDispatch();
   const selectedLanguage = useSelector((store) => store.lang?.lang);
   const [response, setResponse] = useState("");
 
@@ -20,7 +22,7 @@ const GeminiSearchBar = () => {
     const data = await fetch(
       "https://api.themoviedb.org/3/search/movie?query=" +
         movie +
-        "&include_adult=false&language=en-US&page=1",
+        "&language=en-US&page=1",
       API_Options
     );
     const response = await data.json();
@@ -41,11 +43,10 @@ const GeminiSearchBar = () => {
       const movieArray = responseText.split(",");
       console.log("movieArray", movieArray);
 
-      const promiseArray = movieArray.map((movie)=> searchTMDBMovie(movie));
+      const promiseArray = movieArray.map((movie) => searchTMDBMovie(movie));
       const tmdbMovieList = await Promise.all(promiseArray);
       console.log("tmdbMovieList", tmdbMovieList);
-      
-
+      dispatch(addtmdbSearchData(tmdbMovieList));
     } catch (error) {
       console.error("Error:", error);
       setResponse("⚠️ Something went wrong. Please try again.");
@@ -94,7 +95,7 @@ const GeminiSearchBar = () => {
           </button>
         </form>
         {response && (
-          <div className="mt-6 p-4 max-h-40 overflow-y-scroll bg-gray-800 rounded-lg text-white whitespace-pre-wrap">
+          <div className="mt-6 p-4 bg-gray-800 rounded-lg text-white whitespace-pre-wrap">
             <h2 className="text-xl font-semibold mb-2">Response:</h2>
             <p>{response}</p>
           </div>

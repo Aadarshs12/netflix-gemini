@@ -3,6 +3,8 @@ import MoviesList from "./MoviesList";
 
 const SecondaryContainer = () => {
   const movies = useSelector((store) => store.movies);
+  console.log("movies", movies);
+  
 
   return (
     <div>

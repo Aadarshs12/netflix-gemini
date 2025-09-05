@@ -5,7 +5,7 @@ import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
 import useTopRatedMovies from "../hooks/useTopRatedMovies";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
-import GptSearch from "./GeminiSearch";
+import GeminiSearch from "./GeminiSearch";
 import useGenresName from "../hooks/useGenresName";
 import { useSelector } from "react-redux";
 
@@ -20,7 +20,7 @@ const Browse = () => {
     <div>
       <Header />
       {showGeminiSearch ? (
-        <GptSearch />
+        <GeminiSearch />
       ) : (
         <>
           {" "}

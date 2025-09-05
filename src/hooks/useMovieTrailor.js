@@ -31,7 +31,7 @@ const useMovieTrailor = (id) => {
 
   useEffect(() => {
     if (data) {
-      const filterData = data.filter((video) => video.type === "Trailer") || [];
+      const filterData = data.filter((video) => video.type === 'Trailer' && video.site === 'YouTube') || [];
       const trailer = filterData.length ? filterData[0] : data.length ? data[0] : null;
       dispatch(addTrailorVideo({ movieId: id, trailer }));
     }
