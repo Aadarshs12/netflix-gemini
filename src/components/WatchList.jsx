@@ -6,6 +6,7 @@ import { IMG_CDN_URL2 } from "../utils/constant";
 import watchlistimg from "../utils/watchlist.png";
 import { removeWatchList } from "../utils/watchlistSlice";
 import { toast } from "react-toastify";
+import posterbackdrop from "../utils/notfoundposterbackdrop.WEBP";
 
 const WatchList = () => {
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ const WatchList = () => {
                     src={
                       item?.backdrop_path
                         ? IMG_CDN_URL2 + item.backdrop_path
-                        : "/path/to/fallback-image.jpg"
+                        : posterbackdrop
                     }
                     alt={item?.title || "Movie"}
                   />

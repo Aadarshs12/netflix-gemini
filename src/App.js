@@ -1,4 +1,3 @@
-import React from "react";
 import Body from "./components/Body";
 import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
@@ -8,9 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
     <Provider store={appStore}>
-      <div className="bg-black select-none">
+      <div className="select-none">
         <Body />
-        <ToastContainer closeOnClick={true}/>
+        <ToastContainer closeOnClick={true} />
       </div>
     </Provider>
   );

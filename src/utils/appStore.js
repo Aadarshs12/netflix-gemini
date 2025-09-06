@@ -6,15 +6,17 @@ import { languageReducer } from "./languageSlice";
 import { genreReducer } from "./genreSlice";
 import { watchlistReducer } from "./watchlistSlice";
 import { tmdbSearchSliceReducer } from "./tmdbSearchSlice";
+
 const appStore = configureStore({
   reducer: {
     user: userReducer,
     movies: moviesReducer,
     gemini: geminiReducer,
     lang: languageReducer,
-    genre:genreReducer,
-    watchlist : watchlistReducer,
-    tmdbSearch : tmdbSearchSliceReducer,
+    genre: genreReducer,
+    watchlist: watchlistReducer,
+    tmdbSearch: tmdbSearchSliceReducer,
   },
 });
+
 export default appStore;

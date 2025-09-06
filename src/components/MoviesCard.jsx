@@ -1,22 +1,28 @@
-import { IMG_CDN_URL, IMG_CDN_URL2 } from '../utils/constant';
-import { useSelector, useDispatch } from 'react-redux';
-import { FaPlay, FaHeart } from 'react-icons/fa';
-import { BsInfoLg } from 'react-icons/bs';
-import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
-import { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
-import { IoIosCloseCircle } from 'react-icons/io';
-import useMovieTrailor from '../hooks/useMovieTrailor'; // Corrected import
-import { clearTrailerVideo } from '../utils/moviesSlice';
-import YouTube from 'react-youtube';
-import { toast } from 'react-toastify';
-import { addWatchList, removeWatchList } from '../utils/watchlistSlice';
+import { IMG_CDN_URL, IMG_CDN_URL2 } from "../utils/constant";
+import { useSelector, useDispatch } from "react-redux";
+import { FaPlay, FaHeart } from "react-icons/fa";
+import { BsInfoLg } from "react-icons/bs";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { useState, useEffect } from "react";
+import dayjs from "dayjs";
+import { IoIosCloseCircle } from "react-icons/io";
+import useMovieTrailor from "../hooks/useMovieTrailor"; 
+import { clearTrailerVideo } from "../utils/moviesSlice";
+import YouTube from "react-youtube";
+import { toast } from "react-toastify";
+import { addWatchList, removeWatchList } from "../utils/watchlistSlice";
+import poster from "../utils/notfoundposter.WEBP";
+import posterbackdrop from "../utils/notfoundposterbackdrop.WEBP";
 
 const MoviesCard = ({ movie }) => {
   const dispatch = useDispatch();
   const genreList = useSelector((store) => store.genre?.genreList || []);
-  const trailorVideo = useSelector((store) => store.movies?.trailers[movie?.id]);
-  const watchList = useSelector((store) => store.watchlist?.watchListItems || []);
+  const trailorVideo = useSelector(
+    (store) => store.movies?.trailers[movie?.id]
+  );
+  const watchList = useSelector(
+    (store) => store.watchlist?.watchListItems || []
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPlay, setIsOpenPlay] = useState(false);
 
@@ -25,7 +31,7 @@ const MoviesCard = ({ movie }) => {
   useMovieTrailor(movie?.id);
 
   useEffect(() => {
-    console.log('MovieCard - Movie ID:', movie?.id, 'Trailer:', trailorVideo);
+    console.log("MovieCard - Movie ID:", movie?.id, "Trailer:", trailorVideo);
   }, [movie?.id, trailorVideo]);
 
   const handlePlayInsideInfo = () => {
@@ -33,7 +39,9 @@ const MoviesCard = ({ movie }) => {
       setIsOpen(false);
       setIsOpenPlay(true);
     } else {
-      toast.warn('No trailer available for this movie', { position: 'bottom-right' });
+      toast.warn("No trailer available for this movie", {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -54,8 +62,8 @@ const MoviesCard = ({ movie }) => {
   };
 
   const youtubeOpts = {
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%",
     playerVars: {
       autoplay: 1,
       controls: 1,
@@ -68,24 +76,20 @@ const MoviesCard = ({ movie }) => {
 
   const handleAddWatchList = () => {
     dispatch(addWatchList(movie));
-    toast.success('Added to Watch List!', { position: 'bottom-right' });
+    toast.success("Added to Watch List!", { position: "bottom-right" });
   };
 
   const handleRemoveWatchList = () => {
     dispatch(removeWatchList(movie.id));
-    toast.error('Removed from Watch List!', { position: 'bottom-right' });
+    toast.error("Removed from Watch List!", { position: "bottom-right" });
   };
 
   return (
     <div className="forMovieCard relative overflow-visible">
       <img
         className="rounded-lg"
-        src={
-          movie?.poster_path
-            ? IMG_CDN_URL + movie.poster_path
-            : '/path/to/fallback-image.jpg'
-        }
-        alt={movie?.title || 'Movie'}
+        src={movie?.poster_path ? IMG_CDN_URL + movie.poster_path : poster}
+        alt={movie?.title || "Movie"}
       />
       <div className="hoverOnMovieCard p-3 flex flex-col gap-1">
         <div className="flex flex-col-reverse gap-3 items-start">
@@ -101,7 +105,7 @@ const MoviesCard = ({ movie }) => {
             onClose={() => setIsOpenPlay(false)}
             className="fixed inset-0 z-50"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4">
+            <div className="fixed inset-0 bg-opacity-80 flex items-center justify-center p-4">
               <DialogPanel className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
                 <div className="absolute flex items-center gap-3 top-4 right-4">
                   {isInWatchList ? (
@@ -134,7 +138,7 @@ const MoviesCard = ({ movie }) => {
                       opts={youtubeOpts}
                       className="w-full h-full"
                       iframeClassName="w-full h-full"
-                      title={`Trailer for ${movie?.title || 'Movie'}`}
+                      title={`Trailer for ${movie?.title || "Movie"}`}
                     />
                   ) : (
                     <div className="flex items-center justify-center w-full h-full bg-gray-900 text-white">
@@ -169,7 +173,7 @@ const MoviesCard = ({ movie }) => {
           )}
         </div>
         <h4 className="text-white m-0 pb-1 text-lg font-bold leading-5 line-clamp-2">
-          {movie?.title || 'Not Available'}
+          {movie?.title || "Not Available"}
         </h4>
       </div>
 
@@ -196,10 +200,10 @@ const MoviesCard = ({ movie }) => {
                   className="w-full rounded-md object-cover"
                   src={
                     movie?.backdrop_path
-                      ? IMG_CDN_URL2 + movie.backdrop_path
-                      : '/path/to/fallback-image.jpg'
+                      ? IMG_CDN_URL2 + movie?.backdrop_path
+                      : posterbackdrop
                   }
-                  alt={movie?.title || 'Movie'}
+                  alt={movie?.title || "Movie"}
                 />
                 <div className="absolute z-10 items-center right-2 bottom-2">
                   <button
@@ -212,25 +216,26 @@ const MoviesCard = ({ movie }) => {
                 </div>
               </div>
               <span>
-                🎥 <strong>Movie:</strong> {movie?.title || 'Not Available'}
+                🎥 <strong>Movie:</strong> {movie?.title || "Not Available"}
               </span>
               <span className="line-clamp-5">
-                ℹ️ <strong>Overview:</strong> {movie?.overview || 'Not Available'}
+                ℹ️ <strong>Overview:</strong>{" "}
+                {movie?.overview || "Not Available"}
               </span>
               <span>
-                ⭐ <strong>Rating:</strong>{' '}
-                {movie?.vote_average ? movie.vote_average.toFixed(1) : 'N/A'}/10
+                ⭐ <strong>Rating:</strong>{" "}
+                {movie?.vote_average ? movie.vote_average.toFixed(1) : "N/A"}/10
               </span>
               <span>
-                🎬 <strong>Genre:</strong>{' '}
-                {getGenres(movie?.genre_ids, genreList).join(', ') ||
-                  'Not Available'}
+                🎬 <strong>Genre:</strong>{" "}
+                {getGenres(movie?.genre_ids, genreList).join(", ") ||
+                  "Not Available"}
               </span>
               <span>
-                📅 <strong>Release:</strong>{' '}
+                📅 <strong>Release:</strong>{" "}
                 {movie?.release_date
-                  ? dayjs(movie.release_date).format('MMMM D, YYYY')
-                  : 'Not Available'}
+                  ? dayjs(movie.release_date).format("MMMM D, YYYY")
+                  : "Not Available"}
               </span>
             </div>
           </DialogPanel>

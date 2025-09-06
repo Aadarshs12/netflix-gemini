@@ -1,3 +1,4 @@
+// components/GeminiMovieSuggetions.jsx
 import { useSelector } from "react-redux";
 import MoviesList from "../components/MoviesList";
 
@@ -8,25 +9,29 @@ const GeminiMovieSuggetions = () => {
   console.log("search", tmdbSearchData);
 
   const allMovies = tmdbSearchData
-    ? tmdbSearchData
-        .flat()
-        .filter((movie) => movie !== null && movie !== undefined)
+    ? Array.from(
+        new Map(
+          tmdbSearchData
+            .flat()
+            .filter((movie) => movie !== null && movie !== undefined)
+            .map((movie) => [movie.id, movie])
+        ).values()
+      )
     : [];
 
-  console.log("allMovies", allMovies);
+  console.log(
+    "allMovies",
+    allMovies.map((m) => m.id)
+  );
 
   return (
     <>
-      {tmdbSearchData === null ? (
-        <p>Loading movies...</p>
-      ) : allMovies.length > 0 ? (
+      {tmdbSearchData !== null && allMovies.length > 0 && (
         <MoviesList
           title="Related Search"
-          property="lg:-mt-[150px]"
-          movies={allMovies.filter((item) => item?.backdrop_path)}
+          property="lg:-mt-[100px]"
+          movies={allMovies}
         />
-      ) : (
-        <p>No movies found.</p>
       )}
     </>
   );

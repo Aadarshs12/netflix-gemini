@@ -7,35 +7,7 @@
 }
 
 body {
-  background-image: repeating-linear-gradient(
-      90deg,
-      rgba(217, 35, 46, 0.09019607843137255) 0px,
-      rgba(217, 35, 46, 0.09019607843137255) 1px,
-      transparent 1px,
-      transparent 60px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(217, 35, 46, 0.09019607843137255) 0px,
-      rgba(217, 35, 46, 0.09019607843137255) 1px,
-      transparent 1px,
-      transparent 60px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(217, 35, 46, 0.09019607843137255) 0px,
-      rgba(217, 35, 46, 0.09019607843137255) 1px,
-      transparent 1px,
-      transparent 10px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(217, 35, 46, 0.09019607843137255) 0px,
-      rgba(217, 35, 46, 0.09019607843137255) 1px,
-      transparent 1px,
-      transparent 10px
-    ),
-    linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0));
+  background-image: repeating-linear-gradient(0deg, rgb(16,13,13) 0px, rgb(16,13,13) 1px,transparent 1px, transparent 21px),repeating-linear-gradient(90deg, rgb(16,13,13) 0px, rgb(16,13,13) 1px,transparent 1px, transparent 21px),linear-gradient(90deg, rgb(0,0,0),rgb(0,0,0));
 }
 
 span.swiper-pagination-bullet.swiper-pagination-bullet-active {
@@ -66,36 +38,41 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 
 .forBackgroundGradient {
   position: relative;
+  z-index: 10;
   &::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        180deg,
-        rgba(0, 5, 13, 0.8),
-        rgba(0, 5, 13, 0) 22.78%
-      ),
+    z-index: 10;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgb(0 5 13), rgba(0, 5, 13, 0) 22.78%),
       linear-gradient(
         0deg,
         #00050d,
-        rgba(0, 5, 13, 0.35) 15.68%,
+        rgb(0 5 13) 15.68%,
         rgba(0, 5, 13, 0.05) 23.89%,
         rgba(0, 5, 13, 0) 27.36%
       ),
       radial-gradient(
         83.07% 105.9% at 75.42% 30.21%,
-        rgba(0, 5, 13, 0) 28.66%,
-        rgba(0, 5, 13, 0.9) 100%
+        rgb(0 5 13 / 0%) 28.66%,
+        rgb(0 5 13) 100%
       ),
       radial-gradient(
         91.1% 112.51% at 69.92% -12.5%,
         rgba(0, 5, 13, 0) 76.71%,
-        rgba(0, 5, 13, 0.4) 100%
-      );
+        rgb(0 5 13) 100%
+      ) !important;
     height: 100%;
     width: 100%;
   }
+
+  iframe {
+    position: relative;
+    z-index: 1;
+  }
 }
+
 .forMovieCard {
   position: relative;
   overflow: hidden;
@@ -176,5 +153,3 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     padding-bottom: 0px !important;
   }
 }
-
-

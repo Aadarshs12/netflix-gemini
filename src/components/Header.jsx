@@ -75,7 +75,7 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute flex w-full justify-between items-center z-20 h-fit inset-0 bg-gradient-to-b from-black px-8 py-2">
+    <div className="absolute flex w-full justify-between items-center z-30 h-fit inset-0 bg-gradient-to-b from-black px-8 py-2">
       <Link to="/browse">
         <img className="w-64 object-cover" src={Logo1} alt="logo" />
       </Link>
@@ -105,7 +105,7 @@ const Header = () => {
               />
             </div>
           )}
-          <div className="mr-2">
+          <div className="mx-2">
             <Link to={"/watchlist"} className="relative">
               <span className="text-[#fff] text-xl">
                 <BsFillHeartFill />

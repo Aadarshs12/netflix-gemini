@@ -23,7 +23,6 @@ const Browse = () => {
         <GeminiSearch />
       ) : (
         <>
-          {" "}
           <MainContainer />
           <SecondaryContainer />
         </>
