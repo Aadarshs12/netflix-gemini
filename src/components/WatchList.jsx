@@ -7,12 +7,25 @@ import watchlistimg from "../utils/watchlist.png";
 import { removeWatchList } from "../utils/watchlistSlice";
 import { toast } from "react-toastify";
 import posterbackdrop from "../utils/notfoundposterbackdrop.WEBP";
+import useMovieTrailor from "../hooks/useMovieTrailor";
+import { useState, useEffect } from "react";
+import { FaPlay } from "react-icons/fa";
+import { clearTrailerVideo } from "../utils/moviesSlice";
+import { Dialog, DialogPanel } from "@headlessui/react";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const WatchList = () => {
   const dispatch = useDispatch();
-  const watchlist =
-    useSelector((store) => store.watchlist?.watchListItems) || [];
+  const watchlist = useSelector((store) => store.watchlist?.watchListItems) || [];
   const genreList = useSelector((store) => store.genre?.genreList) || [];
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+  const [isLoadingTrailer, setIsLoadingTrailer] = useState(false);
+  const [isOpenPlay, setIsOpenPlay] = useState(false);
+
+  const { fetchTrailer, error, isFetching } = useMovieTrailor(selectedMovieId);
+  const trailorVideo = useSelector(
+    (store) => store.movies?.trailers[selectedMovieId]
+  );
 
   const getGenres = (genre_ids = [], genreList = []) => {
     if (!Array.isArray(genre_ids) || !Array.isArray(genreList)) return [];
@@ -27,15 +40,61 @@ const WatchList = () => {
     );
   };
 
-  console.log("watchlist", watchlist);
+  console.log("[WatchList] Watchlist:", watchlist, "Selected Movie ID:", selectedMovieId);
 
   const handleRemoveWatchList = (item) => {
-    console.log("Removing movie with id:", item.id);
+    if (!item?.id) {
+      console.error("[WatchList] Invalid movie ID for removal");
+      toast.error("Invalid movie data", { position: "bottom-right" });
+      return;
+    }
+    console.log("[WatchList] Removing movie with id:", item.id);
     dispatch(removeWatchList(item.id));
-    toast.error("Removed from Watch List!", {
-      position: "bottom-right",
-    });
+    toast.error("Removed from Watch List!", { position: "bottom-right" });
   };
+
+  const handlePlayInsideInfo = (item) => {
+    if (!item?.id) {
+      console.error("[WatchList] No movie ID provided");
+      toast.error("Invalid movie data", { position: "bottom-right" });
+      return;
+    }
+    console.log("[WatchList] Play button clicked for movie", item.id);
+    if (selectedMovieId !== item.id) {
+      console.log("[WatchList] Clearing previous trailer for", selectedMovieId);
+      if (selectedMovieId) {
+        dispatch(clearTrailerVideo(selectedMovieId));
+      }
+      setSelectedMovieId(item.id);
+      setIsLoadingTrailer(true);
+      toast.warn("Fetching trailer...", { position: "bottom-right", autoClose: false });
+      fetchTrailer(item.id);
+    } else if (!trailorVideo?.key && !isFetching) {
+      console.log("[WatchList] Retrying fetch for movie", item.id);
+      dispatch(clearTrailerVideo(item.id));
+      setIsLoadingTrailer(true);
+      toast.warn("Fetching trailer...", { position: "bottom-right", autoClose: false });
+      fetchTrailer(item.id);
+    }
+  };
+
+  useEffect(() => {
+    console.log("[WatchList] Movie ID:", selectedMovieId, "Trailer:", trailorVideo, "Error:", error);
+    if (error && selectedMovieId) {
+      console.error("[WatchList] Trailer fetch error for movie", selectedMovieId, ":", error);
+      toast.error(`Failed to fetch trailer for movie ${selectedMovieId}: ${error}`, {
+        position: "bottom-right",
+        autoClose: 5000,
+      });
+      setIsLoadingTrailer(false);
+    }
+    if (trailorVideo?.key && isLoadingTrailer && selectedMovieId) {
+      console.log("[WatchList] Trailer loaded, opening modal for key:", trailorVideo.key);
+      setIsOpenPlay(true);
+      setIsLoadingTrailer(false);
+      toast.dismiss();
+    }
+  }, [trailorVideo, error, selectedMovieId, isLoadingTrailer]);
 
   return (
     <>
@@ -71,7 +130,7 @@ const WatchList = () => {
                 key={item?.id}
                 className="text-white mx-8 forMakingBorderBottom pt-10 flex items-end gap-5"
               >
-                <div className="w-1/3">
+                <div className="w-1/3 relative">
                   <img
                     className="w-full rounded-md object-cover"
                     src={
@@ -81,6 +140,15 @@ const WatchList = () => {
                     }
                     alt={item?.title || "Movie"}
                   />
+                  <div className="absolute z-10 items-center right-2 bottom-2">
+                    <button
+                      className="bg-[#d9232e] text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
+                      onClick={() => handlePlayInsideInfo(item)}
+                      disabled={isFetching || isLoadingTrailer}
+                    >
+                      <FaPlay />
+                    </button>
+                  </div>
                 </div>
                 <div className="w-2/3 flex flex-col gap-1">
                   <span>{getGenres(item?.genre_ids, genreList)}</span>
@@ -115,6 +183,76 @@ const WatchList = () => {
                 </div>
               </div>
             ))}
+            <Dialog
+              open={isOpenPlay}
+              onClose={() => {
+                console.log("[WatchList] Closing trailer modal for movie", selectedMovieId);
+                setIsOpenPlay(false);
+                setSelectedMovieId(null);
+                setIsLoadingTrailer(false);
+                toast.dismiss();
+                if (selectedMovieId) {
+                  dispatch(clearTrailerVideo(selectedMovieId));
+                }
+              }}
+              className="fixed inset-0 z-[1000]"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4">
+                <DialogPanel className="relative w-full max-w-4xl bg-black rounded-lg overflow-visible">
+                  <div className="absolute flex items-center gap-3 top-4 right-4 z-[1001]">
+                    <button
+                      onClick={() => {
+                        console.log("[WatchList] Closing trailer modal for movie", selectedMovieId);
+                        setIsOpenPlay(false);
+                        setSelectedMovieId(null);
+                        setIsLoadingTrailer(false);
+                        toast.dismiss();
+                        if (selectedMovieId) {
+                          dispatch(clearTrailerVideo(selectedMovieId));
+                        }
+                      }}
+                      className="bg-[#302e2e9d] text-4xl rounded-full text-slate-300 hover:text-[#d9232e] focus:outline-none z-[1001]"
+                      aria-label="Close"
+                    >
+                      <IoIosCloseCircle />
+                    </button>
+                  </div>
+                  <div className="w-full h-[400px] md:h-[500px] lg:h-[600px]">
+                    {trailorVideo?.key ? (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${trailorVideo.key}?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1`}
+                        title="trailer"
+                        className="w-full h-full border-0"
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                        onLoad={() => {
+                          console.log("[WatchList] Iframe loaded for", trailorVideo.key);
+                          toast.dismiss();
+                        }}
+                        onError={(err) => console.error("[WatchList] Iframe error:", err)}
+                      ></iframe>
+                    ) : (
+                      <div className="flex items-center justify-center w-full h-full bg-gray-900 text-white">
+                        <div className="text-center">
+                          <p>No trailer available</p>
+                          <button
+                            onClick={() => {
+                              console.log("[WatchList] Retry fetch for movie", selectedMovieId);
+                              setIsLoadingTrailer(true);
+                              toast.warn("Fetching trailer...", { position: "bottom-right", autoClose: false });
+                              fetchTrailer(selectedMovieId);
+                            }}
+                            className="mt-2 bg-red-600 px-4 py-2 rounded"
+                          >
+                            Retry
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </DialogPanel>
+              </div>
+            </Dialog>
           </div>
         )}
       </div>

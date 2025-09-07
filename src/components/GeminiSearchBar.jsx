@@ -57,6 +57,7 @@ const GeminiSearchBar = () => {
 
   return (
     <section
+     className="forGeminiBottomGradient"
       style={{
         background: `url(${Login_Banner2}) no-repeat center center / cover`,
         minHeight: "100vh",

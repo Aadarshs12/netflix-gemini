@@ -6,9 +6,8 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { IoIosCloseCircle } from "react-icons/io";
-import useMovieTrailor from "../hooks/useMovieTrailor"; 
+import useMovieTrailor from "../hooks/useMovieTrailor";
 import { clearTrailerVideo } from "../utils/moviesSlice";
-import YouTube from "react-youtube";
 import { toast } from "react-toastify";
 import { addWatchList, removeWatchList } from "../utils/watchlistSlice";
 import poster from "../utils/notfoundposter.WEBP";
@@ -25,31 +24,71 @@ const MoviesCard = ({ movie }) => {
   );
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPlay, setIsOpenPlay] = useState(false);
+  const [isLoadingTrailer, setIsLoadingTrailer] = useState(false);
+  const { fetchTrailer, error, isFetching } = useMovieTrailor(movie?.id);
 
-  const isInWatchList = watchList.some((item) => item.id === movie.id);
-
-  useMovieTrailor(movie?.id);
+  const isInWatchList =
+    movie?.id && Array.isArray(watchList)
+      ? watchList.some((item) => item?.id === movie.id)
+      : false;
 
   useEffect(() => {
-    console.log("MovieCard - Movie ID:", movie?.id, "Trailer:", trailorVideo);
-  }, [movie?.id, trailorVideo]);
+    console.log(
+      "[MoviesCard] Movie ID:",
+      movie?.id,
+      "Trailer:",
+      trailorVideo,
+      "Error:",
+      error
+    );
+    if (error) {
+      console.error(
+        "[MoviesCard] Trailer fetch error for movie",
+        movie?.id,
+        ":",
+        error
+      );
+      toast.error(`Failed to fetch trailer for movie ${movie?.id}: ${error}`, {
+        position: "bottom-right",
+        autoClose: 5000,
+      });
+      setIsLoadingTrailer(false);
+    }
+    if (trailorVideo?.key && isLoadingTrailer) {
+      console.log(
+        "[MoviesCard] Trailer loaded, opening modal for key:",
+        trailorVideo.key
+      );
+      setIsOpenPlay(true);
+      setIsLoadingTrailer(false);
+      toast.dismiss();
+    }
+  }, [trailorVideo, error, movie?.id, isLoadingTrailer]);
 
   const handlePlayInsideInfo = () => {
+    if (!movie?.id) {
+      console.error("[MoviesCard] No movie ID provided");
+      toast.error("Invalid movie data", { position: "bottom-right" });
+      return;
+    }
+    console.log("[MoviesCard] Play button clicked for movie", movie.id);
     if (trailorVideo?.key) {
+      console.log(
+        "[MoviesCard] Opening trailer modal for key:",
+        trailorVideo.key
+      );
       setIsOpen(false);
       setIsOpenPlay(true);
     } else {
-      toast.warn("No trailer available for this movie", {
+      setIsLoadingTrailer(true);
+      toast.warn("Fetching trailer...", {
         position: "bottom-right",
+        autoClose: false,
       });
+      dispatch(clearTrailerVideo(movie.id));
+      fetchTrailer(movie.id);
     }
   };
-
-  useEffect(() => {
-    if (!isOpenPlay) {
-      dispatch(clearTrailerVideo(movie?.id));
-    }
-  }, [isOpenPlay, movie?.id, dispatch]);
 
   const getGenres = (genre_ids = [], genreList = []) => {
     if (!Array.isArray(genre_ids) || !Array.isArray(genreList)) return [];
@@ -61,53 +100,64 @@ const MoviesCard = ({ movie }) => {
       .filter(Boolean);
   };
 
-  const youtubeOpts = {
-    height: "100%",
-    width: "100%",
-    playerVars: {
-      autoplay: 1,
-      controls: 1,
-      rel: 0,
-      modestbranding: 1,
-      iv_load_policy: 3,
-      disablekb: 1,
-    },
-  };
-
   const handleAddWatchList = () => {
+    if (!movie?.id) {
+      toast.error("Invalid movie data", { position: "bottom-right" });
+      return;
+    }
+    console.log("[MoviesCard] Adding movie to watchlist:", movie.id);
     dispatch(addWatchList(movie));
     toast.success("Added to Watch List!", { position: "bottom-right" });
   };
 
   const handleRemoveWatchList = () => {
+    if (!movie?.id) {
+      toast.error("Invalid movie data", { position: "bottom-right" });
+      return;
+    }
+    console.log("[MoviesCard] Removing movie from watchlist:", movie.id);
     dispatch(removeWatchList(movie.id));
     toast.error("Removed from Watch List!", { position: "bottom-right" });
   };
 
+  if (!movie) {
+    console.error("[MoviesCard] No movie data provided");
+    return null;
+  }
+
   return (
     <div className="forMovieCard relative overflow-visible">
       <img
-        className="rounded-lg"
-        src={movie?.poster_path ? IMG_CDN_URL + movie.poster_path : poster}
-        alt={movie?.title || "Movie"}
+        className="rounded-lg h-60 object-cover w-full"
+        src={movie.poster_path ? IMG_CDN_URL + movie.poster_path : poster}
+        alt={movie.title || "Movie"}
       />
       <div className="hoverOnMovieCard p-3 flex flex-col gap-1">
         <div className="flex flex-col-reverse gap-3 items-start">
           <button
             className="bg-[#d9232e] text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
-            onClick={() => trailorVideo?.key && setIsOpenPlay(true)}
-            disabled={!trailorVideo?.key}
+            onClick={handlePlayInsideInfo}
+            disabled={isFetching || isLoadingTrailer}
           >
             <FaPlay />
           </button>
           <Dialog
             open={isOpenPlay}
-            onClose={() => setIsOpenPlay(false)}
-            className="fixed inset-0 z-50"
+            onClose={() => {
+              console.log(
+                "[MoviesCard] Closing trailer modal for movie",
+                movie.id
+              );
+              setIsOpenPlay(false);
+              setIsLoadingTrailer(false);
+              toast.dismiss();
+              dispatch(clearTrailerVideo(movie.id));
+            }}
+            className="fixed inset-0 z-[1000]"
           >
-            <div className="fixed inset-0 bg-opacity-80 flex items-center justify-center p-4">
-              <DialogPanel className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
-                <div className="absolute flex items-center gap-3 top-4 right-4">
+            <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4">
+              <DialogPanel className="relative w-full max-w-4xl bg-black rounded-lg overflow-visible">
+                <div className="absolute flex flex-col-reverse items-center gap-2 top-4 right-4 z-[1001]">
                   {isInWatchList ? (
                     <button
                       onClick={handleRemoveWatchList}
@@ -124,25 +174,63 @@ const MoviesCard = ({ movie }) => {
                     </button>
                   )}
                   <button
-                    onClick={() => setIsOpenPlay(false)}
-                    className="bg-[#302e2e9d] text-4xl rounded-full text-slate-300 hover:text-[#d9232e] focus:outline-none z-10"
+                    onClick={() => {
+                      console.log(
+                        "[MoviesCard] Closing trailer modal for movie",
+                        movie.id
+                      );
+                      setIsOpenPlay(false);
+                      setIsLoadingTrailer(false);
+                      toast.dismiss();
+                      dispatch(clearTrailerVideo(movie.id));
+                    }}
+                    className="bg-[#302e2e9d] text-4xl rounded-full text-slate-300 hover:text-[#d9232e] focus:outline-none z-[1001]"
                     aria-label="Close"
                   >
                     <IoIosCloseCircle />
                   </button>
                 </div>
-                <div className="w-full aspect-video">
+                <div className="w-full h-[400px] md:h-[500px] lg:h-[600px]">
                   {trailorVideo?.key ? (
-                    <YouTube
-                      videoId={trailorVideo.key}
-                      opts={youtubeOpts}
-                      className="w-full h-full"
-                      iframeClassName="w-full h-full"
-                      title={`Trailer for ${movie?.title || "Movie"}`}
-                    />
+                    <iframe
+                      src={`https://www.youtube.com/embed/${trailorVideo.key}?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1`}
+                      title={`Trailer for ${movie.title || "Movie"}`}
+                      className="w-full h-full border-0"
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
+                      onLoad={() => {
+                        console.log(
+                          "[MoviesCard] Iframe loaded for",
+                          trailorVideo.key
+                        );
+                        toast.dismiss();
+                      }}
+                      onError={(err) =>
+                        console.error("[MoviesCard] Iframe error:", err)
+                      }
+                    ></iframe>
                   ) : (
                     <div className="flex items-center justify-center w-full h-full bg-gray-900 text-white">
-                      <p>No trailer available</p>
+                      <div className="text-center">
+                        <p>No trailer available</p>
+                        <button
+                          onClick={() => {
+                            console.log(
+                              "[MoviesCard] Retry fetch for movie",
+                              movie.id
+                            );
+                            setIsLoadingTrailer(true);
+                            toast.warn("Fetching trailer...", {
+                              position: "bottom-right",
+                              autoClose: false,
+                            });
+                            fetchTrailer(movie.id);
+                          }}
+                          className="mt-2 bg-red-600 px-4 py-2 rounded"
+                        >
+                          Retry
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -173,7 +261,7 @@ const MoviesCard = ({ movie }) => {
           )}
         </div>
         <h4 className="text-white m-0 pb-1 text-lg font-bold leading-5 line-clamp-2">
-          {movie?.title || "Not Available"}
+          {movie.title || "Not Available"}
         </h4>
       </div>
 
@@ -199,41 +287,41 @@ const MoviesCard = ({ movie }) => {
                 <img
                   className="w-full rounded-md object-cover"
                   src={
-                    movie?.backdrop_path
-                      ? IMG_CDN_URL2 + movie?.backdrop_path
+                    movie.backdrop_path
+                      ? IMG_CDN_URL2 + movie.backdrop_path
                       : posterbackdrop
                   }
-                  alt={movie?.title || "Movie"}
+                  alt={movie.title || "Movie"}
                 />
                 <div className="absolute z-10 items-center right-2 bottom-2">
                   <button
                     className="bg-[#d9232e] text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
                     onClick={handlePlayInsideInfo}
-                    disabled={!trailorVideo?.key}
+                    disabled={isFetching || isLoadingTrailer}
                   >
                     <FaPlay />
                   </button>
                 </div>
               </div>
               <span>
-                🎥 <strong>Movie:</strong> {movie?.title || "Not Available"}
+                🎥 <strong>Movie:</strong> {movie.title || "Not Available"}
               </span>
               <span className="line-clamp-5">
                 ℹ️ <strong>Overview:</strong>{" "}
-                {movie?.overview || "Not Available"}
+                {movie.overview || "Not Available"}
               </span>
               <span>
                 ⭐ <strong>Rating:</strong>{" "}
-                {movie?.vote_average ? movie.vote_average.toFixed(1) : "N/A"}/10
+                {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}/10
               </span>
               <span>
                 🎬 <strong>Genre:</strong>{" "}
-                {getGenres(movie?.genre_ids, genreList).join(", ") ||
+                {getGenres(movie.genre_ids, genreList).join(", ") ||
                   "Not Available"}
               </span>
               <span>
                 📅 <strong>Release:</strong>{" "}
-                {movie?.release_date
+                {movie.release_date
                   ? dayjs(movie.release_date).format("MMMM D, YYYY")
                   : "Not Available"}
               </span>

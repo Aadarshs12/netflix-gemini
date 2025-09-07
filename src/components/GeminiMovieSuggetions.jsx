@@ -30,7 +30,7 @@ const GeminiMovieSuggetions = () => {
         <MoviesList
           title="Related Search"
           property="lg:-mt-[100px]"
-          movies={allMovies}
+          movies={allMovies.filter((item)=> item?.backdrop_path)}
         />
       )}
     </>

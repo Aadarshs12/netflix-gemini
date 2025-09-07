@@ -53,3 +53,4 @@ const MoviesList = ({ title, movies, property }) => {
 };
 
 export default MoviesList;
+

@@ -7,7 +7,7 @@
 }
 
 body {
-  background-image: repeating-linear-gradient(0deg, rgb(16,13,13) 0px, rgb(16,13,13) 1px,transparent 1px, transparent 21px),repeating-linear-gradient(90deg, rgb(16,13,13) 0px, rgb(16,13,13) 1px,transparent 1px, transparent 21px),linear-gradient(90deg, rgb(0,0,0),rgb(0,0,0));
+  background-color: #00050d !important;
 }
 
 span.swiper-pagination-bullet.swiper-pagination-bullet-active {
@@ -153,3 +153,26 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     padding-bottom: 0px !important;
   }
 }
+
+
+.forGeminiBottomGradient {
+  position: relative;
+  z-index: 10;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;          
+    height: 30%;       
+    z-index: 10;
+    pointer-events: none;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 5, 13, 0) 0%,   
+        rgb(0 5 13) 100%        
+      ) !important;
+  }
+}
+
