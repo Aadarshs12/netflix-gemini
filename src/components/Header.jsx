@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import Logo1 from "../utils/netflix-gemini-newlogo.PNG";
 import { BsCaretDownFill } from "react-icons/bs";
 import { BsFillHeartFill } from "react-icons/bs";
+import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 const Header = () => {
   const menuRef = useRef(null);
@@ -21,11 +22,11 @@ const Header = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const watchlist = useSelector((store) => store.watchlist?.watchListItems);
   const showToggleInformation = useSelector(
     (store) => store.gemini?.showGeminiSearch
   );
-
-  const watchlist = useSelector((store)=> store.watchlist?.watchListItems);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -64,10 +65,7 @@ const Header = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleGeminiSearchClick = () => {
@@ -75,13 +73,13 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute flex w-full justify-between items-center z-30 h-fit inset-0 bg-gradient-to-b from-black px-8 py-2">
+    <div className="flex w-full absolute top-0 justify-between items-center z-30 h-fit bg-gradient-to-b from-black px-8 py-2">
       <Link to="/browse">
         <img className="w-64 object-cover" src={Logo1} alt="logo" />
       </Link>
       {location.pathname !== "/" && (
         <div className="flex items-center mt-3 gap-3">
-          {showToggleInformation && (
+          {showToggleInformation && location.pathname !== "/watchlist" && (
             <div className="relative">
               <Select
                 name="status"
@@ -110,31 +108,28 @@ const Header = () => {
               <span className="text-[#fff] text-xl">
                 <BsFillHeartFill />
               </span>
-              <span className="bg-[#d9232e] text-xs w-4 p-1 h-4 -top-2 -right-3 grid place-content-center rounded-full text-[#fff] absolute ">
+              <span className="bg-[#d9232e] text-xs w-4 p-1 h-4 -top-2 -right-3 grid place-content-center rounded-full text-[#fff] absolute">
                 {watchlist.length}
               </span>
             </Link>
           </div>
-         {location.pathname === "/browse" && (
-  <button
-    onClick={handleGeminiSearchClick}
-    className="text-sm text-[#fff] flex items-center gap-2 font-semibold py-1 px-4 rounded-lg"
-  >
-    <span
-      style={{
-        background: 'linear-gradient(to right, #4992e8 0%, #4e89ee 30%, #7e7dd3 60%, #ca6676 90%)',
-        padding: '10px 14px',
-        borderRadius: '9999px',
-      }}
-    >
-      {showToggleInformation ? "Go Back" : "Gemini Search"}
-    </span>
-  </button>
-)}
-
-
-
-
+          {location.pathname === "/browse" && (
+            <button
+              onClick={handleGeminiSearchClick}
+              className="text-sm text-[#fff] flex items-center gap-2 font-semibold py-1 px-4 rounded-lg"
+            >
+              <span
+                style={{
+                  background:
+                    "linear-gradient(to right, #4992e8 0%, #4e89ee 30%, #7e7dd3 60%, #ca6676 90%)",
+                  padding: "10px 14px",
+                  borderRadius: "9999px",
+                }}
+              >
+                {showToggleInformation ? "Go Back" : "Gemini Search"}
+              </span>
+            </button>
+          )}
           <div className="relative inline-block text-left" ref={menuRef}>
             <button
               onClick={() => setOpen(!open)}
@@ -146,10 +141,9 @@ const Header = () => {
                   src="https://occ-0-3646-3647.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABb7kuX9mKPrFGfvZ0oJ9eMBbFCB7ZhumT7uHIoILp1FtGpeIhybv8zoGgNK76rr7N8bMdhn-kkbRnD6ut8mFLwqYXmdpwCw.png?r=eea"
                   alt="user"
                 />
-              </div>{" "}
+              </div>
               <BsCaretDownFill />
             </button>
-
             {open && (
               <div className="absolute right-0 mt-2 text-slate-300 w-56 origin-top-right rounded-md bg-[#374151ef] dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                 <div className="py-1">
@@ -157,13 +151,13 @@ const Header = () => {
                     to="/support"
                     className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
                   >
-                    View Developer Linkedin
+                    View Developer LinkedIn
                   </Link>
                   <Link
                     to="/license"
                     className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
                   >
-                    View Developer Github
+                    View Developer GitHub
                   </Link>
                   <Link
                     to="/support"
@@ -175,12 +169,46 @@ const Header = () => {
               </div>
             )}
           </div>
-          <button
-            onClick={handleSignOut}
+          <Button
+            onClick={() => setIsOpen(true)}
             className="text-white bg-[#d9232e] active:bg-red-900 hover:bg-red-700 rounded-full px-4 py-3 text-xs font-bold"
           >
             Sign Out
-          </button>
+          </Button>
+          <Dialog
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+            className="fixed inset-0 z-50"
+          >
+            <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 sm:p-6">
+              <DialogPanel className="w-full max-w-sm sm:max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
+                <DialogTitle
+                  as="h2"
+                  className="text-xl sm:text-xl font-bold text-[#d9232e]"
+                >
+                  Sign Out Your Account
+                </DialogTitle>
+                <p className="mt-2 text-sm text-white font-sans">
+                  Are you sure you want to sign out? Click "Yes" to proceed or
+                  "No" to cancel.
+                </p>
+                <div className="mt-4 flex gap-3">
+                  <Button
+                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-gray-600"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    No
+                  </Button>
+                  <Button
+                    className="inline-flex items-center gap-2 rounded-md bg-red-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-600"
+                    onClick={handleSignOut}
+                  >
+                    Yes, Sign Out
+                  </Button>
+                </div>
+              </DialogPanel>
+            </div>
+          </Dialog>
         </div>
       )}
     </div>

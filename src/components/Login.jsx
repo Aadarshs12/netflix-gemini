@@ -82,11 +82,13 @@ const Login = () => {
     <div className="forLoginBg relative min-h-screen" style={{
             background: `url(${Login_Banner1}) no-repeat center center / cover`,
             minHeight : '100vh',
+            position: 'relative',
+            zIndex:'2',
           }}>
       <Header />
       {newToNetflix ? (
         <form
-          className="p-12 lg:w-4/12 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
+          className="p-12 lg:w-5/12 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
           onSubmit={handleSubmit(onSubmitSignUp)}
         >
           <h1 className="text-3xl font-semibold text-white mb-4">Sign Up</h1>
@@ -125,7 +127,7 @@ const Login = () => {
               className="absolute top-1/2 right-4 cursor-pointer transform -translate-y-1/2 h-4 w-4 text-white/60"
               onClick={handleEyeClick}
             >
-              {isPasswordShow ? <FaRegEye /> : <FaRegEyeSlash />}
+              {isPasswordShow ? <FaRegEyeSlash /> : <FaRegEye />}
             </span>
             {errors.password?.type === "required" && (
               <p className="text-[#d9232e]" role="alert">
@@ -158,7 +160,7 @@ const Login = () => {
         </form>
       ) : (
         <form
-          className="p-12 lg:w-4/12 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
+          className="p-12 lg:w-5/12 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
           onSubmit={handleSubmit(onSubmit)}
         >
           <h1 className="text-3xl font-semibold text-white mb-4">Sign In</h1>

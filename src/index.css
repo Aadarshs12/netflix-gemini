@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+
 .swiper-pagination-bullet {
   background: #f3e8e8 !important;
 }
@@ -143,6 +149,8 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
       transparent 10px
     ),
     linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0));
+    aspect-ratio: 16 / 9 !important;
+  width: 100%;
 }
 
 .forMakingBorderBottom {

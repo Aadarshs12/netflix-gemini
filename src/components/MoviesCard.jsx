@@ -105,7 +105,6 @@ const MoviesCard = ({ movie }) => {
       toast.error("Invalid movie data", { position: "bottom-right" });
       return;
     }
-    console.log("[MoviesCard] Adding movie to watchlist:", movie.id);
     dispatch(addWatchList(movie));
     toast.success("Added to Watch List!", { position: "bottom-right" });
   };
@@ -115,7 +114,6 @@ const MoviesCard = ({ movie }) => {
       toast.error("Invalid movie data", { position: "bottom-right" });
       return;
     }
-    console.log("[MoviesCard] Removing movie from watchlist:", movie.id);
     dispatch(removeWatchList(movie.id));
     toast.error("Removed from Watch List!", { position: "bottom-right" });
   };
@@ -135,7 +133,7 @@ const MoviesCard = ({ movie }) => {
       <div className="hoverOnMovieCard p-3 flex flex-col gap-1">
         <div className="flex flex-col-reverse gap-3 items-start">
           <button
-            className="bg-[#d9232e] text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
+            className="bg-[#d9232e] hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
             onClick={handlePlayInsideInfo}
             disabled={isFetching || isLoadingTrailer}
           >
@@ -260,7 +258,7 @@ const MoviesCard = ({ movie }) => {
             </button>
           )}
         </div>
-        <h4 className="text-white m-0 pb-1 text-lg font-bold leading-5 line-clamp-2">
+        <h4 className="text-white m-0 text-lg font-bold leading-5 line-clamp-2">
           {movie.title || "Not Available"}
         </h4>
       </div>

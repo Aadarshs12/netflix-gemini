@@ -8,6 +8,7 @@ const moviesSlice = createSlice({
     popularMovies: null,
     upcomingMovies: null,
     trailers: {},
+    count: 0,
   },
   reducers: {
     addNowPlayingMovies: (state, action) => {
@@ -24,14 +25,15 @@ const moviesSlice = createSlice({
     },
     addTrailorVideo: (state, action) => {
       const { movieId, trailer } = action.payload;
-      console.log("[moviesSlice] Adding trailer for movie", movieId, ":", trailer);
       state.trailers[movieId] = trailer;
     },
     clearTrailerVideo: (state, action) => {
       const movieId = action.payload;
-      console.log("[moviesSlice] Clearing trailer for movie", movieId);
       delete state.trailers[movieId];
     },
+    addCount : (state, action) => {
+      state.count = action.payload;
+    }
   },
 });
 
@@ -42,6 +44,7 @@ export const {
   addUpcomingMovies,
   addTrailorVideo,
   clearTrailerVideo,
+  addCount,
 } = moviesSlice.actions;
 export default moviesSlice.reducer;
 export const moviesReducer = moviesSlice.reducer;

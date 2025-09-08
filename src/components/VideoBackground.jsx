@@ -20,7 +20,7 @@ const VideoBackground = ({ id }) => {
     }
     console.log("[VideoBackground] Initiating trailer fetch for movie", id);
     setIsLoading(true);
-    dispatch(clearTrailerVideo(id)); // Clear previous trailer
+    dispatch(clearTrailerVideo(id)); 
     fetchTrailer(id);
   }, [id, dispatch, fetchTrailer]);
 
@@ -39,7 +39,7 @@ const VideoBackground = ({ id }) => {
   }, [trailorVideo, error, id]);
 
   if (!id || typeof id !== 'number') {
-    return null; // Prevent rendering if no ID
+    return null; 
   }
 
   return (
