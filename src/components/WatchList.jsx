@@ -142,7 +142,7 @@ const WatchList = () => {
                   />
                   <div className="absolute z-10 items-center right-2 bottom-2">
                     <button
-                      className="bg-[#d9232e] text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
+                      className="bg-[#d9232e] hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
                       onClick={() => handlePlayInsideInfo(item)}
                       disabled={isFetching || isLoadingTrailer}
                     >
