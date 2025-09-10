@@ -194,13 +194,13 @@ const Header = () => {
                 </p>
                 <div className="mt-4 flex gap-3">
                   <Button
-                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-gray-600"
+                    className="inline-flex items-center gap-2 rounded-full bg-gray-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-gray-600"
                     onClick={() => setIsOpen(false)}
                   >
                     No
                   </Button>
                   <Button
-                    className="inline-flex items-center gap-2 rounded-md bg-red-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-600"
+                    className="inline-flex items-center gap-2 rounded-full bg-red-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-600"
                     onClick={handleSignOut}
                   >
                     Yes, Sign Out

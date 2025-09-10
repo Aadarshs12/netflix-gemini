@@ -9,6 +9,7 @@ const moviesSlice = createSlice({
     upcomingMovies: null,
     trailers: {},
     count: 0,
+    credits: {}, // Changed from null to object
   },
   reducers: {
     addNowPlayingMovies: (state, action) => {
@@ -31,9 +32,13 @@ const moviesSlice = createSlice({
       const movieId = action.payload;
       delete state.trailers[movieId];
     },
-    addCount : (state, action) => {
+    addCount: (state, action) => {
       state.count = action.payload;
-    }
+    },
+    addCredits: (state, action) => {
+      const { movieId, credits } = action.payload;
+      state.credits[movieId] = credits; 
+    },
   },
 });
 
@@ -45,6 +50,7 @@ export const {
   addTrailorVideo,
   clearTrailerVideo,
   addCount,
+  addCredits,
 } = moviesSlice.actions;
 export default moviesSlice.reducer;
 export const moviesReducer = moviesSlice.reducer;

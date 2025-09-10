@@ -12,6 +12,14 @@ import { toast } from "react-toastify";
 import { addWatchList, removeWatchList } from "../utils/watchlistSlice";
 import poster from "../utils/notfoundposter.WEBP";
 import posterbackdrop from "../utils/notfoundposterbackdrop.WEBP";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { Fragment } from "react";
+import useCreditsData from "../hooks/useMoviesCredits";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const MoviesCard = ({ movie }) => {
   const dispatch = useDispatch();
@@ -19,6 +27,7 @@ const MoviesCard = ({ movie }) => {
   const trailorVideo = useSelector(
     (store) => store.movies?.trailers[movie?.id]
   );
+  const credits = useSelector((store) => store.movies?.credits[movie?.id]);
   const watchList = useSelector(
     (store) => store.watchlist?.watchListItems || []
   );
@@ -27,20 +36,41 @@ const MoviesCard = ({ movie }) => {
   const [isLoadingTrailer, setIsLoadingTrailer] = useState(false);
   const { fetchTrailer, error, isFetching } = useMovieTrailor(movie?.id);
 
+  useCreditsData(movie?.id);
+
+  useEffect(() => {
+    console.log(`Credits for movie ${movie?.id}:`, credits);
+  }, [credits, movie?.id]);
+
+  const categories = [
+    {
+      name: "Cast",
+      posts:
+        credits?.cast?.slice(0, 5)?.map((member) => ({
+          id: member.id,
+          title: member.name,
+          character: member.character,
+          profile_path: member.profile_path,
+        })) || [],
+    },
+    {
+      name: "Crew",
+      posts:
+        credits?.crew?.slice(0, 5)?.map((member) => ({
+          id: member.id,
+          title: member.name,
+          job: member.job,
+          profile_path: member.profile_path,
+        })) || [],
+    },
+  ];
+
   const isInWatchList =
     movie?.id && Array.isArray(watchList)
       ? watchList.some((item) => item?.id === movie.id)
       : false;
 
   useEffect(() => {
-    console.log(
-      "[MoviesCard] Movie ID:",
-      movie?.id,
-      "Trailer:",
-      trailorVideo,
-      "Error:",
-      error
-    );
     if (error) {
       console.error(
         "[MoviesCard] Trailer fetch error for movie",
@@ -269,8 +299,8 @@ const MoviesCard = ({ movie }) => {
         className="relative z-[1000]"
       >
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <DialogPanel className="w-full max-w-md bg-[#000000fa] shadow-lg rounded-lg p-4">
+        <div className="fixed inset-0 w-full h-full flex items-center justify-center">
+          <DialogPanel className="w-full max-w-full flex flex-col gap-2 max-h-[100vh] bg-[#000000da] shadow-lg rounded-lg p-4 overflow-y-auto">
             <DialogTitle className="text-lg mb-2 flex justify-between items-center font-bold text-white">
               <span>Movie Details</span>
               <button
@@ -280,8 +310,8 @@ const MoviesCard = ({ movie }) => {
                 <IoIosCloseCircle />
               </button>
             </DialogTitle>
-            <div className="text-sm flex flex-col gap-3 text-[#fff]">
-              <div className="relative">
+            <div className="text-sm flex items-center flex-row gap-3 text-[#fff]">
+              <div className="relative w-1/3">
                 <img
                   className="w-full rounded-md object-cover"
                   src={
@@ -301,28 +331,135 @@ const MoviesCard = ({ movie }) => {
                   </button>
                 </div>
               </div>
-              <span>
-                🎥 <strong>Movie:</strong> {movie.title || "Not Available"}
-              </span>
-              <span className="line-clamp-5">
-                ℹ️ <strong>Overview:</strong>{" "}
-                {movie.overview || "Not Available"}
-              </span>
-              <span>
-                ⭐ <strong>Rating:</strong>{" "}
-                {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}/10
-              </span>
-              <span>
-                🎬 <strong>Genre:</strong>{" "}
-                {getGenres(movie.genre_ids, genreList).join(", ") ||
-                  "Not Available"}
-              </span>
-              <span>
-                📅 <strong>Release:</strong>{" "}
-                {movie.release_date
-                  ? dayjs(movie.release_date).format("MMMM D, YYYY")
-                  : "Not Available"}
-              </span>
+              <div className="w-2/3 flex text-base flex-col gap-3">
+                <h2 className="text-2xl font-bold text-[#d9232e]">
+                  🎥 {movie.title || "Not Available"}
+                </h2>
+                <span className="line-clamp-5">
+                  ℹ️ {movie.overview || "Not Available"}
+                </span>
+                <span>
+                  ⭐{" "}
+                  {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
+                  /10
+                </span>
+                <span>
+                  🎬{" "}
+                  {getGenres(movie.genre_ids, genreList).join(", ") ||
+                    "Not Available"}
+                </span>
+                <span>
+                  📅{" "}
+                  {movie.release_date
+                    ? dayjs(movie.release_date).format("MMMM D, YYYY")
+                    : "Not Available"}
+                </span>
+              </div>
+            </div>
+            <TabGroup>
+              <TabList className="flex gap-4">
+                {categories.map(({ name }) => (
+                  <Tab key={name} as={Fragment}>
+                    {({ selected }) => (
+                      <button
+                        className={`rounded-full px-3 py-1 mt-3 text-lg font-semibold transition
+                        ${
+                          selected
+                            ? "bg-[#d9232e] text-white"
+                            : "text-white hover:bg-white/5"
+                        }`}
+                      >
+                        {name}
+                      </button>
+                    )}
+                  </Tab>
+                ))}
+              </TabList>
+              <TabPanels className="mt-3">
+                {categories.map(({ name, posts }) => (
+                  <TabPanel key={name} className="rounded-xl text-white p-3">
+                    {posts.length > 0 ? (
+                      <Swiper
+                        modules={[Autoplay, Pagination]}
+                        spaceBetween={16}
+                        slidesPerView={1}
+                        pagination={{ clickable: true }}
+                        autoplay={{
+                          delay: 3000,
+                          disableOnInteraction: true,
+                          pauseOnMouseEnter: true,
+                        }}
+                        breakpoints={{
+                          640: { slidesPerView: 2 },
+                          768: { slidesPerView: 3 },
+                          1024: { slidesPerView: 4 },
+                        }}
+                        className="mySwiper"
+                      >
+                        {posts.map((post) => (
+                          <SwiperSlide key={post.id}>
+                            <div className="flex gap-3 rounded-lg p-3 bg-slate-300/15 items-center">
+                              <div>
+                                <img
+                                  sizes="100px"
+                                  className="w-12 h-12 object-cover rounded-full"
+                                  src={
+                                    post.profile_path
+                                      ? IMG_CDN_URL + post.profile_path
+                                      : poster
+                                  }
+                                  alt={post.title}
+                                />
+                              </div>
+                              <div>
+                                <h4 className="font-bold m-0 text-lg line-clamp-1">
+                                  {post.title}
+                                </h4>
+                                <span className="text-sm line-clamp-1">
+                                  <strong>
+                                    {name === "Cast" ? "As" : "Job"}:{" "}
+                                  </strong>
+                                  {name === "Cast" ? post.character : post.job}
+                                </span>
+                              </div>
+                            </div>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
+                    ) : (
+                      <p>No {name.toLowerCase()} data available.</p>
+                    )}
+                  </TabPanel>
+                ))}
+              </TabPanels>
+            </TabGroup>
+            <div className="text-white flex flex-col gap-3">
+              <h3 className="text-xl font-bold text-[#d9232e]">Reviews</h3>
+              <div className="flex gap-3 items-center">
+                <div>
+                  <img
+                    className="w-12 h-12 object-cover rounded-full"
+                    sizes="100px"
+                    src={
+                      "https://image.tmdb.org/t/p/original/nidqITf735x9xxHfncXkT9BmOQ7.png"
+                    }
+                    alt=""
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <h4 className="font-bold m-0 text-lg">Filipe Manuel Neto</h4>
+                  <span className="lowercase text-[#d9232e] text-xs">
+                    @FilipeManuelNeto
+                  </span>
+                  <span className="text-sm">
+                    <strong>On: </strong>July 30, 2025
+                  </span>
+                </div>
+              </div>
+              <p>
+                A film that was enough for more than one review: dream,
+                nightmare, utopia and reality...
+              </p>
             </div>
           </DialogPanel>
         </div>
