@@ -9,7 +9,8 @@ const moviesSlice = createSlice({
     upcomingMovies: null,
     trailers: {},
     count: 0,
-    credits: {}, // Changed from null to object
+    credits: {},
+    reviews: {},
   },
   reducers: {
     addNowPlayingMovies: (state, action) => {
@@ -39,6 +40,10 @@ const moviesSlice = createSlice({
       const { movieId, credits } = action.payload;
       state.credits[movieId] = credits; 
     },
+    addReviews: (state, action) => {
+      const { movieId, reviews } = action.payload;
+      state.reviews[movieId] = reviews; 
+    },
   },
 });
 
@@ -51,6 +56,7 @@ export const {
   clearTrailerVideo,
   addCount,
   addCredits,
+  addReviews,
 } = moviesSlice.actions;
 export default moviesSlice.reducer;
 export const moviesReducer = moviesSlice.reducer;

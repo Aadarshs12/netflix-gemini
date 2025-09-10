@@ -15,28 +15,31 @@ import posterbackdrop from "../utils/notfoundposterbackdrop.WEBP";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { Fragment } from "react";
 import useCreditsData from "../hooks/useMoviesCredits";
+import useReviewsData from "../hooks/useReviewsData";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const MoviesCard = ({ movie }) => {
   const dispatch = useDispatch();
   const genreList = useSelector((store) => store.genre?.genreList || []);
-  const trailorVideo = useSelector(
-    (store) => store.movies?.trailers[movie?.id]
-  );
+  const trailorVideo = useSelector((store) => store.movies?.trailers[movie?.id]);
   const credits = useSelector((store) => store.movies?.credits[movie?.id]);
-  const watchList = useSelector(
-    (store) => store.watchlist?.watchListItems || []
-  );
+  const reviews = useSelector((store) => store.movies?.reviews?.[movie?.id] || []);
+
+  const watchList = useSelector((store) => store.watchlist?.watchListItems || []);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPlay, setIsOpenPlay] = useState(false);
   const [isLoadingTrailer, setIsLoadingTrailer] = useState(false);
   const { fetchTrailer, error, isFetching } = useMovieTrailor(movie?.id);
 
   useCreditsData(movie?.id);
+  useReviewsData(movie?.id); // No need to destructure fetchReviews
+
+  useEffect(() => {
+    console.log(`Reviews for movie ${movie?.id}:`, reviews);
+  }, [reviews, movie?.id]);
 
   useEffect(() => {
     console.log(`Credits for movie ${movie?.id}:`, credits);
@@ -72,12 +75,7 @@ const MoviesCard = ({ movie }) => {
 
   useEffect(() => {
     if (error) {
-      console.error(
-        "[MoviesCard] Trailer fetch error for movie",
-        movie?.id,
-        ":",
-        error
-      );
+      console.error("[MoviesCard] Trailer fetch error for movie", movie?.id, ":", error);
       toast.error(`Failed to fetch trailer for movie ${movie?.id}: ${error}`, {
         position: "bottom-right",
         autoClose: 5000,
@@ -85,10 +83,7 @@ const MoviesCard = ({ movie }) => {
       setIsLoadingTrailer(false);
     }
     if (trailorVideo?.key && isLoadingTrailer) {
-      console.log(
-        "[MoviesCard] Trailer loaded, opening modal for key:",
-        trailorVideo.key
-      );
+      console.log("[MoviesCard] Trailer loaded, opening modal for key:", trailorVideo.key);
       setIsOpenPlay(true);
       setIsLoadingTrailer(false);
       toast.dismiss();
@@ -103,10 +98,7 @@ const MoviesCard = ({ movie }) => {
     }
     console.log("[MoviesCard] Play button clicked for movie", movie.id);
     if (trailorVideo?.key) {
-      console.log(
-        "[MoviesCard] Opening trailer modal for key:",
-        trailorVideo.key
-      );
+      console.log("[MoviesCard] Opening trailer modal for key:", trailorVideo.key);
       setIsOpen(false);
       setIsOpenPlay(true);
     } else {
@@ -148,6 +140,14 @@ const MoviesCard = ({ movie }) => {
     toast.error("Removed from Watch List!", { position: "bottom-right" });
   };
 
+  const getAvatarUrl = (avatarPath) => {
+    if (!avatarPath) return poster;
+    if (avatarPath.startsWith("/http")) {
+      return avatarPath.substring(1);
+    }
+    return IMG_CDN_URL + avatarPath;
+  };
+
   if (!movie) {
     console.error("[MoviesCard] No movie data provided");
     return null;
@@ -172,10 +172,7 @@ const MoviesCard = ({ movie }) => {
           <Dialog
             open={isOpenPlay}
             onClose={() => {
-              console.log(
-                "[MoviesCard] Closing trailer modal for movie",
-                movie.id
-              );
+              console.log("[MoviesCard] Closing trailer modal for movie", movie.id);
               setIsOpenPlay(false);
               setIsLoadingTrailer(false);
               toast.dismiss();
@@ -203,10 +200,7 @@ const MoviesCard = ({ movie }) => {
                   )}
                   <button
                     onClick={() => {
-                      console.log(
-                        "[MoviesCard] Closing trailer modal for movie",
-                        movie.id
-                      );
+                      console.log("[MoviesCard] Closing trailer modal for movie", movie.id);
                       setIsOpenPlay(false);
                       setIsLoadingTrailer(false);
                       toast.dismiss();
@@ -227,15 +221,10 @@ const MoviesCard = ({ movie }) => {
                       allow="autoplay; encrypted-media"
                       allowFullScreen
                       onLoad={() => {
-                        console.log(
-                          "[MoviesCard] Iframe loaded for",
-                          trailorVideo.key
-                        );
+                        console.log("[MoviesCard] Iframe loaded for", trailorVideo.key);
                         toast.dismiss();
                       }}
-                      onError={(err) =>
-                        console.error("[MoviesCard] Iframe error:", err)
-                      }
+                      onError={(err) => console.error("[MoviesCard] Iframe error:", err)}
                     ></iframe>
                   ) : (
                     <div className="flex items-center justify-center w-full h-full bg-gray-900 text-white">
@@ -243,10 +232,7 @@ const MoviesCard = ({ movie }) => {
                         <p>No trailer available</p>
                         <button
                           onClick={() => {
-                            console.log(
-                              "[MoviesCard] Retry fetch for movie",
-                              movie.id
-                            );
+                            console.log("[MoviesCard] Retry fetch for movie", movie.id);
                             setIsLoadingTrailer(true);
                             toast.warn("Fetching trailer...", {
                               position: "bottom-right",
@@ -298,7 +284,7 @@ const MoviesCard = ({ movie }) => {
         onClose={() => setIsOpen(false)}
         className="relative z-[1000]"
       >
-        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+        <div className="fixed inset-0 bg-black/90" aria-hidden="true" />
         <div className="fixed inset-0 w-full h-full flex items-center justify-center">
           <DialogPanel className="w-full max-w-full flex flex-col gap-2 max-h-[100vh] bg-[#000000da] shadow-lg rounded-lg p-4 overflow-y-auto">
             <DialogTitle className="text-lg mb-2 flex justify-between items-center font-bold text-white">
@@ -314,11 +300,7 @@ const MoviesCard = ({ movie }) => {
               <div className="relative w-1/3">
                 <img
                   className="w-full rounded-md object-cover"
-                  src={
-                    movie.backdrop_path
-                      ? IMG_CDN_URL2 + movie.backdrop_path
-                      : posterbackdrop
-                  }
+                  src={movie.backdrop_path ? IMG_CDN_URL2 + movie.backdrop_path : posterbackdrop}
                   alt={movie.title || "Movie"}
                 />
                 <div className="absolute z-10 items-center right-2 bottom-2">
@@ -339,14 +321,10 @@ const MoviesCard = ({ movie }) => {
                   ℹ️ {movie.overview || "Not Available"}
                 </span>
                 <span>
-                  ⭐{" "}
-                  {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
-                  /10
+                  ⭐ {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}/10
                 </span>
                 <span>
-                  🎬{" "}
-                  {getGenres(movie.genre_ids, genreList).join(", ") ||
-                    "Not Available"}
+                  🎬 {getGenres(movie.genre_ids, genreList).join(", ") || "Not Available"}
                 </span>
                 <span>
                   📅{" "}
@@ -363,11 +341,7 @@ const MoviesCard = ({ movie }) => {
                     {({ selected }) => (
                       <button
                         className={`rounded-full px-3 py-1 mt-3 text-lg font-semibold transition
-                        ${
-                          selected
-                            ? "bg-[#d9232e] text-white"
-                            : "text-white hover:bg-white/5"
-                        }`}
+                        ${selected ? "bg-[#d9232e] text-white" : "text-white hover:bg-white/5"}`}
                       >
                         {name}
                       </button>
@@ -384,6 +358,7 @@ const MoviesCard = ({ movie }) => {
                         spaceBetween={16}
                         slidesPerView={1}
                         pagination={{ clickable: true }}
+                        loop={posts.length >= 2}
                         autoplay={{
                           delay: 3000,
                           disableOnInteraction: true,
@@ -398,16 +373,12 @@ const MoviesCard = ({ movie }) => {
                       >
                         {posts.map((post) => (
                           <SwiperSlide key={post.id}>
-                            <div className="flex gap-3 rounded-lg p-3 bg-slate-300/15 items-center">
+                            <div className="flex gap-3 items-center rounded-lg p-3 bg-slate-300/15 items-center">
                               <div>
                                 <img
                                   sizes="100px"
                                   className="w-12 h-12 object-cover rounded-full"
-                                  src={
-                                    post.profile_path
-                                      ? IMG_CDN_URL + post.profile_path
-                                      : poster
-                                  }
+                                  src={post.profile_path ? IMG_CDN_URL + post.profile_path : poster}
                                   alt={post.title}
                                 />
                               </div>
@@ -416,9 +387,7 @@ const MoviesCard = ({ movie }) => {
                                   {post.title}
                                 </h4>
                                 <span className="text-sm line-clamp-1">
-                                  <strong>
-                                    {name === "Cast" ? "As" : "Job"}:{" "}
-                                  </strong>
+                                  <strong>{name === "Cast" ? "As" : "Job"}: </strong>
                                   {name === "Cast" ? post.character : post.job}
                                 </span>
                               </div>
@@ -433,33 +402,92 @@ const MoviesCard = ({ movie }) => {
                 ))}
               </TabPanels>
             </TabGroup>
-            <div className="text-white flex flex-col gap-3">
+            <div className="text-white flex flex-col gap-3 mt-4 w-full">
               <h3 className="text-xl font-bold text-[#d9232e]">Reviews</h3>
-              <div className="flex gap-3 items-center">
-                <div>
-                  <img
-                    className="w-12 h-12 object-cover rounded-full"
-                    sizes="100px"
-                    src={
-                      "https://image.tmdb.org/t/p/original/nidqITf735x9xxHfncXkT9BmOQ7.png"
-                    }
-                    alt=""
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <h4 className="font-bold m-0 text-lg">Filipe Manuel Neto</h4>
-                  <span className="lowercase text-[#d9232e] text-xs">
-                    @FilipeManuelNeto
-                  </span>
-                  <span className="text-sm">
-                    <strong>On: </strong>July 30, 2025
-                  </span>
-                </div>
-              </div>
-              <p>
-                A film that was enough for more than one review: dream,
-                nightmare, utopia and reality...
-              </p>
+              {reviews?.length > 0 ? (
+                reviews.length === 1 ? (
+                  <div className="flex flex-col text-white rounded-lg p-3 bg-slate-300/15 max-w-full box-border">
+                    <div className="flex items-center gap-3 w-full">
+                      <div>
+                        <img
+                          sizes="100px"
+                          className="w-12 h-12 object-cover rounded-full"
+                          src={getAvatarUrl(reviews[0].author_details?.avatar_path)}
+                          alt={reviews[0].author || "Reviewer"}
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <h4 className="font-bold m-0 text-lg line-clamp-1">
+                          {reviews[0].author || "Unknown"}
+                        </h4>
+                        <span className="lowercase text-[#d9232e] text-xs">
+                          @{reviews[0].author_details?.username || "Unknown"}
+                        </span>
+                        <span className="text-sm line-clamp-1">
+                          <strong>On: </strong>
+                          {reviews[0].updated_at
+                            ? dayjs(reviews[0].updated_at).format("MMMM D, YYYY")
+                            : "Not Available"}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm w-full mt-2">{reviews[0].content}</p>
+                  </div>
+                ) : (
+                  <Swiper
+                    modules={[Autoplay, Pagination]}
+                    spaceBetween={16}
+                    slidesPerView={1}
+                    pagination={{ clickable: true }}
+                    loop={reviews.length >= 2}
+                    autoplay={{
+                      delay: 3000,
+                      disableOnInteraction: true,
+                      pauseOnMouseEnter: true,
+                    }}
+                    breakpoints={{
+                      640: { slidesPerView: 2 },
+                      768: { slidesPerView: 2 },
+                      1024: { slidesPerView: 2 },
+                    }}
+                    className="mySwiper w-full"
+                  >
+                    {reviews.map((review) => (
+                      <SwiperSlide key={review.id}>
+                        <div className="flex flex-col text-white rounded-lg p-3 bg-slate-300/15 max-w-full box-border">
+                          <div className="flex items-center gap-3 w-full">
+                            <div>
+                              <img
+                                sizes="100px"
+                                className="w-12 h-12 object-cover rounded-full"
+                                src={getAvatarUrl(review.author_details?.avatar_path)}
+                                alt={review.author || "Reviewer"}
+                              />
+                            </div>
+                            <div className="flex flex-col">
+                              <h4 className="font-bold m-0 text-lg line-clamp-1">
+                                {review.author || "Unknown"}
+                              </h4>
+                              <span className="lowercase text-[#d9232e] text-xs">
+                                @{review.author_details?.username || "Unknown"}
+                              </span>
+                              <span className="text-sm line-clamp-1">
+                                <strong>On: </strong>
+                                {review.updated_at
+                                  ? dayjs(review.updated_at).format("MMMM D, YYYY")
+                                  : "Not Available"}
+                              </span>
+                            </div>
+                          </div>
+                          <p className="text-sm w-full line-clamp-6 mt-2">{review.content}</p>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                )
+              ) : (
+                <p>No reviews available.</p>
+              )}
             </div>
           </DialogPanel>
         </div>
