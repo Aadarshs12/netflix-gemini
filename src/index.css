@@ -214,15 +214,15 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     position: absolute;
     bottom: 0px; 
     right: 0px;
-    z-index: 99 !important;
+    z-index: 1;
     font-weight: 700;
     font-size: 4rem;
     color: rgb(65, 65, 65);
-    -webkit-text-stroke: 0.25rem #d9232e;
+    -webkit-text-stroke: 0.25rem #dcdcdc;
     text-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.5);
     &::before {
       content: attr(data-content); 
-      -webkit-text-fill-color: #fff;
+      -webkit-text-fill-color: #0a0a0a;
       -webkit-text-stroke: 0;
       position: absolute;
       top: 0;

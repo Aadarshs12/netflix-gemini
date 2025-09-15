@@ -203,7 +203,7 @@ const MoviesCard = ({ movie, index }) => {
         src={movie.poster_path ? IMG_CDN_URL + movie.poster_path : poster}
         alt={movie.title || "Movie"}
       />
-        <span className="forCounting font-bold" data-content={index}>
+      <span className="forCounting font-bold" data-content={index}>
         {index}
       </span>
       <div className="hoverOnMovieCard p-3 flex flex-col gap-1">
@@ -392,7 +392,9 @@ const MoviesCard = ({ movie, index }) => {
                 </span>
                 <span>
                   ⭐{" "}
-                  {movie.vote_average ? movie.vote_average.toFixed(1) + "/10" : "N/A"}
+                  {movie.vote_average
+                    ? movie.vote_average.toFixed(1) + "/10"
+                    : "N/A"}
                 </span>
                 <span>
                   🎬{" "}
@@ -458,7 +460,9 @@ const MoviesCard = ({ movie, index }) => {
                                   src={
                                     post.profile_path
                                       ? IMG_CDN_URL + post.profile_path
-                                      : poster
+                                      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                          post.title.charAt(0) || "R"
+                                        )}&background=000000&color=ffffff&rounded=true`
                                   }
                                   alt={post.title}
                                 />
@@ -499,9 +503,19 @@ const MoviesCard = ({ movie, index }) => {
                         <img
                           sizes="100px"
                           className="w-12 h-12 object-cover rounded-full"
-                          src={getAvatarUrl(
+                          src={
                             reviews[0].author_details?.avatar_path
-                          )}
+                              ? reviews[0].author_details.avatar_path.startsWith(
+                                  "/https"
+                                )
+                                ? reviews[0].author_details.avatar_path.slice(1) 
+                                : IMG_CDN_URL +
+                                  reviews[0].author_details.avatar_path
+                              : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                  reviews[0].author?.charAt(0).toUpperCase() ||
+                                    "R"
+                                )}&background=000000&color=ffffff&rounded=true`
+                          }
                           alt={reviews[0].author || "Reviewer"}
                         />
                       </div>
@@ -551,10 +565,15 @@ const MoviesCard = ({ movie, index }) => {
                               <div>
                                 <img
                                   sizes="100px"
-                                  className="w-12 h-12 object-cover rounded-full"
-                                  src={getAvatarUrl(
+                                  className="w-12 h-12 object-cover bg-black rounded-full"
+                                  src={
                                     review.author_details?.avatar_path
-                                  )}
+                                      ? IMG_CDN_URL +
+                                        review.author_details.avatar_path
+                                      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                          review.author.charAt(0) || "R"
+                                        )}&background=000000&color=ffffff&rounded=true`
+                                  }
                                   alt={review.author || "Reviewer"}
                                 />
                               </div>
@@ -563,7 +582,8 @@ const MoviesCard = ({ movie, index }) => {
                                   {review.author || "Unknown"}
                                 </h4>
                                 <span className="lowercase text-white/80 text-xs">
-                                  @{review.author_details?.username || "Unknown"}
+                                  @
+                                  {review.author_details?.username || "Unknown"}
                                 </span>
                               </div>
                             </div>
