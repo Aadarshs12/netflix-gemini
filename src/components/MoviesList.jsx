@@ -42,9 +42,9 @@ const MoviesList = ({ title, movies, property }) => {
           },
         }}
       >
-        {movies?.map((movie) => (
+        {movies?.map((movie, index) => (
           <SwiperSlide key={movie.id}>
-            <MoviesCard movie={movie} />
+            <MoviesCard movie={movie} index = {index + 1} />
           </SwiperSlide>
         ))}
       </Swiper>

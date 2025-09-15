@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addReviews } from "../utils/moviesSlice";
 import { API_Options } from "../utils/constant";
+import { setReviewsLoading } from "../utils/moviesSlice";  // Export the new action
 
 const useReviewsData = (movieId) => {
   const dispatch = useDispatch();
 
   const getReviewsData = async () => {
     try {
+      dispatch(setReviewsLoading({ movieId, loading: true }));
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US`,
         API_Options
@@ -19,7 +21,7 @@ const useReviewsData = (movieId) => {
       dispatch(
         addReviews({
           movieId,
-          reviews: json.results || [], 
+          reviews: json.results || [],
         })
       );
     } catch (error) {
@@ -27,9 +29,10 @@ const useReviewsData = (movieId) => {
       dispatch(
         addReviews({
           movieId,
-          reviews: [], 
+          reviews: [],
         })
       );
+      dispatch(setReviewsLoading({ movieId, loading: false }));
     }
   };
 
@@ -39,7 +42,7 @@ const useReviewsData = (movieId) => {
     }
   }, [movieId]);
 
-  return null; 
+  return null;
 };
 
 export default useReviewsData;

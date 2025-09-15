@@ -11,6 +11,8 @@ const moviesSlice = createSlice({
     count: 0,
     credits: {},
     reviews: {},
+    reviewsLoading: {}, 
+    reviewsError: {}, 
   },
   reducers: {
     addNowPlayingMovies: (state, action) => {
@@ -38,11 +40,36 @@ const moviesSlice = createSlice({
     },
     addCredits: (state, action) => {
       const { movieId, credits } = action.payload;
-      state.credits[movieId] = credits; 
+      state.credits[movieId] = credits;
+    },
+    setReviewsLoading: (state, action) => {
+      const { movieId, loading } = action.payload;
+      if (!state.reviewsLoading) {
+        state.reviewsLoading = {};
+      }
+      state.reviewsLoading[movieId] = loading;
     },
     addReviews: (state, action) => {
       const { movieId, reviews } = action.payload;
-      state.reviews[movieId] = reviews; 
+      if (!state.reviews) {
+        state.reviews = {};
+      }
+      if (!state.reviewsLoading) {
+        state.reviewsLoading = {};
+      }
+      state.reviews[movieId] = reviews || [];
+      state.reviewsLoading[movieId] = false;
+      if (state.reviewsError?.[movieId]) {
+        delete state.reviewsError[movieId];
+      }
+    },
+    setReviewsError: (state, action) => {
+      const { movieId, error } = action.payload;
+      if (!state.reviewsError) {
+        state.reviewsError = {};
+      }
+      state.reviewsError[movieId] = error;
+      state.reviewsLoading[movieId] = false;
     },
   },
 });
@@ -56,7 +83,10 @@ export const {
   clearTrailerVideo,
   addCount,
   addCredits,
+  setReviewsLoading,
   addReviews,
+  setReviewsError,
 } = moviesSlice.actions;
+
 export default moviesSlice.reducer;
 export const moviesReducer = moviesSlice.reducer;

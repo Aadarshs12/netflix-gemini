@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
-
 
 .swiper-pagination-bullet {
   background: #f3e8e8 !important;
@@ -30,6 +28,8 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   &:hover,
   &:active {
     color: #d9232e !important;
+    font-size: 24px !important;
+    font-weight: 800 !important;
   }
 }
 .swiper-pagination {
@@ -38,7 +38,7 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 
 .swiper-button-prev:after,
 .swiper-button-next:after {
-  font-size: 20px !important;
+  font-size: 24px !important;
   font-weight: 600;
 }
 
@@ -149,7 +149,7 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
       transparent 10px
     ),
     linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0));
-    aspect-ratio: 16 / 9 !important;
+  aspect-ratio: 16 / 9 !important;
   width: 100%;
 }
 
@@ -162,7 +162,6 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   }
 }
 
-
 .forGeminiBottomGradient {
   position: relative;
   z-index: 10;
@@ -172,15 +171,62 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;          
-    height: 30%;       
+    bottom: 0;
+    height: 30%;
     z-index: 10;
     pointer-events: none;
     background: linear-gradient(
-        180deg,
-        rgba(0, 5, 13, 0) 0%,   
-        rgb(0 5 13) 100%        
-      ) !important;
+      180deg,
+      rgba(0, 5, 13, 0) 0%,
+      rgb(0 5 13) 100%
+    ) !important;
   }
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #6b7280 #e5e7eb;
+}
+
+.forCounting {
+  display: none;
+}
+
+.counting {
+  position: relative; 
+
+  .forCounting {
+    display: block !important;
+    line-height: 1;
+    position: absolute;
+    bottom: 0px; 
+    right: 0px;
+    z-index: 99 !important;
+    font-weight: 700;
+    font-size: 4rem;
+    color: rgb(65, 65, 65);
+    -webkit-text-stroke: 0.25rem #d9232e;
+    text-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.5);
+    &::before {
+      content: attr(data-content); 
+      -webkit-text-fill-color: #fff;
+      -webkit-text-stroke: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+}

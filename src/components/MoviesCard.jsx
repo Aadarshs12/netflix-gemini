@@ -20,26 +20,45 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import YouTube from "react-youtube";
 
-const MoviesCard = ({ movie }) => {
+const MoviesCard = ({ movie, index }) => {
   const dispatch = useDispatch();
   const genreList = useSelector((store) => store.genre?.genreList || []);
-  const trailorVideo = useSelector((store) => store.movies?.trailers[movie?.id]);
+  const trailorVideo = useSelector(
+    (store) => store.movies?.trailers[movie?.id]
+  );
   const credits = useSelector((store) => store.movies?.credits[movie?.id]);
-  const reviews = useSelector((store) => store.movies?.reviews?.[movie?.id] || []);
+  const reviews = useSelector(
+    (store) => store.movies?.reviews?.[movie?.id] || []
+  );
+  const reviewsLoading = useSelector(
+    (store) => store.movies?.reviewsLoading?.[movie?.id] || false
+  );
+  const reviewsError = useSelector(
+    (store) => store.movies?.reviewsError?.[movie?.id] || null
+  );
 
-  const watchList = useSelector((store) => store.watchlist?.watchListItems || []);
+  const watchList = useSelector(
+    (store) => store.watchlist?.watchListItems || []
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPlay, setIsOpenPlay] = useState(false);
   const [isLoadingTrailer, setIsLoadingTrailer] = useState(false);
   const { fetchTrailer, error, isFetching } = useMovieTrailor(movie?.id);
 
   useCreditsData(movie?.id);
-  useReviewsData(movie?.id); // No need to destructure fetchReviews
+  useReviewsData(movie?.id);
 
   useEffect(() => {
     console.log(`Reviews for movie ${movie?.id}:`, reviews);
-  }, [reviews, movie?.id]);
+    if (reviewsError) {
+      toast.error(`Error loading reviews: ${reviewsError}`, {
+        position: "bottom-right",
+        autoClose: 5000,
+      });
+    }
+  }, [reviews, reviewsError, movie?.id]);
 
   useEffect(() => {
     console.log(`Credits for movie ${movie?.id}:`, credits);
@@ -75,7 +94,12 @@ const MoviesCard = ({ movie }) => {
 
   useEffect(() => {
     if (error) {
-      console.error("[MoviesCard] Trailer fetch error for movie", movie?.id, ":", error);
+      console.error(
+        "[MoviesCard] Trailer fetch error for movie",
+        movie?.id,
+        ":",
+        error
+      );
       toast.error(`Failed to fetch trailer for movie ${movie?.id}: ${error}`, {
         position: "bottom-right",
         autoClose: 5000,
@@ -83,7 +107,10 @@ const MoviesCard = ({ movie }) => {
       setIsLoadingTrailer(false);
     }
     if (trailorVideo?.key && isLoadingTrailer) {
-      console.log("[MoviesCard] Trailer loaded, opening modal for key:", trailorVideo.key);
+      console.log(
+        "[MoviesCard] Trailer loaded, opening modal for key:",
+        trailorVideo.key
+      );
       setIsOpenPlay(true);
       setIsLoadingTrailer(false);
       toast.dismiss();
@@ -98,7 +125,10 @@ const MoviesCard = ({ movie }) => {
     }
     console.log("[MoviesCard] Play button clicked for movie", movie.id);
     if (trailorVideo?.key) {
-      console.log("[MoviesCard] Opening trailer modal for key:", trailorVideo.key);
+      console.log(
+        "[MoviesCard] Opening trailer modal for key:",
+        trailorVideo.key
+      );
       setIsOpen(false);
       setIsOpenPlay(true);
     } else {
@@ -148,6 +178,19 @@ const MoviesCard = ({ movie }) => {
     return IMG_CDN_URL + avatarPath;
   };
 
+  const youtubeOpts = {
+    width: "100%",
+    height: "100%",
+    playerVars: {
+      autoplay: 1,
+      controls: 1,
+      rel: 0,
+      modestbranding: 1,
+      playsinline: 0,
+      fs: 1, // Enable full-screen button
+    },
+  };
+
   if (!movie) {
     console.error("[MoviesCard] No movie data provided");
     return null;
@@ -160,6 +203,9 @@ const MoviesCard = ({ movie }) => {
         src={movie.poster_path ? IMG_CDN_URL + movie.poster_path : poster}
         alt={movie.title || "Movie"}
       />
+        <span className="forCounting font-bold" data-content={index}>
+        {index}
+      </span>
       <div className="hoverOnMovieCard p-3 flex flex-col gap-1">
         <div className="flex flex-col-reverse gap-3 items-start">
           <button
@@ -172,7 +218,10 @@ const MoviesCard = ({ movie }) => {
           <Dialog
             open={isOpenPlay}
             onClose={() => {
-              console.log("[MoviesCard] Closing trailer modal for movie", movie.id);
+              console.log(
+                "[MoviesCard] Closing trailer modal for movie",
+                movie.id
+              );
               setIsOpenPlay(false);
               setIsLoadingTrailer(false);
               toast.dismiss();
@@ -180,8 +229,8 @@ const MoviesCard = ({ movie }) => {
             }}
             className="fixed inset-0 z-[1000]"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4">
-              <DialogPanel className="relative w-full max-w-4xl bg-black rounded-lg overflow-visible">
+            <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-0">
+              <DialogPanel className="relative w-screen h-screen bg-black overflow-hidden">
                 <div className="absolute flex flex-col-reverse items-center gap-2 top-4 right-4 z-[1001]">
                   {isInWatchList ? (
                     <button
@@ -200,7 +249,10 @@ const MoviesCard = ({ movie }) => {
                   )}
                   <button
                     onClick={() => {
-                      console.log("[MoviesCard] Closing trailer modal for movie", movie.id);
+                      console.log(
+                        "[MoviesCard] Closing trailer modal for movie",
+                        movie.id
+                      );
                       setIsOpenPlay(false);
                       setIsLoadingTrailer(false);
                       toast.dismiss();
@@ -212,27 +264,41 @@ const MoviesCard = ({ movie }) => {
                     <IoIosCloseCircle />
                   </button>
                 </div>
-                <div className="w-full h-[400px] md:h-[500px] lg:h-[600px]">
+                <div className="w-full h-full">
                   {trailorVideo?.key ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${trailorVideo.key}?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1`}
+                    <YouTube
+                      videoId={trailorVideo.key}
+                      opts={youtubeOpts}
+                      className="w-full h-full"
+                      iframeClassName="w-full h-full"
                       title={`Trailer for ${movie.title || "Movie"}`}
-                      className="w-full h-full border-0"
-                      allow="autoplay; encrypted-media"
-                      allowFullScreen
-                      onLoad={() => {
-                        console.log("[MoviesCard] Iframe loaded for", trailorVideo.key);
+                      onReady={(event) => {
+                        console.log(
+                          "[MoviesCard] YouTube player ready for",
+                          trailorVideo.key
+                        );
                         toast.dismiss();
                       }}
-                      onError={(err) => console.error("[MoviesCard] Iframe error:", err)}
-                    ></iframe>
+                      onError={(error) => {
+                        console.error(
+                          "[MoviesCard] YouTube player error:",
+                          error
+                        );
+                        toast.error("Error loading trailer", {
+                          position: "bottom-right",
+                        });
+                      }}
+                    />
                   ) : (
                     <div className="flex items-center justify-center w-full h-full bg-gray-900 text-white">
                       <div className="text-center">
                         <p>No trailer available</p>
                         <button
                           onClick={() => {
-                            console.log("[MoviesCard] Retry fetch for movie", movie.id);
+                            console.log(
+                              "[MoviesCard] Retry fetch for movie",
+                              movie.id
+                            );
                             setIsLoadingTrailer(true);
                             toast.warn("Fetching trailer...", {
                               position: "bottom-right",
@@ -300,7 +366,11 @@ const MoviesCard = ({ movie }) => {
               <div className="relative w-1/3">
                 <img
                   className="w-full rounded-md object-cover"
-                  src={movie.backdrop_path ? IMG_CDN_URL2 + movie.backdrop_path : posterbackdrop}
+                  src={
+                    movie.backdrop_path
+                      ? IMG_CDN_URL2 + movie.backdrop_path
+                      : posterbackdrop
+                  }
                   alt={movie.title || "Movie"}
                 />
                 <div className="absolute z-10 items-center right-2 bottom-2">
@@ -321,10 +391,13 @@ const MoviesCard = ({ movie }) => {
                   ℹ️ {movie.overview || "Not Available"}
                 </span>
                 <span>
-                  ⭐ {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}/10
+                  ⭐{" "}
+                  {movie.vote_average ? movie.vote_average.toFixed(1) + "/10" : "N/A"}
                 </span>
                 <span>
-                  🎬 {getGenres(movie.genre_ids, genreList).join(", ") || "Not Available"}
+                  🎬{" "}
+                  {getGenres(movie.genre_ids, genreList).join(", ") ||
+                    "Not Available"}
                 </span>
                 <span>
                   📅{" "}
@@ -341,7 +414,11 @@ const MoviesCard = ({ movie }) => {
                     {({ selected }) => (
                       <button
                         className={`rounded-full px-3 py-1 mt-3 text-lg font-semibold transition
-                        ${selected ? "bg-[#d9232e] text-white" : "text-white hover:bg-white/5"}`}
+                        ${
+                          selected
+                            ? "bg-[#d9232e] text-white"
+                            : "text-white hover:bg-white/5"
+                        }`}
                       >
                         {name}
                       </button>
@@ -373,12 +450,16 @@ const MoviesCard = ({ movie }) => {
                       >
                         {posts.map((post) => (
                           <SwiperSlide key={post.id}>
-                            <div className="flex gap-3 items-center rounded-lg p-3 bg-slate-300/15 items-center">
+                            <div className="flex gap-3 items-center rounded-lg bg-slate-300/15 p-3">
                               <div>
                                 <img
                                   sizes="100px"
                                   className="w-12 h-12 object-cover rounded-full"
-                                  src={post.profile_path ? IMG_CDN_URL + post.profile_path : poster}
+                                  src={
+                                    post.profile_path
+                                      ? IMG_CDN_URL + post.profile_path
+                                      : poster
+                                  }
                                   alt={post.title}
                                 />
                               </div>
@@ -387,7 +468,9 @@ const MoviesCard = ({ movie }) => {
                                   {post.title}
                                 </h4>
                                 <span className="text-sm line-clamp-1">
-                                  <strong>{name === "Cast" ? "As" : "Job"}: </strong>
+                                  <strong>
+                                    {name === "Cast" ? "As" : "Job"}:{" "}
+                                  </strong>
                                   {name === "Cast" ? post.character : post.job}
                                 </span>
                               </div>
@@ -402,9 +485,13 @@ const MoviesCard = ({ movie }) => {
                 ))}
               </TabPanels>
             </TabGroup>
-            <div className="text-white flex flex-col gap-3 mt-4 w-full">
+            <div className="text-white flex flex-col gap-3 mt-3 w-full">
               <h3 className="text-xl font-bold text-[#d9232e]">Reviews</h3>
-              {reviews?.length > 0 ? (
+              {reviewsLoading ? (
+                <p className="p-3">Loading reviews...</p>
+              ) : reviewsError ? (
+                <p className="p-3 text-red-500">Error: {reviewsError}</p>
+              ) : reviews?.length > 0 ? (
                 reviews.length === 1 ? (
                   <div className="flex flex-col text-white rounded-lg p-3 bg-slate-300/15 max-w-full box-border">
                     <div className="flex items-center gap-3 w-full">
@@ -412,7 +499,9 @@ const MoviesCard = ({ movie }) => {
                         <img
                           sizes="100px"
                           className="w-12 h-12 object-cover rounded-full"
-                          src={getAvatarUrl(reviews[0].author_details?.avatar_path)}
+                          src={getAvatarUrl(
+                            reviews[0].author_details?.avatar_path
+                          )}
                           alt={reviews[0].author || "Reviewer"}
                         />
                       </div>
@@ -426,7 +515,9 @@ const MoviesCard = ({ movie }) => {
                         <span className="text-sm line-clamp-1">
                           <strong>On: </strong>
                           {reviews[0].updated_at
-                            ? dayjs(reviews[0].updated_at).format("MMMM D, YYYY")
+                            ? dayjs(reviews[0].updated_at).format(
+                                "MMMM D, YYYY"
+                              )
                             : "Not Available"}
                         </span>
                       </div>
@@ -453,40 +544,62 @@ const MoviesCard = ({ movie }) => {
                     className="mySwiper w-full"
                   >
                     {reviews.map((review) => (
-                      <SwiperSlide key={review.id}>
-                        <div className="flex flex-col text-white rounded-lg p-3 bg-slate-300/15 max-w-full box-border">
-                          <div className="flex items-center gap-3 w-full">
-                            <div>
-                              <img
-                                sizes="100px"
-                                className="w-12 h-12 object-cover rounded-full"
-                                src={getAvatarUrl(review.author_details?.avatar_path)}
-                                alt={review.author || "Reviewer"}
-                              />
+                      <SwiperSlide className="p-3" key={review.id}>
+                        <div className="flex flex-col text-white p-3 rounded-lg bg-slate-300/15 max-w-full box-border">
+                          <div className="flex justify-between items-center w-full">
+                            <div className="flex items-center gap-3 ">
+                              <div>
+                                <img
+                                  sizes="100px"
+                                  className="w-12 h-12 object-cover rounded-full"
+                                  src={getAvatarUrl(
+                                    review.author_details?.avatar_path
+                                  )}
+                                  alt={review.author || "Reviewer"}
+                                />
+                              </div>
+                              <div className="flex flex-col">
+                                <h4 className="font-bold m-0 text-lg line-clamp-1">
+                                  {review.author || "Unknown"}
+                                </h4>
+                                <span className="lowercase text-white/80 text-xs">
+                                  @{review.author_details?.username || "Unknown"}
+                                </span>
+                              </div>
                             </div>
-                            <div className="flex flex-col">
-                              <h4 className="font-bold m-0 text-lg line-clamp-1">
-                                {review.author || "Unknown"}
-                              </h4>
-                              <span className="lowercase text-[#d9232e] text-xs">
-                                @{review.author_details?.username || "Unknown"}
-                              </span>
-                              <span className="text-sm line-clamp-1">
-                                <strong>On: </strong>
-                                {review.updated_at
-                                  ? dayjs(review.updated_at).format("MMMM D, YYYY")
-                                  : "Not Available"}
-                              </span>
+                            <div className="flex flex-col items-end">
+                              <div className="flex flex-nowrap gap-1 items-center">
+                                <span>⭐</span>
+                                <span>
+                                  {review.author_details?.rating
+                                    ? review.author_details?.rating.toFixed(1) +
+                                      "/10"
+                                    : "N/A"}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="text-sm">
+                                  <strong>On: </strong>
+                                  {review.updated_at
+                                    ? dayjs(review.updated_at).format(
+                                        "MMMM D, YYYY"
+                                      )
+                                    : "Not Available"}
+                                </span>
+                              </div>
                             </div>
                           </div>
-                          <p className="text-sm w-full line-clamp-6 mt-2">{review.content}</p>
+                          <p
+                            className="text-sm w-full h-60 pr-2 overflow-y-auto mt-2 custom-scrollbar"
+                            dangerouslySetInnerHTML={{ __html: review.content }}
+                          />
                         </div>
                       </SwiperSlide>
                     ))}
                   </Swiper>
                 )
               ) : (
-                <p>No reviews available.</p>
+                <p className="p-3">No reviews available.</p>
               )}
             </div>
           </DialogPanel>
