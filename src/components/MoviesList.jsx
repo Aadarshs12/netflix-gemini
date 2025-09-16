@@ -1,16 +1,14 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
 import MoviesCard from "./MoviesCard";
 
 const MoviesList = ({ title, movies, property }) => {
-  if(!movies) return null;
+  if (!movies) return null;
   return (
-    <div className={`py-6 px-10 relative z-20 ${property}`}>
+    <div id="searchResult" className={`py-6 px-10 relative z-20 ${property}`}>
       <h2 className="text-slate-300 text-3xl mb-3">{title}</h2>
       <Swiper
         modules={[Navigation, Autoplay]}
@@ -43,8 +41,8 @@ const MoviesList = ({ title, movies, property }) => {
         }}
       >
         {movies?.map((movie, index) => (
-          <SwiperSlide key={movie.id}>
-            <MoviesCard movie={movie} index = {index + 1} />
+          <SwiperSlide key={movie.id || index}>
+            <MoviesCard movie={movie} index={index + 1} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -53,4 +51,3 @@ const MoviesList = ({ title, movies, property }) => {
 };
 
 export default MoviesList;
-

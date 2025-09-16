@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import lang from "../utils/lang";
 import { useDispatch, useSelector } from "react-redux";
 import { model } from "../utils/geminiai";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { API_Options, Login_Banner2 } from "../utils/constant";
 import { addtmdbSearchData } from "../utils/tmdbSearchSlice";
 
-const GeminiSearchBar = () => {
+const GeminiSearchBar = ({ href = "#searchResult" }) => {
+  const sectionRef = useRef(null); // Ref for scrolling
   const dispatch = useDispatch();
   const selectedLanguage = useSelector((store) => store.lang?.lang);
   const [response, setResponse] = useState("");
@@ -21,7 +22,7 @@ const GeminiSearchBar = () => {
   const searchTMDBMovie = async (movie) => {
     const data = await fetch(
       "https://api.themoviedb.org/3/search/movie?query=" +
-        movie +
+        movie.trim() +
         "&language=en-US&page=1",
       API_Options
     );
@@ -32,21 +33,28 @@ const GeminiSearchBar = () => {
   const onSubmit = async (data) => {
     try {
       const result = await model.generateContent(
-        "Act as a Movie Recommendation system and suggest some movies for the query : " +
-          data.promt +
-          ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: Gadar, Sholay, Koi Mil Gya, Bahubali, RRR."
+        "Act as a Movie Recommendation system and suggest some movies for the query: " +
+          data.prompt +
+          ". Only give me names of 5 movies, comma-separated like the example result given ahead. Example Result: Gadar, Sholay, Koi Mil Gya, Bahubali, RRR."
       );
 
       const responseText = result.response.text();
       console.log("Gemini Response:", responseText);
       setResponse(responseText);
-      const movieArray = responseText.split(",");
+      const movieArray = responseText.split(",").map((movie) => movie.trim());
       console.log("movieArray", movieArray);
 
       const promiseArray = movieArray.map((movie) => searchTMDBMovie(movie));
       const tmdbMovieList = await Promise.all(promiseArray);
       console.log("tmdbMovieList", tmdbMovieList);
       dispatch(addtmdbSearchData(tmdbMovieList));
+
+      setTimeout(() => {
+        const element = document.getElementById("searchResult");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      },1500);
     } catch (error) {
       console.error("Error:", error);
       setResponse("⚠️ Something went wrong. Please try again.");
@@ -57,7 +65,7 @@ const GeminiSearchBar = () => {
 
   return (
     <section
-     className="forGeminiBottomGradient"
+      className="forGeminiBottomGradient"
       style={{
         background: `url(${Login_Banner2}) no-repeat center center / cover`,
         minHeight: "100vh",
@@ -83,9 +91,9 @@ const GeminiSearchBar = () => {
             placeholder={
               lang[selectedLanguage]?.geminiSearchPlaceholder || "Enter prompt"
             }
-            {...register("promt", { required: true })}
+            {...register("prompt", { required: true })}
           />
-          {errors.promt && (
+          {errors.prompt && (
             <span className="text-red-600">This field is required</span>
           )}
           <button
