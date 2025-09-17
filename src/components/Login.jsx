@@ -88,7 +88,7 @@ const Login = () => {
       <Header />
       {newToNetflix ? (
         <form
-          className="p-12 lg:w-2/5 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
+          className="lg:p-12 p-8 lg:w-2/5 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
           onSubmit={handleSubmit(onSubmitSignUp)}
         >
           <h1 className="text-3xl font-semibold text-white mb-4">Sign Up</h1>
@@ -160,7 +160,7 @@ const Login = () => {
         </form>
       ) : (
         <form
-          className="p-12 lg:w-2/5 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
+          className="lg:p-12 p-8 lg:w-2/5 md:w-6/12 w-10/12 rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
           onSubmit={handleSubmit(onSubmit)}
         >
           <h1 className="text-3xl font-semibold text-white mb-4">Sign In</h1>

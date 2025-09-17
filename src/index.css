@@ -206,13 +206,13 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 }
 
 .counting {
-  position: relative; 
+  position: relative;
 
   .forCounting {
     display: block !important;
     line-height: 1;
     position: absolute;
-    bottom: 0px; 
+    bottom: 0px;
     right: 0px;
     z-index: 1;
     font-weight: 700;
@@ -221,12 +221,36 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     -webkit-text-stroke: 0.25rem #dcdcdc;
     text-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.5);
     &::before {
-      content: attr(data-content); 
+      content: attr(data-content);
       -webkit-text-fill-color: #0a0a0a;
       -webkit-text-stroke: 0;
       position: absolute;
       top: 0;
       left: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .forBackgroundGradient {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 480px;
+    width: 100%;
+    z-index: 9;
+    iframe {
+      width: 100vw;
+      height: 56.25vw;
+      min-height: 100vh;
+      min-width: 177.77vh;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      overflow: hidden;
     }
   }
 }

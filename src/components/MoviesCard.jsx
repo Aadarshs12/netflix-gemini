@@ -362,8 +362,8 @@ const MoviesCard = ({ movie, index }) => {
                 <IoIosCloseCircle />
               </button>
             </DialogTitle>
-            <div className="text-sm flex items-center flex-row gap-3 text-[#fff]">
-              <div className="relative w-1/3">
+            <div className="text-sm flex items-center lg:flex-row flex-col gap-3 text-[#fff]">
+              <div className="relative lg:w-1/3 w-full">
                 <img
                   className="w-full rounded-md object-cover"
                   src={
@@ -383,7 +383,7 @@ const MoviesCard = ({ movie, index }) => {
                   </button>
                 </div>
               </div>
-              <div className="w-2/3 flex text-base flex-col gap-3">
+              <div className="lg:w-2/3 w-full flex text-base flex-col gap-3">
                 <h2 className="text-2xl font-bold text-[#d9232e]">
                   🎥 {movie.title || "Not Available"}
                 </h2>
@@ -598,7 +598,7 @@ const MoviesCard = ({ movie, index }) => {
                                 </span>
                               </div>
                               <div>
-                                <span className="text-sm">
+                                <span className="text-sm line-clamp-1">
                                   <strong>On: </strong>
                                   {review.updated_at
                                     ? dayjs(review.updated_at).format(

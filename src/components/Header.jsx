@@ -15,6 +15,7 @@ import Logo1 from "../utils/netflix-gemini-newlogo.PNG";
 import { BsCaretDownFill } from "react-icons/bs";
 import { BsFillHeartFill } from "react-icons/bs";
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Header = () => {
   const menuRef = useRef(null);
@@ -78,7 +79,7 @@ const Header = () => {
         <img className="w-64 object-cover" src={Logo1} alt="logo" />
       </Link>
       {location.pathname !== "/" && (
-        <div className="flex items-center mt-3 gap-3">
+        <div className="lg:flex hidden items-center mt-3 gap-3">
           {showToggleInformation && location.pathname !== "/watchlist" && (
             <div className="relative">
               <Select
