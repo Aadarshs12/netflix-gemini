@@ -54,7 +54,7 @@ const GeminiSearchBar = ({ href = "#searchResult" }) => {
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
         }
-      },1500);
+      },800);
     } catch (error) {
       console.error("Error:", error);
       setResponse("⚠️ Something went wrong. Please try again.");
