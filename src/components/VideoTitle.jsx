@@ -100,19 +100,19 @@ const VideoTitle = ({ movie }) => {
   };
 
   return (
-    <div className="absolute flex flex-col gap-2 aspect-video lg:top-0 bottom-5 left-0 z-20 w-full  md:pt-48 px-4 md:px-10 text-white lg:bg-gradient-to-r from-black to-transparent">
+    <div className="absolute items-center md:items-start flex flex-col gap-2 aspect-video lg:top-0 top-[300px] left-0 z-20 w-full  md:pt-48 px-4 md:px-10 text-white lg:bg-gradient-to-r from-black to-transparent">
       <h1 className="text-3xl lg:pb-[3px] w-full md:w-3/4 lg:w-2/5 md:text-5xl leading-8 line-clamp-1 lg:text-6xl font-bold">
         {movie?.title}
       </h1>
-      <p className="text-base m-0 line-clamp-4 mb-5 text-white text-opacity-75 md:text-lg w-full md:w-3/4 lg:w-5/12">
+      <p className="text-base m-0 line-clamp-4 text-white text-opacity-75 md:text-lg w-full md:w-3/4 lg:w-5/12">
         {movie?.overview}
       </p>
-      <div className="flex gap-4 md:gap-6 lg:items-center items-start flex-row">
+      <div className="flex gap-4 md:gap-6 lg:items-center md:items-start justify-center flex-row">
         <button
           className="bg-[#d9232e] py-2 px-4 md:px-8 flex gap-1 items-center text-white rounded-full hover:bg-opacity-70 transition"
           onClick={handlePlayVideoTrailer}
         >
-          <FaPlay /> Play
+          <FaPlay /> <span className="hidden md:block">Play</span>
         </button>
         <Dialog
           open={isOpen}
@@ -153,7 +153,7 @@ const VideoTitle = ({ movie }) => {
             <>
               <PopoverButton className="bg-[#374151] py-2 px-4 md:px-8 flex gap-1 items-center text-slate-300 rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
                 <FaInfoCircle className="w-5 h-5" />
-                More Info
+                <span className="hidden md:block">More Info</span>
               </PopoverButton>
               <PopoverPanel
                 static
@@ -199,14 +199,14 @@ const VideoTitle = ({ movie }) => {
             onClick={handleRemoveWatchList}
             className="flex gap-1 items-center bg-[#374151] py-2 px-4 md:px-8 text-[#d9232e] rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none"
           >
-            <FaHeart /> Added to Watch List
+            <FaHeart /> <span className="hidden md:block">Added to Watch List</span>
           </button>
         ) : (
           <button
             onClick={handleAddWatchList}
             className="flex gap-1 items-center bg-[#374151] py-2 px-4 md:px-8 text-slate-300 rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none"
           >
-            <FaHeart /> Add to Watch List
+            <FaHeart /> <span className="hidden md:block">Add to Watch List</span>
           </button>
         )}
       </div>
