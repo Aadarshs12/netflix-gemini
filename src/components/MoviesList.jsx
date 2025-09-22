@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
+import { Navigation, Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -11,7 +11,7 @@ const MoviesList = ({ title, movies, property }) => {
     <div id="searchResult" className={`py-6 px-10 relative z-20 ${property}`}>
       <h2 className="text-slate-300 text-3xl mb-3">{title}</h2>
       <Swiper
-        modules={[Navigation, Autoplay]}
+        modules={[Navigation, Autoplay, Pagination]}
         spaceBetween={10}
         slidesPerView={8}
         loop={true}
@@ -21,6 +21,10 @@ const MoviesList = ({ title, movies, property }) => {
           pauseOnMouseEnter: true,
         }}
         navigation
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
         breakpoints={{
           320: {
             slidesPerView: 2,

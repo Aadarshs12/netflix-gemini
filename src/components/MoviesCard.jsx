@@ -51,7 +51,6 @@ const MoviesCard = ({ movie, index }) => {
   useReviewsData(movie?.id);
 
   useEffect(() => {
-    console.log(`Reviews for movie ${movie?.id}:`, reviews);
     if (reviewsError) {
       toast.error(`Error loading reviews: ${reviewsError}`, {
         position: "bottom-right",
@@ -61,7 +60,6 @@ const MoviesCard = ({ movie, index }) => {
   }, [reviews, reviewsError, movie?.id]);
 
   useEffect(() => {
-    console.log(`Credits for movie ${movie?.id}:`, credits);
   }, [credits, movie?.id]);
 
   const categories = [
@@ -107,10 +105,6 @@ const MoviesCard = ({ movie, index }) => {
       setIsLoadingTrailer(false);
     }
     if (trailorVideo?.key && isLoadingTrailer) {
-      console.log(
-        "[MoviesCard] Trailer loaded, opening modal for key:",
-        trailorVideo.key
-      );
       setIsOpenPlay(true);
       setIsLoadingTrailer(false);
       toast.dismiss();
@@ -123,12 +117,7 @@ const MoviesCard = ({ movie, index }) => {
       toast.error("Invalid movie data", { position: "bottom-right" });
       return;
     }
-    console.log("[MoviesCard] Play button clicked for movie", movie.id);
     if (trailorVideo?.key) {
-      console.log(
-        "[MoviesCard] Opening trailer modal for key:",
-        trailorVideo.key
-      );
       setIsOpen(false);
       setIsOpenPlay(true);
     } else {
@@ -218,10 +207,6 @@ const MoviesCard = ({ movie, index }) => {
           <Dialog
             open={isOpenPlay}
             onClose={() => {
-              console.log(
-                "[MoviesCard] Closing trailer modal for movie",
-                movie.id
-              );
               setIsOpenPlay(false);
               setIsLoadingTrailer(false);
               toast.dismiss();
@@ -249,10 +234,6 @@ const MoviesCard = ({ movie, index }) => {
                   )}
                   <button
                     onClick={() => {
-                      console.log(
-                        "[MoviesCard] Closing trailer modal for movie",
-                        movie.id
-                      );
                       setIsOpenPlay(false);
                       setIsLoadingTrailer(false);
                       toast.dismiss();
@@ -273,10 +254,6 @@ const MoviesCard = ({ movie, index }) => {
                       iframeClassName="w-full h-full"
                       title={`Trailer for ${movie.title || "Movie"}`}
                       onReady={(event) => {
-                        console.log(
-                          "[MoviesCard] YouTube player ready for",
-                          trailorVideo.key
-                        );
                         toast.dismiss();
                       }}
                       onError={(error) => {
@@ -295,10 +272,6 @@ const MoviesCard = ({ movie, index }) => {
                         <p>No trailer available</p>
                         <button
                           onClick={() => {
-                            console.log(
-                              "[MoviesCard] Retry fetch for movie",
-                              movie.id
-                            );
                             setIsLoadingTrailer(true);
                             toast.warn("Fetching trailer...", {
                               position: "bottom-right",

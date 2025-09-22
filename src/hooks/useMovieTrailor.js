@@ -18,7 +18,6 @@ const useMovieTrailor = (id) => {
     }
     try {
       setIsFetching(true);
-      console.log(`[useMovieTrailor] Initiating fetch for movie ${movieId}`);
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
         API_Options
@@ -28,7 +27,6 @@ const useMovieTrailor = (id) => {
         throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
       const jsonData = await response.json();
-      console.log(`[useMovieTrailor] Videos for movie ${movieId}:`, jsonData?.results);
       setData(jsonData?.results || []);
       setError(null);
     } catch (error) {
@@ -45,14 +43,12 @@ const useMovieTrailor = (id) => {
       console.warn(`[useMovieTrailor] Fetch skipped due to invalid movie ID: ${movieId}`);
       return;
     }
-    console.log(`[useMovieTrailor] Fetch triggered for movie ${movieId}`);
-    dispatch(clearTrailerVideo(movieId)); // Clear previous trailer
+    dispatch(clearTrailerVideo(movieId)); 
     getMovieVideos(movieId);
   }, [dispatch]);
 
   useEffect(() => {
     if (data && id) {
-      console.log(`[useMovieTrailor] Processing videos for movie ${id}:`, data);
       const filterData = data.filter(
         (video) =>
           video.type === "Trailer" &&
@@ -62,7 +58,6 @@ const useMovieTrailor = (id) => {
           video.key.length >= 11
       );
       const trailer = filterData.length ? filterData[0] : null;
-      console.log(`[useMovieTrailor] Selected trailer for ${id}:`, trailer);
       if (data.length && !filterData.length) {
         console.warn(`[useMovieTrailor] No valid YouTube trailers for movie ${id}, available videos:`, data);
         setError("No valid YouTube trailer found");
@@ -74,7 +69,6 @@ const useMovieTrailor = (id) => {
   useEffect(() => {
     return () => {
       if (id && typeof id === 'number') {
-        console.log(`[useMovieTrailor] Clearing trailer for movie ${id}`);
         dispatch(clearTrailerVideo(id));
       }
     };
