@@ -100,7 +100,7 @@ const VideoTitle = ({ movie }) => {
   };
 
   return (
-    <div className="absolute items-center md:items-start flex flex-col gap-2 aspect-video lg:top-0 top-[300px] left-0 z-20 w-full  md:pt-48 px-4 md:px-10 text-white lg:bg-gradient-to-r from-black to-transparent">
+    <div className="absolute items-center md:items-start flex flex-col gap-2 aspect-video lg:top-0 -bottom-[20px] left-0 z-20 w-full  md:pt-48 px-4 md:px-10 text-white lg:bg-gradient-to-r from-black to-transparent">
       <h1 className="text-3xl lg:pb-[3px] w-full md:w-3/4 lg:w-2/5 md:text-5xl leading-8 line-clamp-1 lg:text-6xl font-bold">
         {movie?.title}
       </h1>
@@ -109,7 +109,7 @@ const VideoTitle = ({ movie }) => {
       </p>
       <div className="flex gap-4 md:gap-6 lg:items-center md:items-start justify-center flex-row">
         <button
-          className="bg-[#d9232e] py-2 px-4 md:px-8 flex gap-1 items-center text-white rounded-full hover:bg-opacity-70 transition"
+          className="bg-[#d9232e] md:py-2 w-10 h-10 md:w-auto md:h-auto grid place-content-center md:px-8 md:flex gap-1 items-center text-white rounded-full hover:bg-opacity-70 transition"
           onClick={handlePlayVideoTrailer}
         >
           <FaPlay /> <span className="hidden md:block">Play</span>
@@ -151,7 +151,7 @@ const VideoTitle = ({ movie }) => {
         <Popover className="relative">
           {({ open }) => (
             <>
-              <PopoverButton className="bg-[#374151] py-2 px-4 md:px-8 flex gap-1 items-center text-slate-300 rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
+              <PopoverButton className="bg-[#374151] md:py-2 w-10 h-10 md:w-auto md:h-auto grid place-content-center md:px-8 md:flex gap-1 items-center text-slate-300 rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none">
                 <FaInfoCircle className="w-5 h-5" />
                 <span className="hidden md:block">More Info</span>
               </PopoverButton>
@@ -197,14 +197,14 @@ const VideoTitle = ({ movie }) => {
         {isInWatchList ? (
           <button
             onClick={handleRemoveWatchList}
-            className="flex gap-1 items-center bg-[#374151] py-2 px-4 md:px-8 text-[#d9232e] rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none"
+            className="md:flex gap-1 items-center bg-[#374151] grid place-content-center md:py-2 w-10 h-10 md:w-auto md:h-auto  md:px-8 text-[#d9232e] rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none"
           >
             <FaHeart /> <span className="hidden md:block">Added to Watch List</span>
           </button>
         ) : (
           <button
             onClick={handleAddWatchList}
-            className="flex gap-1 items-center bg-[#374151] py-2 px-4 md:px-8 text-slate-300 rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none"
+            className="md:flex gap-1 items-center bg-[#374151] grid place-content-center md:py-2 w-10 h-10 md:w-auto md:h-auto  md:px-8 text-slate-300 rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none"
           >
             <FaHeart /> <span className="hidden md:block">Add to Watch List</span>
           </button>

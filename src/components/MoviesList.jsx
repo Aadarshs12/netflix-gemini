@@ -13,6 +13,7 @@ const MoviesList = ({ title, movies, property }) => {
       <Swiper
         modules={[Navigation, Autoplay, Pagination]}
         spaceBetween={10}
+        className="custom-swiper"
         slidesPerView={8}
         loop={true}
         autoplay={{
@@ -27,19 +28,19 @@ const MoviesList = ({ title, movies, property }) => {
         }}
         breakpoints={{
           320: {
-            slidesPerView: 2,
+            slidesPerView: 2.4,
             spaceBetween: 5,
           },
           641: {
-            slidesPerView: 4,
+            slidesPerView: 4.4,
             spaceBetween: 8,
           },
           769: {
-            slidesPerView: 6,
+            slidesPerView: 6.4,
             spaceBetween: 10,
           },
           1025: {
-            slidesPerView: 8,
+            slidesPerView: 8.4,
             spaceBetween: 10,
           },
         }}

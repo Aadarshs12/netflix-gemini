@@ -176,7 +176,7 @@ const MoviesCard = ({ movie, index }) => {
       rel: 0,
       modestbranding: 1,
       playsinline: 0,
-      fs: 1, // Enable full-screen button
+      fs: 1, 
     },
   };
 
@@ -188,7 +188,7 @@ const MoviesCard = ({ movie, index }) => {
   return (
     <div className="forMovieCard relative overflow-visible">
       <img
-        className="rounded-lg h-60 object-cover w-full"
+        className="rounded-lg md:h-60 h-48 object-cover w-full"
         src={movie.poster_path ? IMG_CDN_URL + movie.poster_path : poster}
         alt={movie.title || "Movie"}
       />
