@@ -40,7 +40,7 @@ const useReviewsData = (movieId) => {
     if (movieId) {
       getReviewsData();
     }
-  }, [movieId]);
+  }, [movieId, getReviewsData]);
 
   return null;
 };

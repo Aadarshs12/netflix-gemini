@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import "react-toastify/dist/ReactToastify.css";
 import "@fontsource/montserrat";
-
+import React from 'react';
 import "@fontsource/montserrat/400.css";
 import "@fontsource/montserrat/600.css";
 import "@fontsource/montserrat/700.css";
