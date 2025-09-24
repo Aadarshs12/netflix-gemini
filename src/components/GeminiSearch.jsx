@@ -1,4 +1,3 @@
-import React from 'react';
 import GeminiMovieSuggetions from "./GeminiMovieSuggetions";
 import GeminiSearchBar from "./GeminiSearchBar";
 

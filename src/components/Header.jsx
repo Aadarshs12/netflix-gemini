@@ -1,4 +1,3 @@
-import React from 'react';
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState, useRef } from "react";
 import { auth } from "../utils/firebase";
@@ -16,6 +15,7 @@ import Logo1 from "../utils/netflix-gemini-newlogo.PNG";
 import { BsCaretDownFill } from "react-icons/bs";
 import { BsFillHeartFill } from "react-icons/bs";
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Header = () => {
   const menuRef = useRef(null);
@@ -190,8 +190,8 @@ const Header = () => {
                   Sign Out Your Account
                 </DialogTitle>
                 <p className="mt-2 text-sm text-white font-sans">
-                  Are you sure you want to sign out? Click &quot;Yes&quot; to proceed or
-                  &quot;No&quot; to cancel.
+                  Are you sure you want to sign out? Click "Yes" to proceed or
+                  "No" to cancel.
                 </p>
                 <div className="mt-4 flex gap-3">
                   <Button
