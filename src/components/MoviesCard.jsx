@@ -1,3 +1,4 @@
+import React from 'react';
 import { IMG_CDN_URL, IMG_CDN_URL2 } from "../utils/constant";
 import { useSelector, useDispatch } from "react-redux";
 import { FaPlay, FaHeart } from "react-icons/fa";

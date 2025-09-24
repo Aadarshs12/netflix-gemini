@@ -1,4 +1,4 @@
-// components/GeminiMovieSuggetions.jsx
+import React from 'react';
 import { useSelector } from "react-redux";
 import MoviesList from "../components/MoviesList";
 

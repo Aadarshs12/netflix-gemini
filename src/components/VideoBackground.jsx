@@ -1,5 +1,4 @@
-"use client";
-
+import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import useMovieTrailor from "../hooks/useMovieTrailor";
