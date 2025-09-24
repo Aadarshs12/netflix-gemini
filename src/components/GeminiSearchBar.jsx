@@ -7,7 +7,6 @@ import { API_Options, Login_Banner2 } from "../utils/constant";
 import { addtmdbSearchData } from "../utils/tmdbSearchSlice";
 
 const GeminiSearchBar = ({ href = "#searchResult" }) => {
-  const sectionRef = useRef(null); // Ref for scrolling
   const dispatch = useDispatch();
   const selectedLanguage = useSelector((store) => store.lang?.lang);
   const [response, setResponse] = useState("");
