@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaPlay, FaHeart } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { Dialog, DialogPanel } from "@headlessui/react";

@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from "./Header";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -66,7 +65,8 @@ const Login = () => {
 
   const onSubmit = (data) => {
     signInWithEmailAndPassword(auth, data?.email, data?.password)
-      .then(() => {
+      .then((userCredential) => {
+        const user = userCredential.user;
         toast.success("Signed in successfully!");
         navigate("/browse");
       })
@@ -78,17 +78,13 @@ const Login = () => {
       });
     reset();
   };
-
   return (
-    <div
-      className="forLoginBg relative min-h-screen"
-      style={{
-        background: `url(${Login_Banner1}) no-repeat center center / cover`,
-        minHeight: '100vh',
-        position: 'relative',
-        zIndex: '2',
-      }}
-    >
+    <div className="forLoginBg relative min-h-screen" style={{
+            background: `url(${Login_Banner1}) no-repeat center center / cover`,
+            minHeight : '100vh',
+            position: 'relative',
+            zIndex:'2',
+          }}>
       <Header />
       {newToNetflix ? (
         <form
@@ -143,14 +139,14 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100"
+            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
           >
             Sign Up
           </button>
           <p className="text-white text-sm mt-3">
-            Created with &#9829; by{" "}
+            Created with 💖 by{" "}
             <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span>{" "}
-            - All Rights Reserved.
+            - All Right Reserved.
           </p>
           <div className="pt-4">
             <span className="text-white">
@@ -207,14 +203,14 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100"
+            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
           >
             Sign In
           </button>
           <p className="text-white text-sm mt-3">
-            Created with &#9829; by{" "}
+            Created with 💖 by{" "}
             <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span>{" "}
-            - All Rights Reserved.
+            - All Right Reserved.
           </p>
           <div className="pt-4">
             <span className="text-white">

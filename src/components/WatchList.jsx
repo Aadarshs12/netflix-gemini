@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import { IoHeartDislike } from "react-icons/io5";
