@@ -66,8 +66,7 @@ const Login = () => {
 
   const onSubmit = (data) => {
     signInWithEmailAndPassword(auth, data?.email, data?.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+      .then(() => {
         toast.success("Signed in successfully!");
         navigate("/browse");
       })
@@ -79,13 +78,17 @@ const Login = () => {
       });
     reset();
   };
+
   return (
-    <div className="forLoginBg relative min-h-screen" style={{
-            background: `url(${Login_Banner1}) no-repeat center center / cover`,
-            minHeight : '100vh',
-            position: 'relative',
-            zIndex:'2',
-          }}>
+    <div
+      className="forLoginBg relative min-h-screen"
+      style={{
+        background: `url(${Login_Banner1}) no-repeat center center / cover`,
+        minHeight: '100vh',
+        position: 'relative',
+        zIndex: '2',
+      }}
+    >
       <Header />
       {newToNetflix ? (
         <form
@@ -138,14 +141,14 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
+            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100"
           >
             Sign Up
           </button>
           <p className="text-white text-sm mt-3">
-            Created with 💖 by{" "}
+            Created with &#9829; by{" "}
             <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span>{" "}
-            - All Right Reserved.
+            - All Rights Reserved.
           </p>
           <div className="pt-4">
             <span className="text-white">
@@ -199,14 +202,14 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
+            className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100"
           >
             Sign In
           </button>
           <p className="text-white text-sm mt-3">
-            Created with 💖 by{" "}
+            Created with &#9829; by{" "}
             <span className="font-semibold text-[#d9232e]">Aadarsh Singh</span>{" "}
-            - All Right Reserved.
+            - All Rights Reserved.
           </p>
           <div className="pt-4">
             <span className="text-white">

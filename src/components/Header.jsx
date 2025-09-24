@@ -190,8 +190,8 @@ const Header = () => {
                   Sign Out Your Account
                 </DialogTitle>
                 <p className="mt-2 text-sm text-white font-sans">
-                  Are you sure you want to sign out? Click "Yes" to proceed or
-                  "No" to cancel.
+                  Are you sure you want to sign out? Click &quot;Yes&quot; to proceed or
+                  &quot;No&quot; to cancel.
                 </p>
                 <div className="mt-4 flex gap-3">
                   <Button
