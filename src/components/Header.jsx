@@ -1,3 +1,4 @@
+import React from 'react';
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState, useRef } from "react";
 import { auth } from "../utils/firebase";
@@ -15,7 +16,6 @@ import Logo1 from "../utils/netflix-gemini-newlogo.PNG";
 import { BsCaretDownFill } from "react-icons/bs";
 import { BsFillHeartFill } from "react-icons/bs";
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { RxHamburgerMenu } from "react-icons/rx";
 
 const Header = () => {
   const menuRef = useRef(null);
