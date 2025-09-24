@@ -127,12 +127,14 @@ const Login = () => {
               placeholder="Enter your password"
               autoComplete="new-password"
             />
-            <span
+            <button
+              type="button"
               className="absolute top-1/2 right-4 cursor-pointer transform -translate-y-1/2 h-4 w-4 text-white/60"
               onClick={handleEyeClick}
+              aria-label={isPasswordShow ? "Hide password" : "Show password"}
             >
               {isPasswordShow ? <FaRegEyeSlash /> : <FaRegEye />}
-            </span>
+            </button>
             {errors.password?.type === "required" && (
               <p className="text-[#d9232e]" role="alert">
                 Password is required
@@ -153,12 +155,13 @@ const Login = () => {
           <div className="pt-4">
             <span className="text-white">
               Already an User?{" "}
-              <span
-                className="font-bold text-[#d9232e] hover:underline hover:cursor-pointer"
+              <button
+                type="button"
+                className="font-bold text-[#d9232e] hover:underline"
                 onClick={handleSignUp}
               >
                 Sign In
-              </span>
+              </button>
             </span>
           </div>
         </form>
@@ -188,12 +191,14 @@ const Login = () => {
               placeholder="Enter your password"
               autoComplete="new-password"
             />
-            <span
+            <button
+              type="button"
               className="absolute top-1/2 right-4 cursor-pointer transform -translate-y-1/2 h-4 w-4 text-white/60"
               onClick={handleEyeClick}
+              aria-label={isPasswordShow ? "Hide password" : "Show password"}
             >
               {isPasswordShow ? <FaRegEyeSlash /> : <FaRegEye />}
-            </span>
+            </button>
             {errors.password?.type === "required" && (
               <p className="text-[#d9232e]" role="alert">
                 Password is required
@@ -214,12 +219,13 @@ const Login = () => {
           <div className="pt-4">
             <span className="text-white">
               New to Netflix?{" "}
-              <span
-                className="font-bold text-[#d9232e] hover:underline hover:cursor-pointer"
+              <button
+                type="button"
+                className="font-bold text-[#d9232e] hover:underline"
                 onClick={handleSignUp}
               >
                 Sign Up
-              </span>
+              </button>
             </span>
           </div>
         </form>
