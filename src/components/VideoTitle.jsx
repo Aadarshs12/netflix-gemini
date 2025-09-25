@@ -96,12 +96,9 @@ const VideoTitle = ({ movie }) => {
     },
   };
 
-  const onReady = (event) => {
-    console.log("YouTube player ready:", event.target);
-  };
 
   return (
-    <div className="absolute items-center md:items-start flex flex-col gap-2 aspect-video lg:top-0 -bottom-[20px] left-0 z-20 w-full  md:pt-48 px-4 md:px-10 text-white lg:bg-gradient-to-r from-black to-transparent">
+    <div className="absolute items-center md:items-start flex flex-col gap-2 aspect-video lg:translate-y-32 xl:translate-y-44 lg:translate-x-0 -bottom-[20px] left-0 z-20 w-full  md:pt-48 px-4 md:px-10 text-white lg:bg-gradient-to-r from-black to-transparent">
       <h1 className="text-3xl lg:pb-[3px] w-full md:w-3/4 lg:w-2/5 md:text-5xl leading-8 line-clamp-1 lg:text-6xl font-bold">
         {movie?.title}
       </h1>
@@ -135,7 +132,6 @@ const VideoTitle = ({ movie }) => {
                     key={iframeKey}
                     videoId={trailorVideo.key}
                     opts={youtubeOpts}
-                    onReady={onReady}
                     className="w-full h-full"
                     iframeClassName="w-full h-full"
                     title={`Trailer for ${movie?.title || "Movie"}`}
