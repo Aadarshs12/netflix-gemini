@@ -1,12 +1,13 @@
+import React from 'react';
 import { useForm } from "react-hook-form";
 import lang from "../utils/lang";
 import { useDispatch, useSelector } from "react-redux";
 import { model } from "../utils/geminiai";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { API_Options, Login_Banner2 } from "../utils/constant";
 import { addtmdbSearchData } from "../utils/tmdbSearchSlice";
 
-const GeminiSearchBar = ({ href = "#searchResult" }) => {
+const GeminiSearchBar = () => {
   const dispatch = useDispatch();
   const selectedLanguage = useSelector((store) => store.lang?.lang);
   const [response, setResponse] = useState("");
