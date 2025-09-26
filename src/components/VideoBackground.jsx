@@ -42,7 +42,7 @@ const VideoBackground = ({ id }) => {
   }
 
   return (
-    <div className="w-full aspect-video overflow-hidden forBackgroundGradient">
+    <div className="w-full relative aspect-video overflow-hidden forBackgroundGradient">
       {isFetching || isLoading ? (
         <div className="w-full h-full flex items-center justify-center bg-gray-900 text-white">
           <p>Loading trailer...</p>
