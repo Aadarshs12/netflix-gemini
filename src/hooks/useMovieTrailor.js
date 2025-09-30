@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
 import { API_Options } from "../utils/constant";
@@ -72,7 +73,7 @@ const useMovieTrailor = (id) => {
         dispatch(clearTrailerVideo(id));
       }
     };
-  }, [id, dispatch]);
+  }, [id, dispatch,getMovieVideos]);
 
   return { fetchTrailer, error, isFetching };
 };

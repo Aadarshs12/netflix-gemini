@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addCredits } from "../utils/moviesSlice";
@@ -27,7 +28,7 @@ const useCreditsData = (movieId) => {
     if (movieId) {
       getCreditsData();
     }
-  }, [movieId]);
+  }, [movieId,getCreditsData]);
 };
 
 export default useCreditsData;
