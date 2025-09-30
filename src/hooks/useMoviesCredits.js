@@ -28,7 +28,7 @@ const useCreditsData = (movieId) => {
     if (movieId) {
       getCreditsData();
     }
-  }, [movieId,getCreditsData]);
+  }, [movieId]);
 };
 
 export default useCreditsData;

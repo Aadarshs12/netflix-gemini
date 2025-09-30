@@ -22,7 +22,7 @@ const useGenresName = () => {
     };
 
     fetchGenres();
-  }, [dispatch]); // Include dispatch in dependency array
+  }, [dispatch]); 
 };
 
 export default useGenresName;

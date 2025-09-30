@@ -189,7 +189,7 @@ const MoviesCard = ({ movie, index }) => {
   return (
     <div className="forMovieCard relative overflow-visible">
       <img
-        className="rounded-lg md:h-60 h-48 object-cover w-full"
+        className="rounded-lg md:h-60 h-56 2xl:h-72 object-cover w-full"
         src={movie.poster_path ? IMG_CDN_URL + movie.poster_path : poster}
         alt={movie.title || "Movie"}
       />

@@ -73,7 +73,7 @@ const useMovieTrailor = (id) => {
         dispatch(clearTrailerVideo(id));
       }
     };
-  }, [id, dispatch,getMovieVideos]);
+  }, [id, dispatch]);
 
   return { fetchTrailer, error, isFetching };
 };
