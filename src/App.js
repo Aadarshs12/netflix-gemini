@@ -11,8 +11,6 @@ import "@fontsource/montserrat/700.css";
 
 const App = () => {
 
-  console.log("API KEY:", process.env.REACT_APP_GEMINI_API_KEY);
-
   return (
     <Provider store={appStore}>
       <div className="select-none">

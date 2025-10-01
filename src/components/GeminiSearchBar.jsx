@@ -39,14 +39,11 @@ const GeminiSearchBar = () => {
       );
 
       const responseText = result.response.text();
-      console.log("Gemini Response:", responseText);
       setResponse(responseText);
       const movieArray = responseText.split(",").map((movie) => movie.trim());
-      console.log("movieArray", movieArray);
 
       const promiseArray = movieArray.map((movie) => searchTMDBMovie(movie));
       const tmdbMovieList = await Promise.all(promiseArray);
-      console.log("tmdbMovieList", tmdbMovieList);
       dispatch(addtmdbSearchData(tmdbMovieList));
 
       setTimeout(() => {

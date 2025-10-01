@@ -79,6 +79,7 @@ const Header = () => {
 
   const handleGeminiSearchClick = () => {
     dispatch(toggleGeminiSearchView());
+    setOpenHamBurger(false);
   };
 
   return (
@@ -156,24 +157,36 @@ const Header = () => {
             {open && (
               <div className="absolute right-0 mt-2 text-slate-300 w-56 origin-top-right rounded-md bg-[#374151ef] dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                 <div className="py-1">
-                  <Link
-                    to="/support"
+                  <a
+                    href="https://www.linkedin.com/in/aadarsh-singh-60a1a5229/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
                   >
                     View Developer LinkedIn
-                  </Link>
-                  <Link
-                    to="/license"
+                  </a>
+                  <a
+                    href="https://github.com/aadarshs12"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
                   >
                     View Developer GitHub
-                  </Link>
-                  <Link
-                    to="/support"
+                  </a>
+                  <a
+                    href="https://www.instagram.com/_aadarshrajput_"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
                   >
-                    View Developer Instagram
-                  </Link>
+                    Connect On Instagram
+                  </a>
+                  <a
+                    href="mailto:aadarshs500@gmail.com"
+                    className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
+                  >
+                    Connect On Mail
+                  </a>
                 </div>
               </div>
             )}
@@ -220,14 +233,16 @@ const Header = () => {
           </Dialog>
         </div>
       )}
-      <div
-        className="lg:hidden block rounded-md py-1 px-2 border-solid border-2 border-slate-300"
-        onClick={() => setOpenHamBurger(true)}
-      >
-        <span className="text-white text-3xl">
-          <GiHamburgerMenu />
-        </span>
-      </div>
+      {location.pathname !== "/" && (
+        <div
+          className="lg:hidden block rounded-md py-1 px-2 border-solid border-2 border-slate-300"
+          onClick={() => setOpenHamBurger(true)}
+        >
+          <span className="text-white text-3xl">
+            <GiHamburgerMenu />
+          </span>
+        </div>
+      )}
       <Transition.Root show={openHamBurger} as={Fragment}>
         <Dialog
           as="div"
@@ -255,7 +270,7 @@ const Header = () => {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative bg-gray-900 text-white w-64 p-4">
+              <DialogPanel className="relative bg-gray-900 text-white w-64 p-4">
                 <button
                   onClick={() => setOpenHamBurger(false)}
                   className="absolute top-4 right-4 p-2 rounded-md hover:bg-gray-800"
@@ -291,9 +306,12 @@ const Header = () => {
                           </div>
                         )}
                       <div className="mx-2 flex gap-2 items-center">
+                        <Link to={"/watchlist"}>
+                          {" "}
+                          <span>Watchlist</span>{" "}
+                        </Link>
                         <span>Watchlist</span>
                         <Link to={"/watchlist"} className="relative">
-                        
                           <span className="text-[#fff] text-xl">
                             <BsFillHeartFill />
                           </span>
@@ -342,24 +360,36 @@ const Header = () => {
                         {open && (
                           <div className="absolute left-0 mt-2 text-slate-300 w-56 origin-top-right rounded-md bg-[#374151ef] dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                             <div className="py-1">
-                              <Link
-                                to="/support"
+                              <a
+                                href="https://www.linkedin.com/in/aadarsh-singh-60a1a5229/"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
                               >
                                 View Developer LinkedIn
-                              </Link>
-                              <Link
-                                to="/license"
+                              </a>
+                              <a
+                                href="https://github.com/aadarshs12"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
                               >
                                 View Developer GitHub
-                              </Link>
-                              <Link
-                                to="/support"
+                              </a>
+                              <a
+                                href="https://www.instagram.com/_aadarshrajput_"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
                               >
-                                View Developer Instagram
-                              </Link>
+                                Connect On Instagram
+                              </a>
+                              <a
+                                href="mailto:aadarshs500@gmail.com"
+                                className="block px-4 py-2 text-sm text-slate-300 hover:bg-gray-100 hover:text-black"
+                              >
+                                Connect On Mail
+                              </a>
                             </div>
                           </div>
                         )}
@@ -375,7 +405,7 @@ const Header = () => {
                         onClose={() => setIsOpen(false)}
                         className="fixed inset-0 z-50"
                       >
-                        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 sm:p-6">
+                        <div className="fixed inset-0 bg-[#00050d] flex items-center justify-center p-4 sm:p-6">
                           <DialogPanel className="w-full max-w-sm sm:max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
                             <DialogTitle
                               as="h2"
@@ -407,7 +437,7 @@ const Header = () => {
                     </div>
                   )}
                 </nav>
-              </Dialog.Panel>
+              </DialogPanel>
             </Transition.Child>
           </div>
         </Dialog>

@@ -41,7 +41,6 @@ const WatchList = () => {
     );
   };
 
-  console.log("[WatchList] Watchlist:", watchlist, "Selected Movie ID:", selectedMovieId);
 
   const handleRemoveWatchList = (item) => {
     if (!item?.id) {
@@ -49,7 +48,6 @@ const WatchList = () => {
       toast.error("Invalid movie data", { position: "bottom-right" });
       return;
     }
-    console.log("[WatchList] Removing movie with id:", item.id);
     dispatch(removeWatchList(item.id));
     toast.error("Removed from Watch List!", { position: "bottom-right" });
   };
@@ -60,9 +58,7 @@ const WatchList = () => {
       toast.error("Invalid movie data", { position: "bottom-right" });
       return;
     }
-    console.log("[WatchList] Play button clicked for movie", item.id);
     if (selectedMovieId !== item.id) {
-      console.log("[WatchList] Clearing previous trailer for", selectedMovieId);
       if (selectedMovieId) {
         dispatch(clearTrailerVideo(selectedMovieId));
       }
@@ -71,7 +67,6 @@ const WatchList = () => {
       toast.warn("Fetching trailer...", { position: "bottom-right", autoClose: false });
       fetchTrailer(item.id);
     } else if (!trailorVideo?.key && !isFetching) {
-      console.log("[WatchList] Retrying fetch for movie", item.id);
       dispatch(clearTrailerVideo(item.id));
       setIsLoadingTrailer(true);
       toast.warn("Fetching trailer...", { position: "bottom-right", autoClose: false });
@@ -80,7 +75,6 @@ const WatchList = () => {
   };
 
   useEffect(() => {
-    console.log("[WatchList] Movie ID:", selectedMovieId, "Trailer:", trailorVideo, "Error:", error);
     if (error && selectedMovieId) {
       console.error("[WatchList] Trailer fetch error for movie", selectedMovieId, ":", error);
       toast.error(`Failed to fetch trailer for movie ${selectedMovieId}: ${error}`, {
@@ -90,7 +84,6 @@ const WatchList = () => {
       setIsLoadingTrailer(false);
     }
     if (trailorVideo?.key && isLoadingTrailer && selectedMovieId) {
-      console.log("[WatchList] Trailer loaded, opening modal for key:", trailorVideo.key);
       setIsOpenPlay(true);
       setIsLoadingTrailer(false);
       toast.dismiss();
@@ -187,7 +180,6 @@ const WatchList = () => {
             <Dialog
               open={isOpenPlay}
               onClose={() => {
-                console.log("[WatchList] Closing trailer modal for movie", selectedMovieId);
                 setIsOpenPlay(false);
                 setSelectedMovieId(null);
                 setIsLoadingTrailer(false);
@@ -203,7 +195,6 @@ const WatchList = () => {
                   <div className="absolute flex items-center gap-3 top-4 right-4 z-[1001]">
                     <button
                       onClick={() => {
-                        console.log("[WatchList] Closing trailer modal for movie", selectedMovieId);
                         setIsOpenPlay(false);
                         setSelectedMovieId(null);
                         setIsLoadingTrailer(false);
@@ -227,7 +218,6 @@ const WatchList = () => {
                         allow="autoplay; encrypted-media"
                         allowFullScreen
                         onLoad={() => {
-                          console.log("[WatchList] Iframe loaded for", trailorVideo.key);
                           toast.dismiss();
                         }}
                         onError={(err) => console.error("[WatchList] Iframe error:", err)}
@@ -238,7 +228,6 @@ const WatchList = () => {
                           <p>No trailer available</p>
                           <button
                             onClick={() => {
-                              console.log("[WatchList] Retry fetch for movie", selectedMovieId);
                               setIsLoadingTrailer(true);
                               toast.warn("Fetching trailer...", { position: "bottom-right", autoClose: false });
                               fetchTrailer(selectedMovieId);

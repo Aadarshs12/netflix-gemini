@@ -189,7 +189,7 @@ const MoviesCard = ({ movie, index }) => {
   return (
     <div className="forMovieCard relative overflow-visible">
       <img
-        className="rounded-lg md:h-60 h-56 2xl:h-72 object-cover w-full"
+        className="rounded-lg md:h-60 h-52 2xl:h-72 object-cover w-full"
         src={movie.poster_path ? IMG_CDN_URL + movie.poster_path : poster}
         alt={movie.title || "Movie"}
       />
@@ -324,13 +324,13 @@ const MoviesCard = ({ movie, index }) => {
         onClose={() => setIsOpen(false)}
         className="relative z-[1000]"
       >
-        <div className="fixed inset-0 bg-black/90" aria-hidden="true" />
+        <div className="fixed md:inset-0 left-0 top-1 bottom-1 right-0 bg-black/90" aria-hidden="true" />
         <div className="fixed inset-0 w-full h-full flex items-center justify-center">
-          <DialogPanel className="w-full max-w-full flex flex-col gap-2 max-h-[100vh] bg-[#000000da] shadow-lg rounded-lg p-4 overflow-y-auto">
+          <DialogPanel className="w-full max-w-full flex flex-col gap-2 max-h-[100vh] bg-[#000000da] shadow-lg rounded-lg md:p-4 py-6 px-4 overflow-y-auto">
             <DialogTitle className="text-lg mb-2 flex justify-between items-center font-bold text-white">
-              <span>Movie Details</span>
+              <span className='text-xl'>Movie Details</span>
               <button
-                className="text-2xl text-[#fff] hover:text-[#d9232e]"
+                className="md:text-2xl text-3xl text-[#fff] hover:text-[#d9232e]"
                 onClick={() => setIsOpen(false)}
               >
                 <IoIosCloseCircle />

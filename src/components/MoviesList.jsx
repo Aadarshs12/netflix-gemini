@@ -29,19 +29,19 @@ const MoviesList = ({ title, movies, property }) => {
         }}
         breakpoints={{
           320: {
-            slidesPerView: 2.4,
+            slidesPerView: 2.2,
             spaceBetween: 5,
           },
           641: {
-            slidesPerView: 4.4,
+            slidesPerView: 4.2,
             spaceBetween: 8,
           },
           769: {
-            slidesPerView: 6.4,
+            slidesPerView: 6.2,
             spaceBetween: 10,
           },
           1025: {
-            slidesPerView: 8.4,
+            slidesPerView: 8.2,
             spaceBetween: 10,
           },
         }}

@@ -6,7 +6,6 @@ const GeminiMovieSuggetions = () => {
   const tmdbSearchData = useSelector(
     (store) => store.tmdbSearch?.tmdbSearchData
   );
-  console.log("search", tmdbSearchData);
 
   const allMovies = tmdbSearchData
     ? Array.from(
@@ -19,10 +18,6 @@ const GeminiMovieSuggetions = () => {
       )
     : [];
 
-  console.log(
-    "allMovies",
-    allMovies.map((m) => m.id)
-  );
 
   return (
     <>
