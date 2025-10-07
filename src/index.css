@@ -116,39 +116,6 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   }
 }
 
-.forWatchListBg {
-  background-image: repeating-linear-gradient(
-      90deg,
-      rgba(217, 35, 46, 0.09019607843137255) 0px,
-      rgba(217, 35, 46, 0.09019607843137255) 1px,
-      transparent 1px,
-      transparent 60px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(217, 35, 46, 0.09019607843137255) 0px,
-      rgba(217, 35, 46, 0.09019607843137255) 1px,
-      transparent 1px,
-      transparent 60px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(217, 35, 46, 0.09019607843137255) 0px,
-      rgba(217, 35, 46, 0.09019607843137255) 1px,
-      transparent 1px,
-      transparent 10px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(217, 35, 46, 0.09019607843137255) 0px,
-      rgba(217, 35, 46, 0.09019607843137255) 1px,
-      transparent 1px,
-      transparent 10px
-    ),
-    linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0));
-  aspect-ratio: 16 / 9 !important;
-  width: 100%;
-}
 
 .forMakingBorderBottom {
   border-bottom: 1px solid #cecece;
@@ -281,6 +248,8 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 .swiper-pagination-bullets.swiper-pagination-horizontal {
   bottom: 0px !important;
 }
+
+
 
 @media (max-width: 768px) {
   .custom-swiper {

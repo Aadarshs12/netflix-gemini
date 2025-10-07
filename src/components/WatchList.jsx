@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import { IoHeartDislike } from "react-icons/io5";
@@ -14,10 +14,12 @@ import { FaPlay } from "react-icons/fa";
 import { clearTrailerVideo } from "../utils/moviesSlice";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { IoIosCloseCircle } from "react-icons/io";
+import { Login_Banner2 } from "../utils/constant";
 
 const WatchList = () => {
   const dispatch = useDispatch();
-  const watchlist = useSelector((store) => store.watchlist?.watchListItems) || [];
+  const watchlist =
+    useSelector((store) => store.watchlist?.watchListItems) || [];
   const genreList = useSelector((store) => store.genre?.genreList) || [];
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [isLoadingTrailer, setIsLoadingTrailer] = useState(false);
@@ -41,7 +43,6 @@ const WatchList = () => {
     );
   };
 
-
   const handleRemoveWatchList = (item) => {
     if (!item?.id) {
       console.error("[WatchList] Invalid movie ID for removal");
@@ -64,23 +65,37 @@ const WatchList = () => {
       }
       setSelectedMovieId(item.id);
       setIsLoadingTrailer(true);
-      toast.warn("Fetching trailer...", { position: "bottom-right", autoClose: false });
+      toast.warn("Fetching trailer...", {
+        position: "bottom-right",
+        autoClose: false,
+      });
       fetchTrailer(item.id);
     } else if (!trailorVideo?.key && !isFetching) {
       dispatch(clearTrailerVideo(item.id));
       setIsLoadingTrailer(true);
-      toast.warn("Fetching trailer...", { position: "bottom-right", autoClose: false });
+      toast.warn("Fetching trailer...", {
+        position: "bottom-right",
+        autoClose: false,
+      });
       fetchTrailer(item.id);
     }
   };
 
   useEffect(() => {
     if (error && selectedMovieId) {
-      console.error("[WatchList] Trailer fetch error for movie", selectedMovieId, ":", error);
-      toast.error(`Failed to fetch trailer for movie ${selectedMovieId}: ${error}`, {
-        position: "bottom-right",
-        autoClose: 5000,
-      });
+      console.error(
+        "[WatchList] Trailer fetch error for movie",
+        selectedMovieId,
+        ":",
+        error
+      );
+      toast.error(
+        `Failed to fetch trailer for movie ${selectedMovieId}: ${error}`,
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+        }
+      );
       setIsLoadingTrailer(false);
     }
     if (trailorVideo?.key && isLoadingTrailer && selectedMovieId) {
@@ -93,7 +108,7 @@ const WatchList = () => {
   return (
     <>
       <Header />
-      <div className="pt-24 pb-16 forWatchListBg">
+      <div className="pt-24 pb-16">
         <h1 className="text-center text-4xl font-bold text-[#fff] underline">
           My Watch List
         </h1>
@@ -220,7 +235,9 @@ const WatchList = () => {
                         onLoad={() => {
                           toast.dismiss();
                         }}
-                        onError={(err) => console.error("[WatchList] Iframe error:", err)}
+                        onError={(err) =>
+                          console.error("[WatchList] Iframe error:", err)
+                        }
                       ></iframe>
                     ) : (
                       <div className="flex items-center justify-center w-full h-full bg-gray-900 text-white">
@@ -229,7 +246,10 @@ const WatchList = () => {
                           <button
                             onClick={() => {
                               setIsLoadingTrailer(true);
-                              toast.warn("Fetching trailer...", { position: "bottom-right", autoClose: false });
+                              toast.warn("Fetching trailer...", {
+                                position: "bottom-right",
+                                autoClose: false,
+                              });
                               fetchTrailer(selectedMovieId);
                             }}
                             className="mt-2 bg-red-600 px-4 py-2 rounded"

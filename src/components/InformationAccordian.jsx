@@ -12,7 +12,7 @@ const InformationAccordian = () => {
       <div className="mx-auto w-full divide-y divide-white/5 rounded-xl bg-white/5">
         <Disclosure as="div" className="p-6" defaultOpen={true}>
           <DisclosureButton className="group flex w-full items-center justify-between">
-            <span className="text-xl font-bold text-white group-data-[hover]:text-white/80">
+            <span className="text-xl font-bold text-start text-white group-data-[hover]:text-white/80">
               What is Netflix Gemini?
             </span>
             <IoChevronDownSharp className="size-5 text-white fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
@@ -27,7 +27,7 @@ const InformationAccordian = () => {
         </Disclosure>
         <Disclosure as="div" className="p-6">
           <DisclosureButton className="group flex w-full items-center justify-between">
-            <span className="text-xl font-bold text-white group-data-[hover]:text-white/80">
+            <span className="text-xl font-bold text-start text-white group-data-[hover]:text-white/80">
               Is it free or subscription-based?
             </span>
             <IoChevronDownSharp className="size-5 text-white fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />

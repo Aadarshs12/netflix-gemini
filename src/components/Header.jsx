@@ -82,9 +82,15 @@ const Header = () => {
     setOpenHamBurger(false);
   };
 
+  const handleLogoClick = () => {
+    if (location.pathname === "/browse"){
+      dispatch(toggleGeminiSearchView(false));
+    }
+  }
+
   return (
-    <div className="flex w-full absolute top-0 justify-between items-baseline lg:items-center z-30 h-fit bg-gradient-to-b from-black px-8 py-2">
-      <Link to="/browse">
+    <div className="flex w-full absolute top-0 justify-between items-center z-30 bg-gradient-to-b from-black to-[#0a0a0a28] px-8 py-2">
+      <Link to={location.pathname === "/" ? "/" : "/browse"} onClick={handleLogoClick}>
         <img className="md:w-64 w-52 object-cover" src={Logo1} alt="logo" />
       </Link>
       {location.pathname !== "/" && (
