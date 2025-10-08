@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 import InformationAccordian from "./InformationAccordian";
+import TredingList from "./TredingList";
+import useTrendingMovies from "../hooks/useTrendingMovies";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -27,6 +29,8 @@ const Login = () => {
     handleSubmit,
     reset,
   } = useForm();
+
+  useTrendingMovies();
 
   const handleEyeClick = () => {
     setIsPasswordShow(!isPasswordShow);
@@ -237,6 +241,7 @@ const Login = () => {
           </form>
         )}
       </div>
+      <TredingList/>
       <InformationAccordian />
     </>
   );

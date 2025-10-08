@@ -5,7 +5,6 @@ import usePopularMovies from "../hooks/usePopularMovies";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
 import useTopRatedMovies from "../hooks/useTopRatedMovies";
-import useTrendingMovies from '../hooks/useTrendingMovies';
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
 import GeminiSearch from "./GeminiSearch";
 import useGenresName from "../hooks/useGenresName";
@@ -14,7 +13,6 @@ import { useSelector } from "react-redux";
 const Browse = () => {
   useGenresName();
   useNowPlayingMovies();
-  useTrendingMovies();
   useTopRatedMovies();
   usePopularMovies();
   useUpcomingMovies();

@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addTopRatedMovies } from "../utils/moviesSlice"; 
+import { addTrendingMovies } from "../utils/moviesSlice"; 
 import { API_Options } from "../utils/constant";
 
 const useTrendingMovies = () => {
@@ -17,10 +17,10 @@ const useTrendingMovies = () => {
         throw new Error(`API request failed with status ${response.status}`);
       }
       const json = await response.json();
-      dispatch(addTopRatedMovies(json.results || [])); 
+      dispatch(addTrendingMovies(json.results || [])); 
     } catch (error) {
       console.error("Error fetching Trending movies:", error);
-      dispatch(addTopRatedMovies([])); 
+      dispatch(addTrendingMovies([])); 
     }
   };
 
