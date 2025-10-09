@@ -171,6 +171,7 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
 
 .counting {
   position: relative;
+  z-index: 99;
 
   .forCounting {
     display: block !important;

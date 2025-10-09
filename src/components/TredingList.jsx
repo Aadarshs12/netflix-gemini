@@ -12,12 +12,13 @@ const TredingList = () => {
   console.log("TrendingMovies", TrendingMovies);
 
   return (
-    <>
+    <div className="mx-8 counting -mt-24">
+      <h2 className="text-slate-300 text-3xl mb-3">TrendFlix India</h2>
       <Swiper
         modules={[Navigation, Autoplay, Pagination]}
         spaceBetween={10}
         className="custom-swiper"
-        slidesPerView={6}
+        slidesPerView={8}
         loop={true}
         autoplay={{
           delay: 3000,
@@ -29,22 +30,22 @@ const TredingList = () => {
           clickable: true,
           dynamicBullets: true,
         }}
-        breakpoints={{
+         breakpoints={{
           320: {
             slidesPerView: 2.2,
-            spaceBetween: 2.4,
+            spaceBetween: 5,
           },
           641: {
             slidesPerView: 4.2,
-            spaceBetween: 3.4,
+            spaceBetween: 8,
           },
           769: {
             slidesPerView: 6.2,
-            spaceBetween: 4.4,
+            spaceBetween: 10,
           },
           1025: {
             slidesPerView: 8.2,
-            spaceBetween: 5.4,
+            spaceBetween: 10,
           },
         }}
       >
@@ -54,7 +55,7 @@ const TredingList = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </div>
   );
 };
 
