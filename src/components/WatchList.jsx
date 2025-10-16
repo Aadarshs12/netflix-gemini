@@ -122,7 +122,7 @@ const WatchList = () => {
               />
             </div>
             <div className="lg:w-1/2 w-100 text-center">
-              <h3 className="text-2xl text-[#d9232e] font-bold mb-2">
+              <h3 className="text-2xl text-[#a659bd] font-bold mb-2">
                 Your Watchlist is Empty!
               </h3>
               <p className="text-slate-300">
@@ -151,7 +151,7 @@ const WatchList = () => {
                   />
                   <div className="absolute z-10 items-center right-2 bottom-2">
                     <button
-                      className="bg-[#d9232e] hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
+                      className="bg-[#a659bd] hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100 text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
                       onClick={() => handlePlayInsideInfo(item)}
                       disabled={isFetching || isLoadingTrailer}
                     >
@@ -162,7 +162,7 @@ const WatchList = () => {
                 <div className="w-2/3 flex flex-col gap-1">
                   <span>{getGenres(item?.genre_ids, genreList)}</span>
                   <div className="flex gap-3 flex-wrap items-center">
-                    <h2 className="text-3xl text-[#d9232e] font-bold">
+                    <h2 className="text-3xl text-[#a659bd] font-bold">
                       {item?.title || "Untitled"}
                     </h2>
                     <span>
@@ -185,7 +185,7 @@ const WatchList = () => {
                   </p>
                   <button
                     onClick={() => handleRemoveWatchList(item)}
-                    className="flex gap-2 items-center w-fit bg-[#d9232e] text-white py-2 px-3 rounded-full mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100"
+                    className="flex gap-2 items-center w-fit bg-[#a659bd] text-white py-2 px-3 rounded-full mt-4 hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100"
                   >
                     <IoHeartDislike /> Remove From Watch List
                   </button>
@@ -218,7 +218,7 @@ const WatchList = () => {
                           dispatch(clearTrailerVideo(selectedMovieId));
                         }
                       }}
-                      className="bg-[#302e2e9d] text-4xl rounded-full text-slate-300 hover:text-[#d9232e] focus:outline-none z-[1001]"
+                      className="bg-[#302e2e9d] text-4xl rounded-full text-slate-300 hover:text-[#a659bd] focus:outline-none z-[1001]"
                       aria-label="Close"
                     >
                       <IoIosCloseCircle />

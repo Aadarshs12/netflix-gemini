@@ -199,7 +199,7 @@ const MoviesCard = ({ movie, index }) => {
       <div className="hoverOnMovieCard p-3 flex flex-col gap-1">
         <div className="flex flex-col-reverse gap-3 items-start">
           <button
-            className="bg-[#d9232e] hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
+            className="bg-[#a659bd] hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100 text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
             onClick={handlePlayInsideInfo}
             disabled={isFetching || isLoadingTrailer}
           >
@@ -221,14 +221,14 @@ const MoviesCard = ({ movie, index }) => {
                   {isInWatchList ? (
                     <button
                       onClick={handleRemoveWatchList}
-                      className="bg-[#2b3d5ad3] text-[#d9232e] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
+                      className="bg-[#2b3d5ad3] text-[#a659bd] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
                     >
                       <FaHeart />
                     </button>
                   ) : (
                     <button
                       onClick={handleAddWatchList}
-                      className="bg-[#2b3d5ad3] hover:text-[#d9232e] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
+                      className="bg-[#2b3d5ad3] hover:text-[#a659bd] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
                     >
                       <FaHeart />
                     </button>
@@ -240,7 +240,7 @@ const MoviesCard = ({ movie, index }) => {
                       toast.dismiss();
                       dispatch(clearTrailerVideo(movie.id));
                     }}
-                    className="bg-[#302e2e9d] text-4xl rounded-full text-slate-300 hover:text-[#d9232e] focus:outline-none z-[1001]"
+                    className="bg-[#302e2e9d] text-4xl rounded-full text-slate-300 hover:text-[#a659bd] focus:outline-none z-[1001]"
                     aria-label="Close"
                   >
                     <IoIosCloseCircle />
@@ -293,7 +293,7 @@ const MoviesCard = ({ movie, index }) => {
           </Dialog>
           <button
             type="button"
-            className="bg-[#2b3d5ad3] text-slate-300 hover:text-[#d9232e] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
+            className="bg-[#2b3d5ad3] text-slate-300 hover:text-[#a659bd] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
             onClick={() => setIsOpen(true)}
           >
             <BsInfoLg />
@@ -301,14 +301,14 @@ const MoviesCard = ({ movie, index }) => {
           {isInWatchList ? (
             <button
               onClick={handleRemoveWatchList}
-              className="bg-[#2b3d5ad3] text-[#d9232e] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
+              className="bg-[#2b3d5ad3] text-[#a659bd] hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
             >
               <FaHeart />
             </button>
           ) : (
             <button
               onClick={handleAddWatchList}
-              className="bg-[#2b3d5ad3] hover:text-[#d9232e] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
+              className="bg-[#2b3d5ad3] hover:text-[#a659bd] text-slate-300 hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center focus:outline-none"
             >
               <FaHeart />
             </button>
@@ -330,7 +330,7 @@ const MoviesCard = ({ movie, index }) => {
             <DialogTitle className="text-lg mb-2 flex justify-between items-center font-bold text-white">
               <span className='text-xl'>Movie Details</span>
               <button
-                className="md:text-2xl text-3xl text-[#fff] hover:text-[#d9232e]"
+                className="md:text-2xl text-3xl text-[#fff] hover:text-[#a659bd]"
                 onClick={() => setIsOpen(false)}
               >
                 <IoIosCloseCircle />
@@ -349,7 +349,7 @@ const MoviesCard = ({ movie, index }) => {
                 />
                 <div className="absolute z-10 items-center right-2 bottom-2">
                   <button
-                    className="bg-[#d9232e] hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
+                    className="bg-[#a659bd] hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100 text-white hover:cursor-pointer h-3 w-3 rounded-full p-4 grid place-content-center"
                     onClick={handlePlayInsideInfo}
                     disabled={isFetching || isLoadingTrailer}
                   >
@@ -358,7 +358,7 @@ const MoviesCard = ({ movie, index }) => {
                 </div>
               </div>
               <div className="lg:w-2/3 w-full flex text-base flex-col gap-3">
-                <h2 className="text-2xl font-bold text-[#d9232e]">
+                <h2 className="text-2xl font-bold text-[#a659bd]">
                   🎥 {movie.title || "Not Available"}
                 </h2>
                 <span className="line-clamp-5">
@@ -392,7 +392,7 @@ const MoviesCard = ({ movie, index }) => {
                         className={`rounded-full px-3 py-1 mt-3 text-lg font-semibold transition
                         ${
                           selected
-                            ? "bg-[#d9232e] text-white"
+                            ? "bg-[#a659bd] text-white"
                             : "text-white hover:bg-white/5"
                         }`}
                       >
@@ -464,7 +464,7 @@ const MoviesCard = ({ movie, index }) => {
               </TabPanels>
             </TabGroup>
             <div className="text-white flex flex-col gap-3 mt-3 w-full">
-              <h3 className="text-xl font-bold text-[#d9232e]">Reviews</h3>
+              <h3 className="text-xl font-bold text-[#a659bd]">Reviews</h3>
               {reviewsLoading ? (
                 <p className="p-3">Loading reviews...</p>
               ) : reviewsError ? (
@@ -497,7 +497,7 @@ const MoviesCard = ({ movie, index }) => {
                         <h4 className="font-bold m-0 text-lg line-clamp-1">
                           {reviews[0].author || "Unknown"}
                         </h4>
-                        <span className="lowercase text-[#d9232e] text-xs">
+                        <span className="lowercase text-[#a659bd] text-xs">
                           @{reviews[0].author_details?.username || "Unknown"}
                         </span>
                         <span className="text-sm line-clamp-1">

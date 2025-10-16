@@ -107,7 +107,7 @@ const VideoTitle = ({ movie }) => {
       </p>
       <div className="flex gap-4 md:gap-6 lg:items-center md:items-start justify-center flex-row">
         <button
-          className="bg-[#d9232e] md:py-2 w-10 h-10 md:w-auto md:h-auto grid place-content-center md:px-8 md:flex gap-1 items-center text-white rounded-full hover:bg-opacity-70 transition"
+          className="bg-[#a659bd] md:py-2 w-10 h-10 md:w-auto md:h-auto grid place-content-center md:px-8 md:flex gap-1 items-center text-white rounded-full hover:bg-opacity-70 transition"
           onClick={handlePlayVideoTrailer}
         >
           <FaPlay /> <span className="hidden md:block">Play</span>
@@ -121,7 +121,7 @@ const VideoTitle = ({ movie }) => {
             <DialogPanel className="relative w-full h-full bg-black">
               <button
                 onClick={handleCloseTrailer}
-                className="absolute text-5xl top-6 right-4 bg-[#302e2e9d] rounded-full text-[#fff] hover:text-[#d9232e] focus:outline-none"
+                className="absolute text-5xl top-6 right-4 bg-[#302e2e9d] rounded-full text-[#fff] hover:text-[#a659bd] focus:outline-none"
                 aria-label="Close"
               >
                 <IoIosCloseCircle />
@@ -194,7 +194,7 @@ const VideoTitle = ({ movie }) => {
         {isInWatchList ? (
           <button
             onClick={handleRemoveWatchList}
-            className="md:flex gap-1 items-center bg-[#374151] grid place-content-center md:py-2 w-10 h-10 md:w-auto md:h-auto  md:px-8 text-[#d9232e] rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none"
+            className="md:flex gap-1 items-center bg-[#374151] grid place-content-center md:py-2 w-10 h-10 md:w-auto md:h-auto  md:px-8 text-[#a659bd] rounded-full bg-opacity-70 hover:bg-opacity-80 transition focus:outline-none"
           >
             <FaHeart /> <span className="hidden md:block">Added to Watch List</span>
           </button>

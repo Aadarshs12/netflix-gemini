@@ -20,7 +20,7 @@ import { toggleGeminiSearchView } from "../utils/geminiSlice";
 import { changeLang } from "../utils/languageSlice";
 import { FaChevronDown } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import Logo1 from "../utils/netflix-gemini-newlogo.PNG";
+import Logo1 from "../utils/logo.png";
 import { BsCaretDownFill, BsFillHeartFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 
@@ -83,15 +83,18 @@ const Header = () => {
   };
 
   const handleLogoClick = () => {
-    if (location.pathname === "/browse"){
+    if (location.pathname === "/browse") {
       dispatch(toggleGeminiSearchView(false));
     }
-  }
+  };
 
   return (
     <div className="flex w-full absolute top-0 justify-between items-center z-30 bg-gradient-to-b from-black to-[#0a0a0a28] px-8 py-2">
-      <Link to={location.pathname === "/" ? "/" : "/browse"} onClick={handleLogoClick}>
-        <img className="md:w-64 w-52 object-cover" src={Logo1} alt="logo" />
+      <Link
+        to={location.pathname === "/" ? "/" : "/browse"}
+        onClick={handleLogoClick}
+      >
+        <img className="md:w-96 ffd400 w-72 object-cover" src={Logo1} alt="logo" />
       </Link>
       {location.pathname !== "/" && (
         <div className="lg:flex hidden items-center mt-3 gap-3">
@@ -124,7 +127,7 @@ const Header = () => {
               <span className="text-[#fff] text-xl">
                 <BsFillHeartFill />
               </span>
-              <span className="bg-[#d9232e] text-xs w-4 p-1 h-4 -top-2 -right-3 grid place-content-center rounded-full text-[#fff] absolute">
+              <span className="bg-[#a659bd] text-xs w-4 p-1 h-4 -top-2 -right-3 grid place-content-center rounded-full text-[#fff] absolute">
                 {watchlist.length}
               </span>
             </Link>
@@ -199,7 +202,7 @@ const Header = () => {
           </div>
           <Button
             onClick={() => setIsOpen(true)}
-            className="text-white bg-[#d9232e] active:bg-red-900 hover:bg-red-700 rounded-full px-4 py-3 text-xs font-bold"
+            className="text-white bg-[#a659bd] active:bg-purple-900 hover:bg-purple-500 rounded-full px-4 py-3 text-xs font-bold"
           >
             Sign Out
           </Button>
@@ -212,7 +215,7 @@ const Header = () => {
               <DialogPanel className="w-full max-w-sm sm:max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
                 <DialogTitle
                   as="h2"
-                  className="text-xl sm:text-xl font-bold text-[#d9232e]"
+                  className="text-xl sm:text-xl font-bold text-[#a659bd]"
                 >
                   Sign Out Your Account
                 </DialogTitle>
@@ -228,7 +231,7 @@ const Header = () => {
                     No
                   </Button>
                   <Button
-                    className="inline-flex items-center gap-2 rounded-full bg-red-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-600"
+                    className="inline-flex items-center gap-2 rounded-full bg-purple-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-600"
                     onClick={handleSignOut}
                   >
                     Yes, Sign Out
@@ -321,7 +324,7 @@ const Header = () => {
                           <span className="text-[#fff] text-xl">
                             <BsFillHeartFill />
                           </span>
-                          <span className="bg-[#d9232e] text-xs w-4 p-1 h-4 -top-2 -right-3 grid place-content-center rounded-full text-[#fff] absolute">
+                          <span className="bg-[#a659bd] text-xs w-4 p-1 h-4 -top-2 -right-3 grid place-content-center rounded-full text-[#fff] absolute">
                             {watchlist.length}
                           </span>
                         </Link>
@@ -402,7 +405,7 @@ const Header = () => {
                       </div>
                       <Button
                         onClick={() => setIsOpen(true)}
-                        className="text-white bg-[#d9232e] active:bg-red-900 hover:bg-red-700 rounded-full px-4 py-3 text-xs font-bold"
+                        className="text-white bg-[#a659bd] active:bg-purple-900 hover:bg-purple-500 rounded-full px-4 py-3 text-xs font-bold"
                       >
                         Sign Out
                       </Button>
@@ -415,7 +418,7 @@ const Header = () => {
                           <DialogPanel className="w-full max-w-sm sm:max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
                             <DialogTitle
                               as="h2"
-                              className="text-xl sm:text-xl font-bold text-[#d9232e]"
+                              className="text-xl sm:text-xl font-bold text-[#a659bd]"
                             >
                               Sign Out Your Account
                             </DialogTitle>
@@ -431,7 +434,7 @@ const Header = () => {
                                 No
                               </Button>
                               <Button
-                                className="inline-flex items-center gap-2 rounded-full bg-red-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-600"
+                                className="inline-flex items-center gap-2 rounded-full bg-purple-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-600"
                                 onClick={handleSignOut}
                               >
                                 Yes, Sign Out

@@ -109,7 +109,7 @@ const Login = () => {
               placeholder="Enter your name"
             />
             {errors.name?.type === "required" && (
-              <p className="text-[#d9232e]" role="alert">
+              <p className="text-[#a659bd]" role="alert">
                 Full name is required
               </p>
             )}
@@ -120,7 +120,7 @@ const Login = () => {
               placeholder="Enter your email"
             />
             {errors.email?.type === "required" && (
-              <p className="text-[#d9232e]" role="alert">
+              <p className="text-[#a659bd]" role="alert">
                 Email is required
               </p>
             )}
@@ -142,20 +142,20 @@ const Login = () => {
                 {isPasswordShow ? <FaRegEyeSlash /> : <FaRegEye />}
               </button>
               {errors.password?.type === "required" && (
-                <p className="text-[#d9232e]" role="alert">
+                <p className="text-[#a659bd]" role="alert">
                   Password is required
                 </p>
               )}
             </div>
             <button
               type="submit"
-              className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
+              className="w-full bg-[#a659bd] text-white p-3 rounded-lg mt-4 hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100 "
             >
               Sign Up
             </button>
             <p className="text-white text-sm mt-3">
               Created with 💖 by{" "}
-              <span className="font-semibold text-[#d9232e]">
+              <span className="font-semibold text-[#a659bd]">
                 Aadarsh Singh
               </span>{" "}
               - All Right Reserved.
@@ -165,7 +165,7 @@ const Login = () => {
                 Already an User?{" "}
                 <button
                   type="button"
-                  className="font-bold text-[#d9232e] hover:underline"
+                  className="font-bold text-[#a659bd] hover:underline"
                   onClick={handleSignUp}
                 >
                   Sign In
@@ -186,7 +186,7 @@ const Login = () => {
               placeholder="Enter your email"
             />
             {errors.email?.type === "required" && (
-              <p className="text-[#d9232e]" role="alert">
+              <p className="text-[#a659bd]" role="alert">
                 Email is required
               </p>
             )}
@@ -208,20 +208,20 @@ const Login = () => {
                 {isPasswordShow ? <FaRegEyeSlash /> : <FaRegEye />}
               </button>
               {errors.password?.type === "required" && (
-                <p className="text-[#d9232e]" role="alert">
+                <p className="text-[#a659bd]" role="alert">
                   Password is required
                 </p>
               )}
             </div>
             <button
               type="submit"
-              className="w-full bg-[#d9232e] text-white p-3 rounded-lg mt-4 hover:bg-red-800 hover:scale-105 active:bg-red-900 active:scale-100 "
+              className="w-full bg-[#a659bd] text-white p-3 rounded-lg mt-4 hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100 "
             >
               Sign In
             </button>
             <p className="text-white text-sm mt-3">
               Created with 💖 by{" "}
-              <span className="font-semibold text-[#d9232e]">
+              <span className="font-semibold text-[#a659bd]">
                 Aadarsh Singh
               </span>{" "}
               - All Right Reserved.
@@ -231,7 +231,7 @@ const Login = () => {
                 New to Netflix?{" "}
                 <button
                   type="button"
-                  className="font-bold text-[#d9232e] hover:underline"
+                  className="font-bold text-[#a659bd] hover:underline"
                   onClick={handleSignUp}
                 >
                   Sign Up

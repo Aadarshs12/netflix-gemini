@@ -15,7 +15,7 @@ body {
 }
 
 span.swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background: #d9232e !important;
+  background: #a659bd !important;
 }
 .swiper-button-prev,
 .swiper-button-next {
@@ -27,7 +27,7 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   place-content: center;
   &:hover,
   &:active {
-    color: #d9232e !important;
+    color: #a659bd !important;
     font-size: 24px !important;
     font-weight: 800 !important;
   }
