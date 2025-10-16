@@ -91,10 +91,10 @@ const GeminiSearchBar = () => {
             {...register("prompt", { required: true })}
           />
           {errors.prompt && (
-            <span className="text-red-600">This field is required</span>
+            <span className="text-purple-600">This field is required</span>
           )}
           <button
-            className="w-full bg-red-700 text-white p-3 rounded-lg mt-4 hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100"
+            className="w-full bg-purple-700 text-white p-3 rounded-lg mt-4 hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100"
             type="submit"
           >
             {lang[selectedLanguage]?.search || "Search"}

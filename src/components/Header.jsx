@@ -94,7 +94,7 @@ const Header = () => {
         to={location.pathname === "/" ? "/" : "/browse"}
         onClick={handleLogoClick}
       >
-        <img className="md:w-96 ffd400 w-72 object-cover" src={Logo1} alt="logo" />
+        <img className="md:w-96 ffd400 w-60 object-cover" src={Logo1} alt="logo" />
       </Link>
       {location.pathname !== "/" && (
         <div className="lg:flex hidden items-center mt-3 gap-3">
@@ -231,7 +231,7 @@ const Header = () => {
                     No
                   </Button>
                   <Button
-                    className="inline-flex items-center gap-2 rounded-full bg-purple-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-600"
+                    className="inline-flex items-center gap-2 rounded-full bg-purple-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-purple-700"
                     onClick={handleSignOut}
                   >
                     Yes, Sign Out
