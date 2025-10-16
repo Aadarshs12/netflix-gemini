@@ -228,7 +228,7 @@ const Login = () => {
             </p>
             <div className="pt-4">
               <span className="text-white">
-                New to Netflix?{" "}
+                New to NetGeminiFlix?{" "}
                 <button
                   type="button"
                   className="font-bold text-[#a659bd] hover:underline"
