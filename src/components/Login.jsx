@@ -17,7 +17,6 @@ import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 import InformationAccordian from "./InformationAccordian";
 import TredingList from "./TredingList";
-import useTrendingMovies from "../hooks/useTrendingMovies";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -30,7 +29,7 @@ const Login = () => {
     reset,
   } = useForm();
 
-  useTrendingMovies();
+  
 
   const handleEyeClick = () => {
     setIsPasswordShow(!isPasswordShow);
