@@ -37,6 +37,20 @@ const InformationAccordian = () => {
             sign up and log in with your credentials to start exploring.
           </DisclosurePanel>
         </Disclosure>
+        <Disclosure as="div" className="p-6">
+          <DisclosureButton className="group flex w-full items-center justify-between">
+            <span className="text-xl font-bold text-start text-white group-data-[hover]:text-white/80">
+              Who is the Greatest of all time?
+            </span>
+            <IoChevronDownSharp className="size-5 text-white fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
+          </DisclosureButton>
+          <DisclosurePanel className="mt-2 text-sm/5 text-white/50">
+            As confirmed by totally unbiased, not-at-all made-up sources, the
+            GOAT is none other than{" "}
+            <strong className="text-purple-500">Aadarsh Singh</strong>. Move
+            over, legends — the guy who probably invented sliced bread is here.
+          </DisclosurePanel>
+        </Disclosure>
       </div>
     </div>
   );

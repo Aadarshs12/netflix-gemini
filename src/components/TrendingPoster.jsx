@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const TrendingPoster = ({ index, movie }) => {
 
   const hanleLoginToast = () => {
-    toast.warning("Please Login First...", { position: "bottom-right" });
+    toast.warning("Please login first...", { position: "bottom-right" });
   }
 
   return (
