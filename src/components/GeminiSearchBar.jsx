@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useForm } from "react-hook-form";
 import lang from "../utils/lang";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,11 @@ const GeminiSearchBar = () => {
   const selectedLanguage = useSelector((store) => store.lang?.lang);
   const [response, setResponse] = useState("");
 
+  const BASE_URL =
+    process.env.NODE_ENV === "production"
+      ? "/.netlify/functions/tmdbProxy?path="
+      : "https://api.themoviedb.org/3/";
+
   const {
     register,
     handleSubmit,
@@ -21,7 +26,7 @@ const GeminiSearchBar = () => {
 
   const searchTMDBMovie = async (movie) => {
     const data = await fetch(
-      "https://api.themoviedb.org/3/search/movie?query=" +
+      `${BASE_URL}search/movie?query=` +
         movie.trim() +
         "&language=en-US&page=1",
       API_Options
@@ -51,7 +56,7 @@ const GeminiSearchBar = () => {
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
         }
-      },800);
+      }, 800);
     } catch (error) {
       console.error("Error:", error);
       setResponse("⚠️ Something went wrong. Please try again.");

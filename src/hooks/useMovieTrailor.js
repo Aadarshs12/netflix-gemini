@@ -10,8 +10,13 @@ const useMovieTrailor = (id) => {
   const [error, setError] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
 
+  const BASE_URL =
+    process.env.NODE_ENV === "production"
+      ? "/.netlify/functions/tmdbProxy?path="
+      : "https://api.themoviedb.org/3/";
+
   const getMovieVideos = async (movieId) => {
-    if (!movieId || typeof movieId !== 'number') {
+    if (!movieId || typeof movieId !== "number") {
       console.warn(`[useMovieTrailor] Invalid or missing movie ID: ${movieId}`);
       setError("Invalid or missing movie ID");
       setIsFetching(false);
@@ -20,18 +25,23 @@ const useMovieTrailor = (id) => {
     try {
       setIsFetching(true);
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
+        `${BASE_URL}movie/${movieId}/videos?language=en-US`,
         API_Options
       );
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorText}`
+        );
       }
       const jsonData = await response.json();
       setData(jsonData?.results || []);
       setError(null);
     } catch (error) {
-      console.error(`[useMovieTrailor] Error fetching videos for movie ${movieId}:`, error);
+      console.error(
+        `[useMovieTrailor] Error fetching videos for movie ${movieId}:`,
+        error
+      );
       setError(error.message || "Failed to fetch trailer");
       setData([]);
     } finally {
@@ -39,14 +49,19 @@ const useMovieTrailor = (id) => {
     }
   };
 
-  const fetchTrailer = useCallback((movieId) => {
-    if (!movieId || typeof movieId !== 'number') {
-      console.warn(`[useMovieTrailor] Fetch skipped due to invalid movie ID: ${movieId}`);
-      return;
-    }
-    dispatch(clearTrailerVideo(movieId)); 
-    getMovieVideos(movieId);
-  }, [dispatch]);
+  const fetchTrailer = useCallback(
+    (movieId) => {
+      if (!movieId || typeof movieId !== "number") {
+        console.warn(
+          `[useMovieTrailor] Fetch skipped due to invalid movie ID: ${movieId}`
+        );
+        return;
+      }
+      dispatch(clearTrailerVideo(movieId));
+      getMovieVideos(movieId);
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (data && id) {
@@ -60,7 +75,10 @@ const useMovieTrailor = (id) => {
       );
       const trailer = filterData.length ? filterData[0] : null;
       if (data.length && !filterData.length) {
-        console.warn(`[useMovieTrailor] No valid YouTube trailers for movie ${id}, available videos:`, data);
+        console.warn(
+          `[useMovieTrailor] No valid YouTube trailers for movie ${id}, available videos:`,
+          data
+        );
         setError("No valid YouTube trailer found");
       }
       dispatch(addTrailorVideo({ movieId: id, trailer }));
@@ -69,7 +87,7 @@ const useMovieTrailor = (id) => {
 
   useEffect(() => {
     return () => {
-      if (id && typeof id === 'number') {
+      if (id && typeof id === "number") {
         dispatch(clearTrailerVideo(id));
       }
     };

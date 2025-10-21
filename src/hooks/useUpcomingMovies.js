@@ -7,10 +7,15 @@ import { API_Options } from "../utils/constant";
 const useUpcomingMovies = () => {
   const dispatch = useDispatch();
 
+  const BASE_URL =
+    process.env.NODE_ENV === "production"
+      ? "/.netlify/functions/tmdbProxy?path="
+      : "https://api.themoviedb.org/3/";
+
   const getUpcomingMovies = async () => {
     try {
       const response = await fetch(
-        "https://api.themoviedb.org/3/movie/upcoming?page=1",
+        `${BASE_URL}movie/upcoming?page=1`,
         API_Options
       );
       if (!response.ok) {

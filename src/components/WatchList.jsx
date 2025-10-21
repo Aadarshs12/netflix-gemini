@@ -137,9 +137,9 @@ const WatchList = () => {
             {watchlist.map((item) => (
               <div
                 key={item?.id}
-                className="text-white mx-8 forMakingBorderBottom pt-10 flex items-end gap-5"
+                className="text-white mx-8 forMakingBorderBottom pt-10 flex lg:flex-row flex-col items-end gap-5"
               >
-                <div className="w-1/3 relative">
+                <div className="lg:w-1/3 w-full relative">
                   <img
                     className="w-full rounded-md object-cover"
                     src={
@@ -159,7 +159,7 @@ const WatchList = () => {
                     </button>
                   </div>
                 </div>
-                <div className="w-2/3 flex flex-col gap-1">
+                <div className="lg:w-2/3 w-full flex flex-col gap-1">
                   <span>{getGenres(item?.genre_ids, genreList)}</span>
                   <div className="flex gap-3 flex-wrap items-center">
                     <h2 className="text-3xl text-[#a659bd] font-bold">
@@ -185,7 +185,7 @@ const WatchList = () => {
                   </p>
                   <button
                     onClick={() => handleRemoveWatchList(item)}
-                    className="flex gap-2 items-center w-fit bg-[#a659bd] text-white py-2 px-3 rounded-full mt-4 hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100"
+                    className="flex gap-2 justify-center  items-center w-full lg:w-fit bg-[#a659bd] text-white py-2 px-3 rounded-full mt-4 hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100"
                   >
                     <IoHeartDislike /> Remove From Watch List
                   </button>

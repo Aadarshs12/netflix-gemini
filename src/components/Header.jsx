@@ -319,7 +319,6 @@ const Header = () => {
                           {" "}
                           <span>Watchlist</span>{" "}
                         </Link>
-                        <span>Watchlist</span>
                         <Link to={"/watchlist"} className="relative">
                           <span className="text-[#fff] text-xl">
                             <BsFillHeartFill />
@@ -434,7 +433,7 @@ const Header = () => {
                                 No
                               </Button>
                               <Button
-                                className="inline-flex items-center gap-2 rounded-full bg-purple-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-600"
+                                className="inline-flex items-center gap-2 rounded-full bg-purple-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-purple-600"
                                 onClick={handleSignOut}
                               >
                                 Yes, Sign Out

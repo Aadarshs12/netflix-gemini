@@ -3,16 +3,21 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addReviews } from "../utils/moviesSlice";
 import { API_Options } from "../utils/constant";
-import { setReviewsLoading } from "../utils/moviesSlice";  // Export the new action
+import { setReviewsLoading } from "../utils/moviesSlice"; 
 
 const useReviewsData = (movieId) => {
   const dispatch = useDispatch();
+
+    const BASE_URL =
+    process.env.NODE_ENV === "production"
+      ? "/.netlify/functions/tmdbProxy?path="
+      : "https://api.themoviedb.org/3/";
 
   const getReviewsData = async () => {
     try {
       dispatch(setReviewsLoading({ movieId, loading: true }));
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US`,
+        `${BASE_URL}movie/${movieId}/reviews?language=en-US`,
         API_Options
       );
       if (!response.ok) {

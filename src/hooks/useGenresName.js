@@ -7,11 +7,16 @@ import { addGenreList } from "../utils/genreSlice";
 const useGenresName = () => {
   const dispatch = useDispatch();
 
+  const BASE_URL =
+    process.env.NODE_ENV === "production"
+      ? "/.netlify/functions/tmdbProxy?path="
+      : "https://api.themoviedb.org/3/";
+
   useEffect(() => {
     const fetchGenres = async () => {
       try {
         const genreResult = await fetch(
-          "https://api.themoviedb.org/3/genre/movie/list?language=en-US",
+          `${BASE_URL}genre/movie/list?language=en-US`,
           API_Options
         );
         const genreData = await genreResult.json();
@@ -22,7 +27,7 @@ const useGenresName = () => {
     };
 
     fetchGenres();
-  }, [dispatch]); 
+  }, [dispatch]);
 };
 
 export default useGenresName;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { IMG_CDN_URL, IMG_CDN_URL2 } from "../utils/constant";
 import { useSelector, useDispatch } from "react-redux";
 import { FaPlay, FaHeart } from "react-icons/fa";
@@ -60,8 +60,7 @@ const MoviesCard = ({ movie, index }) => {
     }
   }, [reviews, reviewsError, movie?.id]);
 
-  useEffect(() => {
-  }, [credits, movie?.id]);
+  useEffect(() => {}, [credits, movie?.id]);
 
   const categories = [
     {
@@ -177,7 +176,7 @@ const MoviesCard = ({ movie, index }) => {
       rel: 0,
       modestbranding: 1,
       playsinline: 0,
-      fs: 1, 
+      fs: 1,
     },
   };
 
@@ -324,11 +323,14 @@ const MoviesCard = ({ movie, index }) => {
         onClose={() => setIsOpen(false)}
         className="relative z-[1000]"
       >
-        <div className="fixed md:inset-0 left-0 top-1 bottom-1 right-0 bg-black/90" aria-hidden="true" />
+        <div
+          className="fixed md:inset-0 left-0 top-1 bottom-1 right-0 bg-black/90"
+          aria-hidden="true"
+        />
         <div className="fixed inset-0 w-full h-full flex items-center justify-center">
-          <DialogPanel className="w-full max-w-full flex flex-col gap-2 max-h-[100vh] bg-[#000000da] shadow-lg rounded-lg md:p-4 py-6 px-4 overflow-y-auto">
+          <DialogPanel className="w-full max-w-full flex flex-col gap-2 max-h-[100vh] bg-[#000000da] shadow-lg rounded-lg md:p-4 pb-6 pt-10 px-4 overflow-y-auto">
             <DialogTitle className="text-lg mb-2 flex justify-between items-center font-bold text-white">
-              <span className='text-xl'>Movie Details</span>
+              <span className="text-xl">Movie Details</span>
               <button
                 className="md:text-2xl text-3xl text-[#fff] hover:text-[#a659bd]"
                 onClick={() => setIsOpen(false)}
@@ -482,7 +484,7 @@ const MoviesCard = ({ movie, index }) => {
                               ? reviews[0].author_details.avatar_path.startsWith(
                                   "/https"
                                 )
-                                ? reviews[0].author_details.avatar_path.slice(1) 
+                                ? reviews[0].author_details.avatar_path.slice(1)
                                 : IMG_CDN_URL +
                                   reviews[0].author_details.avatar_path
                               : `https://ui-avatars.com/api/?name=${encodeURIComponent(
