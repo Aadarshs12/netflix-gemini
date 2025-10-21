@@ -32,12 +32,16 @@ const MoviesList = ({ title, movies, property }) => {
             slidesPerView: 2.2,
             spaceBetween: 5,
           },
+          400: {
+            slidesPerView: 3.2,
+            spaceBetween: 5,
+          },
           641: {
-            slidesPerView: 4.2,
+            slidesPerView: 5.2,
             spaceBetween: 8,
           },
           769: {
-            slidesPerView: 6.2,
+            slidesPerView: 7.2,
             spaceBetween: 10,
           },
           1025: {

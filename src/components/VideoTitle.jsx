@@ -98,7 +98,7 @@ const VideoTitle = ({ movie }) => {
 
 
   return (
-    <div className="absolute items-center md:items-start flex flex-col gap-2 aspect-video lg:bottom-0 -bottom-[20px] left-0 z-20 w-full xl:pt-[25%] 2xl:pt-[33%] px-4 md:px-10 text-white lg:bg-gradient-to-r from-black to-transparent">
+    <div className="absolute items-center md:items-start flex flex-col gap-2  aspect-video bottom-[0px] sm:bottom-[-70px] md:bottom-[-70px] lg:bottom-32 xl:bottom-32 2xl:bottom-36 left-0 z-20 w-full pt-[18%] sm:pt-[20%] md:pt-[22%] lg:pt-[24%] xl:pt-[25%] 2xl:pt-[33%] px-10 text-white lg:bg-gradient-to-r from-black to-transparent">
       <h1 className="text-3xl lg:pb-[3px] w-full md:w-3/4 lg:w-2/5 md:text-5xl leading-8 line-clamp-1 lg:text-6xl font-bold">
         {movie?.title}
       </h1>

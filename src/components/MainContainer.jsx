@@ -17,7 +17,7 @@ const MainContainer = () => {
   } = mainMovie;
 
   return (
-    <div>
+    <div className='relative z-10'>
       <VideoTitle
         movie= {mainMovie}
       />
