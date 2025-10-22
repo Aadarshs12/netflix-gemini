@@ -474,42 +474,60 @@ const MoviesCard = ({ movie, index }) => {
               ) : reviews?.length > 0 ? (
                 reviews.length === 1 ? (
                   <div className="flex flex-col text-white rounded-lg p-3 bg-slate-300/15 max-w-full box-border">
-                    <div className="flex items-center gap-3 w-full">
-                      <div>
-                        <img
-                          sizes="100px"
-                          className="w-12 h-12 object-cover rounded-full"
-                          src={
-                            reviews[0].author_details?.avatar_path
-                              ? reviews[0].author_details.avatar_path.startsWith(
-                                  "/https"
-                                )
-                                ? reviews[0].author_details.avatar_path.slice(1)
-                                : IMG_CDN_URL +
-                                  reviews[0].author_details.avatar_path
-                              : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                                  reviews[0].author?.charAt(0).toUpperCase() ||
-                                    "R"
-                                )}&background=000000&color=ffffff&rounded=true`
-                          }
-                          alt={reviews[0].author || "Reviewer"}
-                        />
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-3">
+                        <div>
+                          <img
+                            sizes="100px"
+                            className="w-12 h-12 object-cover rounded-full"
+                            src={
+                              reviews[0].author_details?.avatar_path
+                                ? reviews[0].author_details.avatar_path.startsWith(
+                                    "/https"
+                                  )
+                                  ? reviews[0].author_details.avatar_path.slice(
+                                      1
+                                    )
+                                  : IMG_CDN_URL +
+                                    reviews[0].author_details.avatar_path
+                                : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                    reviews[0].author
+                                      ?.charAt(0)
+                                      .toUpperCase() || "R"
+                                  )}&background=000000&color=ffffff&rounded=true`
+                            }
+                            alt={reviews[0].author || "Reviewer"}
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <h4 className="font-bold m-0 text-lg line-clamp-1">
+                            {reviews[0].author || "Unknown"}
+                          </h4>
+                          <span className="lowercase text-[#a659bd] text-xs">
+                            @{reviews[0].author_details?.username || "Unknown"}
+                          </span>{" "}
+                        </div>
                       </div>
-                      <div className="flex flex-col">
-                        <h4 className="font-bold m-0 text-lg line-clamp-1">
-                          {reviews[0].author || "Unknown"}
-                        </h4>
-                        <span className="lowercase text-[#a659bd] text-xs">
-                          @{reviews[0].author_details?.username || "Unknown"}
-                        </span>
-                        <span className="text-sm line-clamp-1">
-                          <strong>On: </strong>
-                          {reviews[0].updated_at
-                            ? dayjs(reviews[0].updated_at).format(
-                                "MMMM D, YYYY"
-                              )
-                            : "Not Available"}
-                        </span>
+                      <div className="flex flex-col items-end">
+                        <div className="flex flex-nowrap gap-1 items-center">
+                          <span>⭐</span>
+                          <span>
+                            {reviews[0].author_details?.rating
+                              ? reviews[0].author_details?.rating.toFixed(1) +
+                                "/10"
+                              : "N/A"}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-sm line-clamp-1">
+                            <strong>On: </strong>
+                            {reviews[0].updated_at
+                              ? dayjs(reviews[0].updated_at).format(
+                                  "MMMM D, YYYY"
+                                )
+                              : "Not Available"}
+                          </span>
+                        </div>
                       </div>
                     </div>
                     <p className="text-sm w-full mt-2">{reviews[0].content}</p>
