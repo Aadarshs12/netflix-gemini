@@ -11,9 +11,11 @@ const moviesSlice = createSlice({
     trailers: {},
     count: 0,
     credits: {},
+    providers: {},
+    providersLoading: {},
     reviews: {},
-    reviewsLoading: {}, 
-    reviewsError: {}, 
+    reviewsLoading: {},
+    reviewsError: {},
   },
   reducers: {
     addNowPlayingMovies: (state, action) => {
@@ -53,6 +55,16 @@ const moviesSlice = createSlice({
       }
       state.reviewsLoading[movieId] = loading;
     },
+    addProviders: (state, action) => {
+      const { movieId, providers } = action.payload;
+      state.providers[movieId] = providers || [];
+    },
+
+    setProvidersLoading: (state, action) => {
+      const { movieId, loading } = action.payload;
+      state.providersLoading[movieId] = loading;
+    },
+
     addReviews: (state, action) => {
       const { movieId, reviews } = action.payload;
       if (!state.reviews) {
@@ -86,7 +98,9 @@ export const {
   addUpcomingMovies,
   addTrailorVideo,
   clearTrailerVideo,
+  setProvidersLoading,
   addCount,
+  addProviders,
   addCredits,
   setReviewsLoading,
   addReviews,

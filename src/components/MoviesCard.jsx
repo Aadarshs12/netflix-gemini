@@ -22,6 +22,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import YouTube from "react-youtube";
+import useWatchProvidersData from "../hooks/useWatchProvidersData";
 
 const MoviesCard = ({ movie, index }) => {
   const dispatch = useDispatch();
@@ -30,6 +31,12 @@ const MoviesCard = ({ movie, index }) => {
     (store) => store.movies?.trailers[movie?.id]
   );
   const credits = useSelector((store) => store.movies?.credits[movie?.id]);
+  const watchProviders = useSelector(
+    (store) => store.movies?.providers[movie?.id] || []
+  );
+  const watchProvidersLoading = useSelector(
+    (store) => store.movies?.providersLoading[movie?.id] === true
+  );
   const reviews = useSelector(
     (store) => store.movies?.reviews?.[movie?.id] || []
   );
@@ -50,6 +57,7 @@ const MoviesCard = ({ movie, index }) => {
 
   useCreditsData(movie?.id);
   useReviewsData(movie?.id);
+  useWatchProvidersData(movie?.id);
 
   useEffect(() => {
     if (reviewsError) {
@@ -383,6 +391,44 @@ const MoviesCard = ({ movie, index }) => {
                     ? dayjs(movie.release_date).format("MMMM D, YYYY")
                     : "Not Available"}
                 </span>
+                <div className="flex flex-wrap gap-2 items-center mt-2">
+                  {watchProvidersLoading ? (
+                    <span className="text-xs text-yellow-400 animate-pulse">
+                      Loading providers...
+                    </span>
+                  ) : watchProviders.length > 0 ? (
+                    watchProviders
+                      .filter(
+                        (p, i, a) =>
+                          a.findIndex(
+                            (t) => t.provider_id === p.provider_id
+                          ) === i
+                      )
+                      .sort((a, b) => a.display_priority - b.display_priority)
+                      .map((p) => (
+                        <div
+                          key={p.provider_id}
+                          className="flex items-center gap-1 bg-white/10 rounded-full px-2 py-1 text-xs hover:bg-white/20 transition"
+                          title={p.provider_name}
+                        >
+                          <img
+                            src={`https://image.tmdb.org/t/p/w45${p.logo_path}`}
+                            alt={p.provider_name}
+                            className="w-5 h-5 rounded-full object-contain"
+                            loading="lazy"
+                            onError={(e) => (e.target.style.display = "none")}
+                          />
+                          <span className="hidden sm:inline">
+                            {p.provider_name}
+                          </span>
+                        </div>
+                      ))
+                  ) : (
+                    <span className="text-xs text-gray-500">
+                      No streaming info
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             <TabGroup>
