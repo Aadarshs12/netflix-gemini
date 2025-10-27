@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { auth } from "../utils/firebase";
 import { Login_Banner1 } from "../utils/constant";
 import { FaRegEye } from "react-icons/fa";
@@ -21,6 +21,8 @@ import TredingList from "./TredingList";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const btnRef = useRef(null);
+  const btnRef2 = useRef(null);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const {
     register,
@@ -28,8 +30,6 @@ const Login = () => {
     handleSubmit,
     reset,
   } = useForm();
-
-  
 
   const handleEyeClick = () => {
     setIsPasswordShow(!isPasswordShow);
@@ -49,6 +49,7 @@ const Login = () => {
         data?.password
       );
       const user = userCredential.user;
+      btnRef.current.disabled = true;
 
       await updateProfile(user, {
         displayName: data?.name,
@@ -69,6 +70,7 @@ const Login = () => {
   };
 
   const onSubmit = (data) => {
+    btnRef2.current.disabled = true;
     signInWithEmailAndPassword(auth, data?.email, data?.password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -97,7 +99,7 @@ const Login = () => {
         <Header />
         {newToNetflix ? (
           <form
-            className="lg:p-12 p-8 lg:w-2/5  2xl:w-1/3 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
+            className="lg:p-10 p-8 mt-5 lg:w-2/5  2xl:w-1/3 md:w-6/12 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
             onSubmit={handleSubmit(onSubmitSignUp)}
           >
             <h1 className="text-3xl font-semibold text-white mb-4">Sign Up</h1>
@@ -147,6 +149,7 @@ const Login = () => {
               )}
             </div>
             <button
+              ref={btnRef}
               type="submit"
               className="w-full bg-[#a659bd] text-white p-3 rounded-lg mt-4 hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100 "
             >
@@ -174,7 +177,7 @@ const Login = () => {
           </form>
         ) : (
           <form
-            className="lg:p-12 p-8 lg:w-2/5 md:w-6/12 2xl:w-1/3 w-full rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
+            className="lg:p-10 p-8   lg:w-2/5  2xl:w-1/3 md:w-6/12 w-full mt-5 rounded-lg bg-black absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80"
             onSubmit={handleSubmit(onSubmit)}
           >
             <h1 className="text-3xl font-semibold text-white mb-4">Sign In</h1>
@@ -229,6 +232,7 @@ const Login = () => {
               <span className="text-white">
                 New to NetGeminiFlix?{" "}
                 <button
+                ref={btnRef2}
                   type="button"
                   className="font-bold text-[#a659bd] hover:underline"
                   onClick={handleSignUp}
@@ -240,7 +244,7 @@ const Login = () => {
           </form>
         )}
       </div>
-      <TredingList/>
+      <TredingList />
       <InformationAccordian />
     </>
   );

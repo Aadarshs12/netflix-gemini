@@ -102,7 +102,7 @@ const VideoTitle = ({ movie }) => {
       <h1 className="text-3xl lg:pb-[3px] w-full md:w-3/4 lg:w-2/5 md:text-5xl leading-8 line-clamp-1 lg:text-6xl font-bold">
         {movie?.title}
       </h1>
-      <p className="text-base m-0 line-clamp-4 text-white text-opacity-75 md:text-lg w-full md:w-3/4 lg:w-5/12">
+      <p className="text-base m-0 line-clamp-4 text-slate-300 text-opacity-75 md:text-lg w-full md:w-3/4 lg:w-5/12">
         {movie?.overview}
       </p>
       <div className="flex gap-4 md:gap-6 lg:items-center md:items-start justify-center flex-row">

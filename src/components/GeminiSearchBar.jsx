@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import lang from "../utils/lang";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { API_Options, Login_Banner2 } from "../utils/constant";
 import { addtmdbSearchData } from "../utils/tmdbSearchSlice";
 
 const GeminiSearchBar = () => {
+  const btnRef3 = useRef(null);
   const dispatch = useDispatch();
   const selectedLanguage = useSelector((store) => store.lang?.lang);
   const [response, setResponse] = useState("");
@@ -37,6 +38,7 @@ const GeminiSearchBar = () => {
 
   const onSubmit = async (data) => {
     try {
+      btnRef3.current.disabled = true;
       const result = await model.generateContent(
         "Act as a Movie Recommendation system and suggest some movies for the query: " +
           data.prompt +
@@ -99,6 +101,7 @@ const GeminiSearchBar = () => {
             <span className="text-[#a659bd]">This field is required</span>
           )}
           <button
+            ref={btnRef3}
             className="w-full bg-purple-700 text-white p-3 rounded-lg mt-4 hover:bg-purple-800 hover:scale-105 active:bg-purple-900 active:scale-100"
             type="submit"
           >

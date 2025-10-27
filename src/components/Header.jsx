@@ -32,6 +32,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [openHamBurger, setOpenHamBurger] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const watchlist = useSelector((store) => store.watchlist?.watchListItems);
   const showToggleInformation = useSelector(
     (store) => store.gemini?.showGeminiSearch
@@ -81,6 +82,19 @@ const Header = () => {
     dispatch(toggleGeminiSearchView());
     setOpenHamBurger(false);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 4) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleLogoClick = () => {
     if (location.pathname === "/browse") {
@@ -171,7 +185,13 @@ const Header = () => {
               </button>
               {open && (
                 <div className="absolute right-0 mt-2 text-slate-300 w-56 origin-top-right rounded-md bg-[#374151ef] dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-                  <div className="py-1">
+                  <div
+                    className={`py-1 bg-[#374151ef] fixed z-20 rounded-xl transition-all duration-300 ${
+                      isVisible
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none"
+                    }`}
+                  >
                     <a
                       href="https://www.linkedin.com/in/aadarsh-singh-60a1a5229/"
                       target="_blank"
