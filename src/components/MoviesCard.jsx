@@ -321,7 +321,7 @@ const MoviesCard = ({ movie, index }) => {
             </button>
           )}
         </div>
-        <h4 className="text-white m-0 text-lg font-bold leading-5 line-clamp-2">
+        <h4 className="text-[#99abd3] m-0 text-lg font-bold leading-5 line-clamp-2">
           {movie.title || "Not Available"}
         </h4>
       </div>
@@ -347,7 +347,7 @@ const MoviesCard = ({ movie, index }) => {
               </button>
             </DialogTitle>
             <div className="text-sm flex items-center lg:flex-row flex-col gap-3 text-[#fff]">
-              <div className="relative lg:w-1/3 w-full">
+              <div className="relative lg:w-2/5 w-full">
                 <img
                   className="w-full rounded-md object-cover"
                   src={
@@ -367,7 +367,7 @@ const MoviesCard = ({ movie, index }) => {
                   </button>
                 </div>
               </div>
-              <div className="lg:w-2/3 w-full flex text-base flex-col gap-3">
+              <div className="lg:w-3/5 w-full flex text-base flex-col gap-3">
                 <h2 className="text-2xl font-bold text-[#a659bd]">
                   🎥 {movie.title || "Not Available"}
                 </h2>
@@ -391,9 +391,9 @@ const MoviesCard = ({ movie, index }) => {
                     ? dayjs(movie.release_date).format("MMMM D, YYYY")
                     : "Not Available"}
                 </span>
-                <div className="flex flex-wrap gap-2 items-center mt-2">
+                <div className="flex flex-wrap gap-2 items-center">
                   {watchProvidersLoading ? (
-                    <span className="text-xs text-yellow-400 animate-pulse">
+                    <span className="text-base text-[#a659bd] animate-pulse">
                       Loading providers...
                     </span>
                   ) : watchProviders.length > 0 ? (
@@ -412,7 +412,7 @@ const MoviesCard = ({ movie, index }) => {
                           title={p.provider_name}
                         >
                           <img
-                            src={`https://image.tmdb.org/t/p/w45${p.logo_path}`}
+                            src={IMG_CDN_URL + p.logo_path}
                             alt={p.provider_name}
                             className="w-5 h-5 rounded-full object-contain"
                             loading="lazy"
@@ -424,7 +424,7 @@ const MoviesCard = ({ movie, index }) => {
                         </div>
                       ))
                   ) : (
-                    <span className="text-xs text-gray-500">
+                    <span className="text-base text-purple-500">
                       No streaming info
                     </span>
                   )}
@@ -494,7 +494,7 @@ const MoviesCard = ({ movie, index }) => {
                                   {post.title}
                                 </h4>
                                 <span className="text-sm line-clamp-1">
-                                  <strong>
+                                  <strong className="text-[#a659bd]">
                                     {name === "Cast" ? "As" : "Job"}:{" "}
                                   </strong>
                                   {name === "Cast" ? post.character : post.job}
@@ -514,7 +514,7 @@ const MoviesCard = ({ movie, index }) => {
             <div className="text-white flex flex-col gap-3 mt-3 w-full">
               <h3 className="text-xl font-bold text-[#a659bd]">Reviews</h3>
               {reviewsLoading ? (
-                <p className="p-3">Loading reviews...</p>
+                <p className="p-3 animate-pulse">Loading reviews...</p>
               ) : reviewsError ? (
                 <p className="p-3 text-red-500">Error: {reviewsError}</p>
               ) : reviews?.length > 0 ? (
@@ -546,7 +546,7 @@ const MoviesCard = ({ movie, index }) => {
                           />
                         </div>
                         <div className="flex flex-col">
-                          <h4 className="font-bold m-0 text-lg line-clamp-1">
+                          <h4 className="font-bold text-white m-0 text-lg line-clamp-1">
                             {reviews[0].author || "Unknown"}
                           </h4>
                           <span className="lowercase text-[#a659bd] text-xs">
@@ -618,7 +618,7 @@ const MoviesCard = ({ movie, index }) => {
                                 />
                               </div>
                               <div className="flex flex-col">
-                                <h4 className="font-bold m-0 text-lg line-clamp-1">
+                                <h4 className="font-bold m-0 text-white text-lg line-clamp-1">
                                   {review.author || "Unknown"}
                                 </h4>
                                 <span className="lowercase text-white/80 text-xs">

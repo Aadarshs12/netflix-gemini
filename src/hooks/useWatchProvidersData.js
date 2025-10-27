@@ -6,10 +6,8 @@ import { API_Options } from "../utils/constant";
 const useWatchProvidersData = (movieId) => {
   const dispatch = useDispatch();
 
-  // Ensure movieId is a number
   const id = Number(movieId);
 
-  // Prevent invalid calls
   if (!id || isNaN(id)) {
     console.warn("[useWatchProvidersData] Invalid movieId:", movieId);
     return null;
@@ -21,17 +19,14 @@ const useWatchProvidersData = (movieId) => {
       : "https://api.themoviedb.org/3/";
 
   useEffect(() => {
-    console.log("[useWatchProvidersData] START →", id);
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000); // 8s timeout
-
+    const timeout = setTimeout(() => controller.abort(), 8000); 
     const fetchProviders = async () => {
       dispatch(setProvidersLoading({ movieId: id, loading: true }));
 
       try {
         const url = `${BASE_URL}movie/${id}/watch/providers`;
-        console.log("[useWatchProvidersData] FETCHING:", url);
 
         const response = await fetch(url, {
           ...API_Options,
@@ -45,7 +40,6 @@ const useWatchProvidersData = (movieId) => {
         }
 
         const json = await response.json();
-        console.log("[useWatchProvidersData] RAW DATA:", json);
 
         const regionData =
           json.results?.IN ||
@@ -59,9 +53,7 @@ const useWatchProvidersData = (movieId) => {
 
         const allProviders = [...flat, ...rent, ...buy];
 
-        console.log("[useWatchProvidersData] FINAL PROVIDERS:", allProviders);
 
-        // Dispatch with NUMBER ID
         dispatch(addProviders({ movieId: id, providers: allProviders }));
       } catch (error) {
         clearTimeout(timeout);
