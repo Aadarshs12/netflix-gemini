@@ -26,21 +26,26 @@ const useMovieTrailor = (id) => {
       setIsFetching(true);
       const response = await fetch(
         `${BASE_URL}movie/${movieId}/videos?language=en-US`,
-        API_Options
+        API_Options,
       );
+      console.log("URL:", `${BASE_URL}movie/${movieId}/videos?language=en-US`);
+      console.log("Options:", API_Options);
+      console.log("Status:", response.status);
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
-          `HTTP error! status: ${response.status}, message: ${errorText}`
+          `HTTP error! status: ${response.status}, message: ${errorText}`,
         );
       }
       const jsonData = await response.json();
+      console.log(jsonData, "jsonData");
+
       setData(jsonData?.results || []);
       setError(null);
     } catch (error) {
       console.error(
         `[useMovieTrailor] Error fetching videos for movie ${movieId}:`,
-        error
+        error,
       );
       setError(error.message || "Failed to fetch trailer");
       setData([]);
@@ -53,14 +58,14 @@ const useMovieTrailor = (id) => {
     (movieId) => {
       if (!movieId || typeof movieId !== "number") {
         console.warn(
-          `[useMovieTrailor] Fetch skipped due to invalid movie ID: ${movieId}`
+          `[useMovieTrailor] Fetch skipped due to invalid movie ID: ${movieId}`,
         );
         return;
       }
       dispatch(clearTrailerVideo(movieId));
       getMovieVideos(movieId);
     },
-    [dispatch]
+    [dispatch],
   );
 
   useEffect(() => {
@@ -71,13 +76,13 @@ const useMovieTrailor = (id) => {
           video.site === "YouTube" &&
           video.key &&
           typeof video.key === "string" &&
-          video.key.length >= 11
+          video.key.length >= 11,
       );
       const trailer = filterData.length ? filterData[0] : null;
       if (data.length && !filterData.length) {
         console.warn(
           `[useMovieTrailor] No valid YouTube trailers for movie ${id}, available videos:`,
-          data
+          data,
         );
         setError("No valid YouTube trailer found");
       }

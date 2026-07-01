@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { IMG_CDN_URL, IMG_CDN_URL2 } from "../utils/constant";
 import { useSelector, useDispatch } from "react-redux";
 import { FaPlay, FaHeart } from "react-icons/fa";
@@ -24,21 +24,23 @@ import "swiper/css/pagination";
 import YouTube from "react-youtube";
 import useWatchProvidersData from "../hooks/useWatchProvidersData";
 
+const empty_array = [];
+
 const MoviesCard = ({ movie, index }) => {
   const dispatch = useDispatch();
-  const genreList = useSelector((store) => store.genre?.genreList || []);
+  const genreList = useSelector((store) => store.genre?.genreList ?? empty_array);
   const trailorVideo = useSelector(
     (store) => store.movies?.trailers[movie?.id]
   );
   const credits = useSelector((store) => store.movies?.credits[movie?.id]);
   const watchProviders = useSelector(
-    (store) => store.movies?.providers[movie?.id] || []
+    (store) => store.movies?.providers[movie?.id] ?? empty_array
   );
   const watchProvidersLoading = useSelector(
     (store) => store.movies?.providersLoading[movie?.id] === true
   );
   const reviews = useSelector(
-    (store) => store.movies?.reviews?.[movie?.id] || []
+    (store) => store.movies?.reviews?.[movie?.id] ?? empty_array
   );
   const reviewsLoading = useSelector(
     (store) => store.movies?.reviewsLoading?.[movie?.id] || false
@@ -48,7 +50,7 @@ const MoviesCard = ({ movie, index }) => {
   );
 
   const watchList = useSelector(
-    (store) => store.watchlist?.watchListItems || []
+    (store) => store.watchlist?.watchListItems ?? empty_array
   );
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPlay, setIsOpenPlay] = useState(false);
@@ -70,28 +72,51 @@ const MoviesCard = ({ movie, index }) => {
 
   useEffect(() => {}, [credits, movie?.id]);
 
-  const categories = [
-    {
-      name: "Cast",
-      posts:
-        credits?.cast?.slice(0, 5)?.map((member) => ({
-          id: member.id,
-          title: member.name,
-          character: member.character,
-          profile_path: member.profile_path,
-        })) || [],
-    },
-    {
-      name: "Crew",
-      posts:
-        credits?.crew?.slice(0, 5)?.map((member) => ({
-          id: member.id,
-          title: member.name,
-          job: member.job,
-          profile_path: member.profile_path,
-        })) || [],
-    },
-  ];
+  // const categories = [
+  //   {
+  //     name: "Cast",
+  //     posts:
+  //       credits?.cast?.slice(0, 5)?.map((member) => ({
+  //         id: member.id,
+  //         title: member.name,
+  //         character: member.character,
+  //         profile_path: member.profile_path,
+  //       })) || [],
+  //   },
+  //   {
+  //     name: "Crew",
+  //     posts:
+  //       credits?.crew?.slice(0, 5)?.map((member) => ({
+  //         id: member.id,
+  //         title: member.name,
+  //         job: member.job,
+  //         profile_path: member.profile_path,
+  //       })) || [],
+  //   },
+  // ];
+
+  const categories = useMemo(() => [
+  {
+    name: "Cast",
+    posts:
+      credits?.cast?.slice(0, 5)?.map((member) => ({
+        id: member.id,
+        title: member.name,
+        character: member.character,
+        profile_path: member.profile_path,
+      })) ?? [],
+  },
+  {
+    name: "Crew",
+    posts:
+      credits?.crew?.slice(0, 5)?.map((member) => ({
+        id: member.id,
+        title: member.name,
+        job: member.job,
+        profile_path: member.profile_path,
+      })) ?? [],
+  },
+], [credits]);
 
   const isInWatchList =
     movie?.id && Array.isArray(watchList)

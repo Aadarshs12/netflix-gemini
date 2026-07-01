@@ -11,6 +11,9 @@ const VideoBackground = ({ id }) => {
   const { fetchTrailer, error, isFetching } = useMovieTrailor(id);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(trailorVideo, "trailorVideo");
+  
+
   useEffect(() => {
     if (!id || typeof id !== 'number') {
       console.error("[VideoBackground] Invalid or missing movie ID:", id);

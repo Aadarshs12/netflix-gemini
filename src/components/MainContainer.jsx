@@ -8,13 +8,16 @@ const MainContainer = () => {
   const count = useSelector((store) => store.movies?.count);
   if (!movies) return;
 
-  const mainMovie = movies[count || 0];
+  const mainMovie = movies[ count+1 || 0];
 
   if (!mainMovie) return null;
 
   const {
     id,
   } = mainMovie;
+
+  console.log(mainMovie, "mainmovie");
+  
 
   return (
     <div className='relative z-10'>

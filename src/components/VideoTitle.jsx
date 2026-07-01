@@ -25,16 +25,21 @@ const VideoTitle = ({ movie }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [iframeKey, setIframeKey] = useState(0);
 
+  console.log(movie, "movie");
+  
+
   const genreList = useSelector((store) => store.genre?.genreList);
+
   const getGenres = (genre_ids = [], genreList = []) => {
-    if (!Array.isArray(genre_ids) || !Array.isArray(genreList)) return [];
-    return genre_ids
-      .map((id) => {
-        const genre = genreList.find((g) => g.id === movie?.id);
-        return genre ? genre.name : null;
-      })
-      .filter(Boolean);
-  };
+  if (!Array.isArray(genre_ids) || !Array.isArray(genreList)) return [];
+
+  return genre_ids
+    .map((id) => {
+      const genre = genreList.find((g) => g.id === id);
+      return genre ? genre.name : null;
+    })
+    .filter(Boolean);
+};
 
   const watchList = useSelector(
     (store) => store.watchlist?.watchListItems || []
@@ -95,6 +100,9 @@ const VideoTitle = ({ movie }) => {
       disablekb: 1,
     },
   };
+
+  console.log("genreList", genreList);
+  
 
 
   return (
